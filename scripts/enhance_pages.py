@@ -916,9 +916,12 @@ def main(argv=None):
             use_prepocr=args.prepocr,
         )
 
-        # Output next to original with _enhanced suffix
+        # Output to pages_enhanced/<book>/<page>.ext (mirrors book-level behavior)
         ext = "png" if args.format == "png" else "jpg"
-        out_path = img_path.parent / f"{img_path.stem}_enhanced.{ext}"
+        book_name = img_path.parent.name
+        out_dir = PROJECT_ROOT / "pages_enhanced" / book_name
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / f"{img_path.stem}.{ext}"
         if ext == "jpg":
             cv2.imwrite(
                 str(out_path), enhanced, [cv2.IMWRITE_JPEG_QUALITY, args.jpeg_quality]
@@ -927,8 +930,9 @@ def main(argv=None):
             cv2.imwrite(str(out_path), enhanced)
 
         size_kb = out_path.stat().st_size / 1024
+        rel_out = out_path.relative_to(PROJECT_ROOT)
         print(
-            f"  ✅ {img_path.name} → {out_path.name}"
+            f"  ✅ {img_path} → {rel_out}"
             f"  ({enhanced.shape[1]}×{enhanced.shape[0]} px, {size_kb:.0f} KB)"
         )
         total += 1
