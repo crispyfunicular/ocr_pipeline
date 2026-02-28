@@ -569,6 +569,7 @@ def enhance_image(
     docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
     use_prepocr: bool = True,
+    use_classical: bool = True,
 ) -> np.ndarray:
     """Apply the full enhancement pipeline.
 
@@ -589,8 +590,9 @@ def enhance_image(
                 torch.cuda.empty_cache()
     if use_prepocr:
         result = prepocr_restore(result)
-    result = to_grayscale(result)
-    result = apply_clahe(result, clip_limit=clip_limit)
+    if use_classical:
+        result = to_grayscale(result)
+        result = apply_clahe(result, clip_limit=clip_limit)
     if denoise:
         result = bilateral_denoise(result)
     if binarize:
@@ -667,6 +669,7 @@ def process_book(
     docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
     use_prepocr: bool = True,
+    use_classical: bool = True,
 ) -> int:
     """Process all pages of a single book directory. Returns count."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -696,6 +699,7 @@ def process_book(
             docres_tasks=docres_tasks,
             docres_model=docres_model,
             use_prepocr=use_prepocr,
+            use_classical=use_classical,
         )
 
         ext = "png" if out_format == "png" else "jpg"
@@ -831,6 +835,13 @@ def main(argv=None):
         default=True,
         help="Disable PreP-OCR ResShift diffusion deblurring (on by default)",
     )
+    parser.add_argument(
+        "--no-classical",
+        dest="classical",
+        action="store_false",
+        default=True,
+        help="Disable classical enhancement (grayscale + CLAHE, on by default)",
+    )
     args = parser.parse_args(argv)
 
     # Validate DocRes setup
@@ -891,6 +902,7 @@ def main(argv=None):
             docres_tasks=args.docres_tasks,
             docres_model=args.docres_model,
             use_prepocr=args.prepocr,
+            use_classical=args.classical,
         )
         total += count
         books_processed.append(book_dir.name)
@@ -914,6 +926,7 @@ def main(argv=None):
             docres_tasks=args.docres_tasks,
             docres_model=args.docres_model,
             use_prepocr=args.prepocr,
+            use_classical=args.classical,
         )
 
         # Output to pages_enhanced/<book>/<page>.ext (mirrors book-level behavior)

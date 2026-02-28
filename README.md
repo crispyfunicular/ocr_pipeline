@@ -118,9 +118,10 @@ Applies image enhancement to improve OCR accuracy on degraded historical scans. 
 
 ```bash
 python pipeline.py enhance                                        # Full default: DocRes + PreP-OCR + classical
+python pipeline.py enhance --no-classical                         # DocRes + PreP-OCR only (keep color)
 python pipeline.py enhance --no-prepocr                           # DocRes + classical only (skip PreP-OCR)
 python pipeline.py enhance --no-docres                            # PreP-OCR + classical only (skip DocRes)
-python pipeline.py enhance --no-docres --no-prepocr               # Classical only
+python pipeline.py enhance --no-docres --no-prepocr --no-classical  # No enhancement (passthrough)
 python pipeline.py enhance --docres-tasks appearance              # Only one DocRes task
 python pipeline.py enhance --docres-tasks deshadowing deblurring  # Pick specific DocRes tasks
 python pipeline.py enhance my_book                                # Enhance one book

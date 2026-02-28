@@ -10,6 +10,7 @@ corpus/
 
 # DocRes weights and cloned repo
 docres/
+resshift/
 
 # Reports (auto-generated)
 reports/

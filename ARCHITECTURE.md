@@ -68,14 +68,13 @@ OCR_pipeline/
 
 ### 2. Enhancement (`scripts/enhance_pages.py`)
 
-Current default pipeline (in order):
-1. **DocRes AI** — Restormer-based document restoration (deshadowing → deblurring → appearance)
-2. **PreP-OCR** — ResShift diffusion deblurring (256×256 tiles, 4-step diffusion)
-3. **Grayscale** conversion
-4. **CLAHE** — Contrast Limited Adaptive Histogram Equalization (clip_limit=1.5)
-5. (Optional) Bilateral denoising
-6. (Optional) Adaptive Gaussian binarization + morphological cleanup
-7. (Optional) 2× Lanczos upscale
+Current default pipeline (in order, each can be disabled via CLI flags):
+1. **DocRes AI** — Restormer-based document restoration (deshadowing → deblurring → appearance) (`--no-docres`)
+2. **PreP-OCR** — ResShift diffusion deblurring (256×256 tiles, 4-step diffusion) (`--no-prepocr`)
+3. **Classical** — Grayscale conversion + CLAHE (clip_limit=1.5) (`--no-classical`)
+4. (Optional) Bilateral denoising (`--denoise`)
+5. (Optional) Adaptive Gaussian binarization + morphological cleanup (`--binarize`)
+6. (Optional) 2× Lanczos upscale (`--upscale`)
 
 DocRes integration:
 - Model: Restormer (~26M params), weights from HuggingFace
