@@ -15,6 +15,9 @@ Cet ouvrage est une **méthode d'apprentissage du breton** de 1933, organisée e
 2. **Titre de leçon grammaticale** — bilingue (ex : « Anoiou alies (ien, ed, ou) / Noms pluriels (s, x, aux) »)
 3. **Section Élocution** — texte continu, breton sur page gauche, français sur page droite
 4. **Section Devoir** — exercices écrits, souvent monolingues ou à compléter
+5. **Lennadennou / Lectures** — textes en vers ou en prose, numérotés strophe par strophe, alignés page gauche / page droite
+6. **Verbou / Verbes** — conjugaisons avec paradigmes
+7. **Geriou digemmus / Mots invariables** — vocabulaire en deux colonnes
 
 ---
 
@@ -45,12 +48,30 @@ Certaines leçons listent des mots de vocabulaire en colonnes. Extrayez chaque p
 {"breton": "ar stered", "français": "les étoiles"}
 ```
 
+### Mots invariables (Geriou digemmus)
+Certaines leçons contiennent un tableau de mots invariables en deux colonnes (breton à gauche, français à droite). Extrayez chaque paire :
+```json
+{"breton": "betek breman", "français": "jusqu'ici"}
+{"breton": "ken", "français": "plus"}
+{"breton": "ken abret", "français": "si tôt"}
+{"breton": "evelhen", "français": "ainsi"}
+{"breton": "ivez", "français": "aussi"}
+```
+
+### Lennadennou / Lectures
+Les pages de lecture présentent des textes en vers ou en prose numérotés (1., 2., 3., …), avec le breton à gauche et le français à droite. Extrayez **strophe par strophe** — chaque strophe numérotée constitue un segment. Ne découpez pas ligne par ligne à l'intérieur d'une strophe :
+```json
+{"breton": "Eun amzer a zo bet, ha ne veze klevet 'N hon touez nemet yez Breiz ; war ar maez, 'vel en kêr, Holl 'komzemp ar yez koz gant hon tadou komzet, En Gwened, en Kerne, Leon ha Landreger.", "français": "Il fut un temps, où l'on n'entendait, parmi nous, que la langue de Breiz : à la campagne comme en ville, nous parlions tous la vieille langue que parlaient nos pères, en Vannes, en Cornouaille, en Léon, en Trégor."}
+```
+
 ### Sections à exclure
 
 - **Devoir / Devoir écrit** : exercices à compléter, souvent monolingues → **exclure**
 - **Notes grammaticales** en bas de page (numérotées `(1)`, `(2)`) : explications de règles → **exclure**
 - **Exercices « Skrivet hag echuit ar gerion-man »** (Écrire et compléter les mots suivants) → **exclure** (monolingue, phrases à trous)
 - **Sections « Grammaire »** en bas de page droite → **exclure** (consignes monolingues)
+- **Sections « Verbou / Verbes »** : paradigmes de conjugaison (1°, 2°, 3°) → **exclure** entièrement (y compris les infinitifs)
+- **Sections « Thème » / « Da lakat e galleg »** : exercices de traduction dirigés → **exclure** (monolingues ou semi-monolingues)
 
 ### Nettoyage
 
