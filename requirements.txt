@@ -10,6 +10,14 @@ einops
 scikit-image
 tqdm
 
+# AI — PreP-OCR / ResShift deblurring (diffusion-based)
+omegaconf
+loguru
+lpips
+albumentations
+loralib
+timm
+
 # OCR extraction
 openai
 anthropic

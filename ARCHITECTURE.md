@@ -27,7 +27,7 @@ OCR_pipeline/
 │   ├── __init__.py
 │   ├── utils.py             ← Shared helpers (types, parsing, target discovery)
 │   ├── extract_pages.py     ← PDF → PNG
-│   ├── enhance_pages.py     ← Image enhancement (CLAHE + DocRes)
+│   ├── enhance_pages.py     ← Image enhancement (DocRes + PreP-OCR + CLAHE)
 │   ├── ocr_openai.py        ← VLM-based OCR extraction
 │   ├── cleanup_corpus.py    ← JSONL quality assurance (stub)
 │   └── build_corpus.py      ← Final corpus merge (stub)
@@ -52,6 +52,8 @@ OCR_pipeline/
 │   └── <book>/
 │       └── <model>/report.md
 ├── docres/                  ← Cloned DocRes repo + weights
+├── resshift/                ← Cloned ResShift repo + weights (PreP-OCR)
+├── compare/                 ← Enhancement comparison outputs
 ├── AGENTS.md
 └── ARCHITECTURE.md
 ```
@@ -66,18 +68,29 @@ OCR_pipeline/
 
 ### 2. Enhancement (`scripts/enhance_pages.py`)
 
-Current pipeline (in order):
-1. **(Optional) DocRes AI** — Restormer-based document restoration (appearance/deblurring/deshadowing)
-2. **Grayscale** conversion
-3. **CLAHE** — Contrast Limited Adaptive Histogram Equalization (clip_limit=1.5)
-4. (Optional) Bilateral denoising
-5. (Optional) Adaptive Gaussian binarization + morphological cleanup
-6. (Optional) 2× Lanczos upscale
+Current default pipeline (in order):
+1. **DocRes AI** — Restormer-based document restoration (deshadowing → deblurring → appearance)
+2. **PreP-OCR** — ResShift diffusion deblurring (256×256 tiles, 4-step diffusion)
+3. **Grayscale** conversion
+4. **CLAHE** — Contrast Limited Adaptive Histogram Equalization (clip_limit=1.5)
+5. (Optional) Bilateral denoising
+6. (Optional) Adaptive Gaussian binarization + morphological cleanup
+7. (Optional) 2× Lanczos upscale
 
 DocRes integration:
 - Model: Restormer (~26M params), weights from HuggingFace
-- Tasks: `appearance` (background normalization), `deblurring` (Sobel prompt), `deshadowing` (illumination prompt)
-- GPU: auto-detects CUDA, runs on RTX 5070 Ti (~2-4GB VRAM per image)
+- Tasks: `deshadowing` (illumination prompt), `deblurring` (Sobel prompt), `appearance` (background normalization)
+- GPU: auto-detects CUDA
+
+PreP-OCR integration:
+- Model: ResShift (diffusion-based), weights from HuggingFace
+- Tiled inference: 256×256 patches with 4-step diffusion sampling
+- Includes VQ-VAE autoencoder for latent-space processing
+- GPU required
+
+Comparison tool (`pipeline.py compare`):
+- Generates all 18 permutations of DocRes/PreP-OCR/Classical for a single page
+- Output: `compare/<book>/<page>/` with 19 images (original + 18 variants)
 
 ### 3. OCR Extraction (`scripts/ocr_openai.py`)
 

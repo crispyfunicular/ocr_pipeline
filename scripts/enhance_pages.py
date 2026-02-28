@@ -40,6 +40,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PAGES_DIR = PROJECT_ROOT / "pages"
 ENHANCED_DIR = PROJECT_ROOT / "pages_enhanced"
 DOCRES_DIR = PROJECT_ROOT / "docres"
+RESSHIFT_DIR = PROJECT_ROOT / "resshift"
 
 from scripts.utils import discover_targets
 
@@ -313,6 +314,246 @@ def docres_restore(
             return np.clip(img.astype(float) / shadow_map, 0, 255).astype(np.uint8)
 
 
+# ── PreP-OCR / ResShift deblurring ─────────────────────────────────
+
+_resshift_sampler = None
+
+
+def _load_resshift_sampler():
+    """Lazy-load the ResShift sampler (cached)."""
+    global _resshift_sampler
+    if _resshift_sampler is not None:
+        return _resshift_sampler
+
+    import sys
+    import torch
+    from omegaconf import OmegaConf
+
+    # ResShift has a 'utils/' package that conflicts with DocRes's 'utils.py'.
+    # Temporarily remove DocRes from sys.path during ResShift loading.
+    docres_path = str(DOCRES_DIR.resolve())
+    docres_was_in_path = docres_path in sys.path
+    if docres_was_in_path:
+        sys.path.remove(docres_path)
+
+    # Also remove any cached 'utils' module from DocRes
+    cached_utils = {}
+    for key in list(sys.modules.keys()):
+        if key == "utils" or key.startswith("utils."):
+            cached_utils[key] = sys.modules.pop(key)
+
+    # Add ResShift to Python path so its internal imports work
+    resshift_path = str(RESSHIFT_DIR)
+    if resshift_path not in sys.path:
+        sys.path.insert(0, resshift_path)
+
+    config_path = RESSHIFT_DIR / "configs" / "deblur_prepocr.yaml"
+    if not config_path.exists():
+        raise FileNotFoundError(
+            f"ResShift config not found: {config_path}\n"
+            "  Run ./setup.sh to set up ResShift/PreP-OCR."
+        )
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    print(f"  🧠 Loading ResShift/PreP-OCR model on {device}...")
+
+    configs = OmegaConf.load(str(config_path))
+
+    from sampler import ResShiftSampler
+    sampler = ResShiftSampler(
+        configs,
+        sf=1,
+        chop_size=256,
+        chop_stride=256,
+        chop_bs=1,
+        use_amp=True,
+        seed=12345,
+    )
+
+    # Restore DocRes path (needed if DocRes runs again later)
+    if docres_was_in_path and docres_path not in sys.path:
+        sys.path.append(docres_path)
+
+    _resshift_sampler = sampler
+    return sampler
+
+
+def prepocr_restore(img: np.ndarray) -> np.ndarray:
+    """Apply PreP-OCR ResShift diffusion deblurring.
+
+    Processes the image in tiles (256×256) so it works at any resolution.
+    Returns a deblurred BGR numpy uint8 image.
+    """
+    import torch
+    from contextlib import nullcontext
+
+    sampler = _load_resshift_sampler()
+
+    # BGR → RGB, uint8 → float32 [0, 1]
+    rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
+
+    # HWC → 1CHW tensor on GPU
+    tensor = torch.from_numpy(rgb.transpose(2, 0, 1)).unsqueeze(0).cuda()
+
+    # Normalize to [-1, 1]
+    tensor_norm = (tensor - 0.5) / 0.5
+
+    context = torch.cuda.amp.autocast if sampler.use_amp else nullcontext
+
+    # Tiled inference (mirrors ResShift's _process_per_image)
+    with torch.no_grad():
+        if tensor_norm.shape[2] > sampler.chop_size or tensor_norm.shape[3] > sampler.chop_size:
+            from utils.util_image import ImageSpliterTh
+            spliter = ImageSpliterTh(
+                tensor_norm,
+                sampler.chop_size,
+                stride=sampler.chop_stride,
+                sf=sampler.sf,
+                extra_bs=sampler.chop_bs,
+            )
+            for lq_patch, index_infos in spliter:
+                with context():
+                    sr_patch = sampler.sample_func(
+                        lq_patch,
+                        noise_repeat=False,
+                        mask=None,
+                    )
+                spliter.update(sr_patch, index_infos)
+            result = spliter.gather()
+        else:
+            with context():
+                result = sampler.sample_func(
+                    tensor_norm,
+                    noise_repeat=False,
+                    mask=None,
+                )
+
+    # sample_func returns [-1, 1], denormalize to [0, 1]
+    result = result * 0.5 + 0.5
+    result = result.clamp(0, 1)
+
+    # 1CHW → HWC, float → uint8, RGB → BGR
+    out = result[0].permute(1, 2, 0).cpu().numpy()
+    out = (out * 255).astype(np.uint8)
+    out = cv2.cvtColor(out, cv2.COLOR_RGB2BGR)
+
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+    return out
+
+
+# ── Comparison matrix ──────────────────────────────────────────────
+
+
+def run_comparison(
+    img: np.ndarray,
+    book: str,
+    page: str,
+    out_root: Path,
+    docres_model: str | None = None,
+) -> Path:
+    """Generate all permutations of enhancement steps for comparison.
+
+    Saves 18 images to out_root/compare/<book>/<page>/:
+    - 3 individual DocRes sub-steps
+    - 3 individual main steps
+    - 6 two-step permutations
+    - 6 three-step permutations
+    """
+    import torch
+
+    out_dir = out_root / "compare" / book / page
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    def _save(name: str, result: np.ndarray):
+        path = out_dir / f"{name}.png"
+        cv2.imwrite(str(path), result)
+        size_kb = path.stat().st_size / 1024
+        print(f"    ✅ {name}.png  ({result.shape[1]}×{result.shape[0]} px, {size_kb:.0f} KB)")
+
+    def _clear():
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
+    # ── Define atomic steps ─────────────────────────────────
+
+    def step_docres_pipeline(x: np.ndarray) -> np.ndarray:
+        """Full DocRes chain: deshadowing → deblurring → appearance."""
+        r = x
+        for task in DEFAULT_DOCRES_TASKS:
+            r = docres_restore(r, task=task, model_path=docres_model)
+            _clear()
+        return r
+
+    def step_prepocr(x: np.ndarray) -> np.ndarray:
+        """ResShift diffusion deblurring."""
+        r = prepocr_restore(x)
+        _clear()
+        return r
+
+    def step_classical(x: np.ndarray) -> np.ndarray:
+        """Grayscale + CLAHE. Returns 3-channel BGR for chaining."""
+        r = to_grayscale(x)
+        r = apply_clahe(r)
+        # Convert back to BGR so other steps can process it
+        if len(r.shape) == 2:
+            r = cv2.cvtColor(r, cv2.COLOR_GRAY2BGR)
+        return r
+
+    STEPS = {
+        "docres_pipeline": step_docres_pipeline,
+        "prepocr": step_prepocr,
+        "classical": step_classical,
+    }
+
+    # ── Save original ───────────────────────────────────────
+    _save("original", img)
+
+    # ── Phase 0: Individual DocRes sub-steps ────────────────
+    print("  📊 Phase 0/4: Individual DocRes sub-steps")
+    for task in DEFAULT_DOCRES_TASKS:
+        result = docres_restore(img, task=task, model_path=docres_model)
+        _clear()
+        _save(f"docres_{task}", result)
+
+    # ── Phase 1: Individual main steps ──────────────────────
+    print("  📊 Phase 1/4: Individual steps")
+    singles = {}
+    for name, fn in STEPS.items():
+        result = fn(img)
+        singles[name] = result
+        _save(name, result)
+
+    # ── Phase 2: Two-step permutations ──────────────────────
+    print("  📊 Phase 2/4: Two-step permutations")
+    step_names = list(STEPS.keys())
+    doubles = {}
+    for first in step_names:
+        for second in step_names:
+            if first == second:
+                continue
+            combo_name = f"{first}-{second}"
+            result = STEPS[second](singles[first])
+            doubles[combo_name] = result
+            _save(combo_name, result)
+
+    # ── Phase 3: Three-step permutations ────────────────────
+    print("  📊 Phase 3/4: Three-step permutations")
+    for first in step_names:
+        for second in step_names:
+            if second == first:
+                continue
+            third = [s for s in step_names if s != first and s != second][0]
+            combo_name = f"{first}-{second}-{third}"
+            two_step_key = f"{first}-{second}"
+            result = STEPS[third](doubles[two_step_key])
+            _save(combo_name, result)
+
+    print(f"  📁 All comparisons saved to {out_dir}/")
+    return out_dir
+
+
 # ── Full pipeline ──────────────────────────────────────────────────
 
 
@@ -327,14 +568,16 @@ def enhance_image(
     use_docres: bool = False,
     docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
+    use_prepocr: bool = True,
 ) -> np.ndarray:
     """Apply the full enhancement pipeline.
 
     Default: grayscale + CLAHE only — improves contrast while keeping
     text perfectly sharp for VLM-based OCR.
 
-    When DocRes is enabled, chains the requested tasks sequentially
-    (default: deshadowing → deblurring → appearance).
+    Optional AI enhancements (run before classical processing):
+    - DocRes: deshadowing → deblurring → appearance (--no-docres to disable)
+    - PreP-OCR: ResShift diffusion deblurring (--no-prepocr to disable)
     """
     result = img
     if use_docres:
@@ -344,6 +587,8 @@ def enhance_image(
             result = docres_restore(result, task=task, model_path=docres_model)
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
+    if use_prepocr:
+        result = prepocr_restore(result)
     result = to_grayscale(result)
     result = apply_clahe(result, clip_limit=clip_limit)
     if denoise:
@@ -421,6 +666,7 @@ def process_book(
     use_docres: bool = False,
     docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
+    use_prepocr: bool = True,
 ) -> int:
     """Process all pages of a single book directory. Returns count."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -449,6 +695,7 @@ def process_book(
             use_docres=use_docres,
             docres_tasks=docres_tasks,
             docres_model=docres_model,
+            use_prepocr=use_prepocr,
         )
 
         ext = "png" if out_format == "png" else "jpg"
@@ -577,6 +824,13 @@ def main(argv=None):
         default=None,
         help="Path to docres.pkl weights (default: ./docres/checkpoints/docres.pkl)",
     )
+    parser.add_argument(
+        "--no-prepocr",
+        dest="prepocr",
+        action="store_false",
+        default=True,
+        help="Disable PreP-OCR ResShift diffusion deblurring (on by default)",
+    )
     args = parser.parse_args(argv)
 
     # Validate DocRes setup
@@ -606,6 +860,8 @@ def main(argv=None):
     if args.docres:
         tasks = args.docres_tasks or DEFAULT_DOCRES_TASKS
         print(f"  🧠 DocRes AI restoration enabled (tasks: {' → '.join(tasks)})")
+    if args.prepocr:
+        print("  🧠 PreP-OCR ResShift deblurring enabled")
     if args.upscale:
         print("  ↗️  2× Lanczos upscale enabled")
     if args.binarize:
@@ -634,6 +890,7 @@ def main(argv=None):
             use_docres=args.docres,
             docres_tasks=args.docres_tasks,
             docres_model=args.docres_model,
+            use_prepocr=args.prepocr,
         )
         total += count
         books_processed.append(book_dir.name)
@@ -656,6 +913,7 @@ def main(argv=None):
             use_docres=args.docres,
             docres_tasks=args.docres_tasks,
             docres_model=args.docres_model,
+            use_prepocr=args.prepocr,
         )
 
         # Output next to original with _enhanced suffix

@@ -87,9 +87,123 @@ else
     echo "  ✅ Weights downloaded ($(du -h "$WEIGHTS_FILE" | cut -f1))"
 fi
 
-# ── 5. OpenAI API key check ───────────────────────────
+# ── 5. ResShift / PreP-OCR (diffusion deblurring) ─────
 echo ""
-echo "── Step 5/5: OpenAI API key ──"
+echo "── Step 5/6: ResShift (PreP-OCR deblurring) setup ──"
+
+RESSHIFT_DIR="resshift"
+RESSHIFT_WEIGHTS="$RESSHIFT_DIR/weights"
+DEBLUR_CKPT="$RESSHIFT_WEIGHTS/resshift_deblur_prep_ocr.pth"
+AUTOENC_CKPT="$RESSHIFT_WEIGHTS/autoencoder_vq_f4.pth"
+PREPOCR_CONFIG="$RESSHIFT_DIR/configs/deblur_prepocr.yaml"
+
+if [ -d "$RESSHIFT_DIR" ]; then
+    echo "  ✅ ResShift repo already cloned"
+else
+    echo "  Cloning ResShift..."
+    git clone --depth 1 https://github.com/zsyOAOA/ResShift.git "$RESSHIFT_DIR"
+    echo "  ✅ ResShift cloned"
+fi
+
+mkdir -p "$RESSHIFT_WEIGHTS"
+
+if [ -f "$DEBLUR_CKPT" ]; then
+    echo "  ✅ PreP-OCR deblur weights already downloaded"
+else
+    echo "  Downloading PreP-OCR deblur weights (457 MB)..."
+    wget -q --show-progress \
+        "https://huggingface.co/ShuhaoGuan/prep-ocr-resshift-deblur/resolve/main/resshift_deblur_prep_ocr.pth" \
+        -O "$DEBLUR_CKPT"
+    echo "  ✅ Deblur weights downloaded ($(du -h "$DEBLUR_CKPT" | cut -f1))"
+fi
+
+if [ -f "$AUTOENC_CKPT" ]; then
+    echo "  ✅ VQ-VAE autoencoder weights already downloaded"
+else
+    echo "  Downloading VQ-VAE autoencoder weights..."
+    wget -q --show-progress \
+        "https://github.com/zsyOAOA/ResShift/releases/download/v2.0/autoencoder_vq_f4.pth" \
+        -O "$AUTOENC_CKPT"
+    echo "  ✅ Autoencoder weights downloaded ($(du -h "$AUTOENC_CKPT" | cut -f1))"
+fi
+
+# Create local config with corrected paths
+SCRIPT_ABS_DIR="$(cd "$SCRIPT_DIR" && pwd)"
+cat > "$PREPOCR_CONFIG" <<YAML
+trainer:
+  target: trainer.TrainerDifIRLPIPS
+
+model:
+  target: models.unet.UNetModelSwin
+  ckpt_path: ${SCRIPT_ABS_DIR}/${DEBLUR_CKPT}
+  params:
+    image_size: 64
+    in_channels: 3
+    model_channels: 160
+    out_channels: 3
+    attention_resolutions: [64,32,16,8]
+    dropout: 0
+    channel_mult: [1, 2, 2, 4]
+    num_res_blocks: [2, 2, 2, 2]
+    conv_resample: True
+    dims: 2
+    use_fp16: False
+    num_head_channels: 32
+    use_scale_shift_norm: True
+    resblock_updown: False
+    swin_depth: 2
+    swin_embed_dim: 192
+    window_size: 8
+    mlp_ratio: 4
+    cond_lq: True
+    lq_size: 256
+
+diffusion:
+  target: models.script_util.create_gaussian_diffusion
+  params:
+    sf: 1
+    schedule_name: exponential
+    schedule_kwargs:
+      power: 0.3
+    etas_end: 0.99
+    steps: 4
+    min_noise_level: 0.2
+    kappa: 2.0
+    weighted_mse: False
+    predict_type: xstart
+    timestep_respacing: ~
+    scale_factor: 1.0
+    normalize_input: True
+    latent_flag: True
+
+autoencoder:
+  target: ldm.models.autoencoder.VQModelTorch
+  ckpt_path: ${SCRIPT_ABS_DIR}/${AUTOENC_CKPT}
+  tune_decoder: False
+  params:
+    embed_dim: 3
+    n_embed: 8192
+    ddconfig:
+      double_z: False
+      z_channels: 3
+      resolution: 256
+      in_channels: 3
+      out_ch: 3
+      ch: 128
+      ch_mult:
+      - 1
+      - 2
+      - 4
+      num_res_blocks: 2
+      attn_resolutions: []
+      dropout: 0.0
+      padding_mode: zeros
+YAML
+echo "  ✅ Config written to $PREPOCR_CONFIG"
+
+# ── 6. API key check ─────────────────────────────────
+echo ""
+echo "── Step 6/6: API keys ──"
 
 if [ -n "${OPENAI_API_KEY:-}" ]; then
     echo "  ✅ OPENAI_API_KEY is set"

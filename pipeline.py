@@ -46,7 +46,43 @@ def cmd_enhance(args):
         argv.append("--no-docres")
     if args.docres_tasks:
         argv.extend(["--docres-tasks"] + list(args.docres_tasks))
+    if not args.prepocr:
+        argv.append("--no-prepocr")
     return enhance_main(argv)
+
+
+def cmd_compare(args):
+    """Generate comparison matrix of all enhancement permutations."""
+    from pathlib import Path
+    from scripts.enhance_pages import run_comparison, PROJECT_ROOT
+    import cv2
+
+    img_path = Path(args.image)
+    if not img_path.exists():
+        print(f"❌ Image not found: {img_path}", file=sys.stderr)
+        sys.exit(1)
+
+    img = cv2.imread(str(img_path))
+    if img is None:
+        print(f"❌ Could not read image: {img_path}", file=sys.stderr)
+        sys.exit(1)
+
+    # Infer book and page from path: pages/<book>/<page>.png
+    img_path = img_path.resolve()
+    page = img_path.stem
+    book = img_path.parent.name
+
+    print(f"📊 Generating comparison matrix for {book}/{page}")
+    print(f"  Image: {img.shape[1]}×{img.shape[0]} px")
+
+    run_comparison(
+        img,
+        book=book,
+        page=page,
+        out_root=PROJECT_ROOT,
+    )
+
+    print(f"\n🎉 Done — see compare/{book}/{page}/")
 
 
 def cmd_ocr(args):
@@ -121,6 +157,8 @@ def cmd_run(args):
         enhance_argv.append("--no-docres")
     if args.docres_tasks:
         enhance_argv.extend(["--docres-tasks"] + list(args.docres_tasks))
+    if not args.prepocr:
+        enhance_argv.append("--no-prepocr")
     enhance_main(enhance_argv)
 
     # Stage 3: OCR
@@ -193,6 +231,13 @@ Examples:
         help="DocRes tasks to run, in order (default: deshadowing deblurring appearance)",
     )
     p_run.add_argument(
+        "--no-prepocr",
+        dest="prepocr",
+        action="store_false",
+        default=True,
+        help="Disable PreP-OCR ResShift diffusion deblurring (on by default)",
+    )
+    p_run.add_argument(
         "--model",
         default=None,
         help="OpenAI model to use for OCR (default: from ocr_openai.py)",
@@ -240,7 +285,25 @@ Examples:
         default=None,
         help="DocRes tasks to run, in order (default: deshadowing deblurring appearance)",
     )
+    p_enhance.add_argument(
+        "--no-prepocr",
+        dest="prepocr",
+        action="store_false",
+        default=True,
+        help="Disable PreP-OCR ResShift diffusion deblurring (on by default)",
+    )
     p_enhance.set_defaults(func=cmd_enhance)
+
+    # --- compare ---
+    p_compare = subparsers.add_parser(
+        "compare",
+        help="Generate comparison matrix of all enhancement permutations",
+    )
+    p_compare.add_argument(
+        "image",
+        help="Path to a single input image (e.g. pages/my_book/17.png)",
+    )
+    p_compare.set_defaults(func=cmd_compare)
 
     # --- ocr ---
     p_ocr = subparsers.add_parser("ocr", help="Run OCR extraction via OpenAI VLM")

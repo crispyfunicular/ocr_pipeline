@@ -52,7 +52,7 @@ PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → cl
 | Stage | Description | Script |
 |-------|-------------|--------|
 | **extract** | Render PDF pages as 300 DPI PNGs | `scripts/extract_pages.py` |
-| **enhance** | DocRes AI restoration + CLAHE contrast | `scripts/enhance_pages.py` |
+| **enhance** | DocRes AI restoration + PreP-OCR deblurring + CLAHE contrast | `scripts/enhance_pages.py` |
 | **ocr** | VLM-based bilingual text extraction | `scripts/ocr_openai.py` |
 | **cleanup** | Quality assurance on extracted JSONL | `scripts/cleanup_corpus.py` *(stub)* |
 | **corpus** | Merge per-page JSONL into final corpus | `scripts/build_corpus.py` *(stub)* |
@@ -100,7 +100,7 @@ python scripts/extract_pages.py --dpi 400 pdfs/my_book.pdf
 
 ### Enhance Overview
 
-Applies image enhancement to improve OCR accuracy on degraded historical scans. The pipeline chains two stages:
+Applies image enhancement to improve OCR accuracy on degraded historical scans. The default pipeline chains three stages:
 
 1. **DocRes AI restoration** ([CVPR 2024](https://github.com/ZZZHANG-jx/DocRes)) — a Restormer model with Dynamic Task-Specific Prompts that runs **three tasks sequentially** by default:
 
@@ -110,15 +110,19 @@ Applies image enhancement to improve OCR accuracy on degraded historical scans. 
    | `deblurring` | 2nd | Sharpen blurry or out-of-focus text |
    | `appearance` | 3rd | Final background cleanup and contrast normalization |
 
-2. **Classical enhancement** — grayscale conversion + CLAHE contrast equalization, with optional bilateral denoising and adaptive binarization.
+2. **PreP-OCR deblurring** ([PreP-OCR](https://github.com/NikoGuan/PreP-OCR)) — a ResShift diffusion model trained specifically for historical document deblurring. Processes images in 256×256 tiles with 4-step diffusion sampling. **On by default.**
+
+3. **Classical enhancement** — grayscale conversion + CLAHE contrast equalization, with optional bilateral denoising and adaptive binarization.
 
 ### Enhance Usage
 
 ```bash
-python pipeline.py enhance                                        # All 3 DocRes tasks (default)
-python pipeline.py enhance --docres-tasks appearance              # Only one task
-python pipeline.py enhance --docres-tasks deshadowing deblurring  # Pick specific tasks
-python pipeline.py enhance --no-docres                            # Skip DocRes, classical only
+python pipeline.py enhance                                        # Full default: DocRes + PreP-OCR + classical
+python pipeline.py enhance --no-prepocr                           # DocRes + classical only (skip PreP-OCR)
+python pipeline.py enhance --no-docres                            # PreP-OCR + classical only (skip DocRes)
+python pipeline.py enhance --no-docres --no-prepocr               # Classical only
+python pipeline.py enhance --docres-tasks appearance              # Only one DocRes task
+python pipeline.py enhance --docres-tasks deshadowing deblurring  # Pick specific DocRes tasks
 python pipeline.py enhance my_book                                # Enhance one book
 python pipeline.py enhance pages/my_book/05.png                   # Enhance a single image
 
@@ -127,6 +131,27 @@ python scripts/enhance_pages.py --binarize --upscale --compare 20
 ```
 
 ---
+
+## Compare
+
+### Compare Overview
+
+Generates a comparison matrix of **all permutations** of the three enhancement stages (DocRes, PreP-OCR, Classical) for a single page. Useful for evaluating which ordering produces the best results for OCR.
+
+Outputs **19 images** to `compare/<book>/<page>/`:
+- `original.png` — unmodified input
+- 3 individual DocRes sub-steps (`docres_deshadowing`, `docres_deblurring`, `docres_appearance`)
+- 3 individual steps (`docres_pipeline`, `prepocr`, `classical`)
+- 6 two-step permutations (e.g. `docres_pipeline-prepocr`, `classical-docres_pipeline`)
+- 6 three-step permutations (e.g. `docres_pipeline-prepocr-classical`)
+
+Two-step and three-step outputs reuse cached intermediate results to avoid redundant model passes.
+
+### Compare Usage
+
+```bash
+python pipeline.py compare pages/my_book/17.png
+```
 
 ## OCR
 
