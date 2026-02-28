@@ -1,0 +1,16 @@
+# Core — PDF extraction & image preprocessing
+PyMuPDF                 # fitz — extract pages as PNG
+opencv-python           # cv2 — CLAHE, bilateral filter, binarization
+numpy
+
+# AI — DocRes document restoration (Restormer)
+# torch + torchvision installed separately with CUDA index:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+einops
+scikit-image
+tqdm
+
+# OCR extraction
+openai
+anthropic
+black

@@ -1,0 +1,18 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Data (large files)
+pages/
+pages_enhanced/
+corpus/
+
+# DocRes weights and cloned repo
+docres/
+
+# Reports (auto-generated)
+reports/
+
+# Logs
+*.log
