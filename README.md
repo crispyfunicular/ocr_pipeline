@@ -1,48 +1,6 @@
 # 📜 Breton-French OCR Pipeline
 
-A multi-stage pipeline for extracting bilingual **Breton-French** parallel corpora from scanned historical books (1860s–1940s). The extracted data produces JSONL files of aligned `{"breton": "...", "français": "..."}` pairs suitable for training translation models, building dictionaries, or linguistic research.
-
-## Quick Start
-
-```bash
-# 1. Set up the environment (venv, dependencies, DocRes AI model)
-./setup.sh
-
-# 2. Activate the virtual environment
-source .venv/bin/activate
-
-# 3. Place your PDFs in pdfs/
-
-# 4. Run the full pipeline
-python pipeline.py run
-```
-
----
-
-## Pipeline Overview
-
-```
-PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → cleanup → corpus
-```
-
-| Stage | Description | Script |
-|-------|-------------|--------|
-| **extract** | Render PDF pages as 300 DPI PNGs | `scripts/extract_pages.py` |
-| **enhance** | CLAHE contrast + optional DocRes AI restoration | `scripts/enhance_pages.py` |
-| **ocr** | VLM-based bilingual text extraction (OpenAI) | `scripts/ocr_openai.py` |
-| **cleanup** | Quality assurance on extracted JSONL | `scripts/cleanup_corpus.py` *(stub)* |
-| **corpus** | Merge per-page JSONL into final corpus | `scripts/build_corpus.py` *(stub)* |
-
-### How the OCR stage works
-
-The OCR stage sends each page image to an OpenAI Vision model along with a **two-layer prompt system**:
-
-1. **Base prompt** (`prompts/extract_bilingual_corpus.md`) — defines the general extraction workflow, JSONL output format, quality rules, and exclusion criteria applicable to all books.
-2. **Book-specific prompt** (`prompts/<book_name>.md`) — appended automatically based on the book folder name. Contains page layout descriptions, extraction rules, examples, and edge cases specific to that book.
-
-The model returns structured JSONL pairs and a quality report (status, score, remarks) for each page.
-
----
+A multi-stage pipeline for extracting bilingual **Breton-French** parallel corpora from scanned historical books (1860s–1940s). Produces JSONL files of aligned `{"breton": "...", "français": "..."}` pairs suitable for training translation models, building dictionaries, or linguistic research.
 
 ## Corpus
 
@@ -62,63 +20,145 @@ The corpus spans **570 pages** across **9 historical Breton-language books**:
 
 ---
 
-## Usage
+## Setup
 
-### Full pipeline
+### Requirements
+
+- **Python 3.11+**
+- **NVIDIA GPU** with CUDA support (for DocRes enhancement; not required for OCR)
+- **API keys** — `OPENAI_API_KEY` and/or `ANTHROPIC_API_KEY` for the OCR stage
+
+### Installation
+
+Run `./setup.sh` to automatically:
+1. Create a Python virtual environment (`.venv`)
+2. Install dependencies from `requirements.txt`
+3. Install PyTorch with CUDA 12.8 support
+4. Clone [DocRes](https://github.com/ZZZHANG-jx/DocRes) (CVPR 2024) and download model weights
 
 ```bash
-python pipeline.py run                              # All PDFs
-python pipeline.py run pdfs/my_book.pdf              # One specific PDF
-python pipeline.py run --no-docres                   # Without AI enhancement
+./setup.sh
+source .venv/bin/activate
 ```
 
-### Individual stages
+---
 
-```bash
-python pipeline.py extract                           # Extract all PDFs
-python pipeline.py extract pdfs/my_book.pdf          # Extract one PDF
-python pipeline.py enhance --no-docres               # Without DocRes AI
-python pipeline.py enhance Manuel_1865               # Enhance one book
-python pipeline.py enhance pages/Manuel_1865/05.png  # Enhance a single image
-python pipeline.py ocr Manuel_1865                   # OCR one book
-python pipeline.py ocr --model gpt-4.1-mini page.png # OCR a single page with a specific model
-python pipeline.py ocr --debug page.png              # Show full prompts & LLM response
+## Pipeline Overview
+
+```
+PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → cleanup → corpus
 ```
 
-### Standalone scripts
+| Stage | Description | Script |
+|-------|-------------|--------|
+| **extract** | Render PDF pages as 300 DPI PNGs | `scripts/extract_pages.py` |
+| **enhance** | DocRes AI restoration + CLAHE contrast | `scripts/enhance_pages.py` |
+| **ocr** | VLM-based bilingual text extraction | `scripts/ocr_openai.py` |
+| **cleanup** | Quality assurance on extracted JSONL | `scripts/cleanup_corpus.py` *(stub)* |
+| **corpus** | Merge per-page JSONL into final corpus | `scripts/build_corpus.py` *(stub)* |
 
-Each script can also be run directly with full CLI options:
+## Pipeline Usage
 
 ```bash
+# Full pipeline — all PDFs
+python pipeline.py run
+
+# Full pipeline — one specific PDF
+python pipeline.py run pdfs/my_book.pdf
+
+# Full pipeline — no AI enhancement
+python pipeline.py run --no-docres
+
+# Individual stages
+python pipeline.py extract
+python pipeline.py enhance
+python pipeline.py ocr
+```
+
+---
+
+## Extract
+
+### Extract Overview
+
+Renders each page of a PDF as a 300 DPI PNG image using PyMuPDF. Each PDF's pages are saved to `pages/<pdf_stem>/`.
+
+### Extract Usage
+
+```bash
+python pipeline.py extract                           # All PDFs in pdfs/
+python pipeline.py extract pdfs/my_book.pdf           # One specific PDF
+python pipeline.py extract pdfs/a.pdf pdfs/b.pdf      # Multiple PDFs
+
+# Direct script usage with extra options
 python scripts/extract_pages.py --dpi 400 pdfs/my_book.pdf
-python scripts/enhance_pages.py --docres --docres-task deblurring --compare 20
-python scripts/ocr_openai.py --targets Manuel_1865
 ```
 
 ---
 
-## Prompt System
+## Enhance
 
-Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to extract bilingual pairs from that specific book's layout and formatting:
+### Enhance Overview
 
-| Prompt file | Key rules |
-|-------------|-----------|
-| `extract_bilingual_corpus.md` | **Base prompt** — JSONL format, quality rules, exclusion criteria, normalization |
-| `toullec_lexique_1865.md` | 4-column layout, parallel preface, gender suffix stripping |
-| `colloque_1890.md` | 4-column verb lists, conversational dialogues, synonym handling |
-| `colloque_lourec_1884.md` | Profession-based sections, disambiguating parentheses |
-| `normant_lexique_1902.md` | Breton→French direction, conjugation tables, cross-references |
-| `geriadur_lexique_1927.md` | French→Breton direction, sub-entry expansion, abbreviation tables |
-| `roparz_cours_elementaire_1930.md` | DIVIZ dialogues, mutation tables, RÉSUMÉ pages |
-| `bozec_methode_1933.md` | Facing-page alignment, illustration captions, pronunciation cleanup |
-| `yez_hon_tadou_1940.md` | GERIADUR word lists, word families, bilingual conjugation |
-| `daniel_ker_vreiz_1944.md` | Vocabulary with pronunciation, LENNADENN/POELLADENNOU exclusions |
+Applies image enhancement to improve OCR accuracy on degraded historical scans. The pipeline chains two stages:
 
-> **Adding a new book:** Create a new `prompts/<book_folder_name>.md` file following the same structure. The OCR stage will automatically pick it up based on the folder name.
+1. **DocRes AI restoration** ([CVPR 2024](https://github.com/ZZZHANG-jx/DocRes)) — a Restormer model with Dynamic Task-Specific Prompts that runs **three tasks sequentially** by default:
+
+   | Task | Order | Purpose |
+   |------|-------|---------|
+   | `deshadowing` | 1st | Remove shadows from book bindings and uneven lighting |
+   | `deblurring` | 2nd | Sharpen blurry or out-of-focus text |
+   | `appearance` | 3rd | Final background cleanup and contrast normalization |
+
+2. **Classical enhancement** — grayscale conversion + CLAHE contrast equalization, with optional bilateral denoising and adaptive binarization.
+
+### Enhance Usage
+
+```bash
+python pipeline.py enhance                                        # All 3 DocRes tasks (default)
+python pipeline.py enhance --docres-tasks appearance              # Only one task
+python pipeline.py enhance --docres-tasks deshadowing deblurring  # Pick specific tasks
+python pipeline.py enhance --no-docres                            # Skip DocRes, classical only
+python pipeline.py enhance my_book                                # Enhance one book
+python pipeline.py enhance pages/my_book/05.png                   # Enhance a single image
+
+# Direct script usage with all options
+python scripts/enhance_pages.py --binarize --upscale --compare 20
+```
 
 ---
 
-## Cost Estimation (OCR Stage)
+## OCR
+
+### OCR Overview
+
+Sends each page image to a Vision Language Model (VLM) and parses structured bilingual output. Uses a **two-layer prompt system**:
+
+1. **Base prompt** (`prompts/extract_bilingual_corpus.md`) — defines the general extraction workflow, JSONL output format, quality rules, and exclusion criteria.
+2. **Book-specific prompt** (`prompts/<book_name>.md`) — appended automatically based on folder name. Contains page layout descriptions, extraction rules, examples, and edge cases.
+
+The model returns structured JSONL pairs and a quality report (status, score, remarks) for each page. Processing is **resumable** — pages with existing `.jsonl` files are skipped.
+
+**Supported providers:**
+
+| Provider | Models | API key env var |
+|----------|--------|-----------------|
+| OpenAI | `gpt-5.2` (default), `gpt-4.1-mini`, `o3`, etc. | `OPENAI_API_KEY` |
+| Anthropic | `claude-sonnet-4`, `claude-haiku-4.5`, etc. | `ANTHROPIC_API_KEY` |
+
+### OCR Usage
+
+```bash
+python pipeline.py ocr                                # All books, default model
+python pipeline.py ocr my_book                        # One book
+python pipeline.py ocr --model gpt-4.1-mini           # Cheaper model
+python pipeline.py ocr --model claude-sonnet-4         # Anthropic
+python pipeline.py ocr pages/my_book/05.png            # Single image
+python pipeline.py ocr --debug pages/my_book/05.png    # Show full prompts & response
+python pipeline.py ocr --limit 5 my_book               # Random sample of 5 pages
+```
+
+### Cost Estimation
 
 | Model | Avg cost/page | Avg time/page | Accuracy | Full run (570 pages) |
 |-------|--------------|---------------|----------|----------------------|
@@ -127,37 +167,40 @@ Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to 
 
 > **Recommendation:** Use `gpt-5.2` (default) for production runs — the higher accuracy justifies the ~5× cost. Use `gpt-4.1-mini` for rapid iteration and prompt testing.
 
+### Prompt System
+
+Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to extract bilingual pairs from that specific book's layout:
+
+| Prompt file | Key rules |
+|-------------|-----------|
+| `extract_bilingual_corpus.md` | **Base prompt** — JSONL format, quality rules, exclusion criteria |
+| `toullec_lexique_1865.md` | 4-column layout, parallel preface, gender suffix stripping |
+| `colloque_1890.md` | 4-column verb lists, conversational dialogues |
+| `colloque_lourec_1884.md` | Profession-based sections, disambiguating parentheses |
+| `normant_lexique_1902.md` | Breton→French direction, conjugation tables, cross-references |
+| `geriadur_lexique_1927.md` | French→Breton direction, sub-entry expansion, abbreviations |
+| `roparz_cours_elementaire_1930.md` | DIVIZ dialogues, mutation tables, RÉSUMÉ pages |
+| `bozec_methode_1933.md` | Facing-page alignment, illustration captions |
+| `yez_hon_tadou_1940.md` | GERIADUR word lists, word families, bilingual conjugation |
+| `daniel_ker_vreiz_1944.md` | Vocabulary with pronunciation, LENNADENN exclusions |
+
+> **Adding a new book:** Create `prompts/<book_folder_name>.md` following the same structure. The OCR stage picks it up automatically based on folder name.
+
 ---
 
-## Requirements
+## Cleanup *(stub)*
 
-- **Python 3.11+**
-- **NVIDIA GPU** with CUDA support (for DocRes enhancement stage; not required for OCR)
-- **OpenAI API key** — set `OPENAI_API_KEY` env var for the OCR stage
+### Cleanup Overview
 
-### Setup
-
-Run `./setup.sh` to automatically:
-1. Create a Python virtual environment (`.venv`)
-2. Install dependencies from `requirements.txt`
-3. Install PyTorch with CUDA 12.8 support
-4. Clone the [DocRes](https://github.com/ZZZHANG-jx/DocRes) repository and download model weights
+Quality assurance pass on extracted JSONL files. Not yet implemented.
 
 ---
 
-## DocRes AI Enhancement
+## Corpus *(stub)*
 
-The pipeline integrates [DocRes](https://github.com/ZZZHANG-jx/DocRes) (CVPR 2024) for AI-powered document restoration. Available tasks:
+### Corpus Overview
 
-| Task | Best for |
-|------|----------|
-| `appearance` | General cleanup, background normalization (default) |
-| `deblurring` | Blurry or out-of-focus scans |
-| `deshadowing` | Scans with shadows from book bindings |
-
-```bash
-python pipeline.py enhance --docres --docres-task appearance
-```
+Merges per-page JSONL files into a final consolidated corpus. Not yet implemented.
 
 ---
 
@@ -170,19 +213,35 @@ python pipeline.py enhance --docres --docres-task appearance
 ├── scripts/
 │   ├── utils.py             # Shared helpers (types, parsing, target discovery)
 │   ├── extract_pages.py     # PDF → PNG extraction
-│   ├── enhance_pages.py     # Image enhancement (CLAHE + DocRes)
-│   ├── ocr_openai.py        # OpenAI VLM-based OCR
+│   ├── enhance_pages.py     # Image enhancement (DocRes + CLAHE)
+│   ├── ocr_openai.py        # VLM-based OCR (OpenAI / Anthropic)
 │   ├── cleanup_corpus.py    # JSONL quality assurance (stub)
 │   └── build_corpus.py      # Final corpus merge (stub)
 ├── prompts/
 │   ├── extract_bilingual_corpus.md  # Base VLM extraction prompt
 │   └── <book_name>.md              # Book-specific prompts (×9)
 ├── pdfs/                    # Source PDFs (not tracked)
-├── pages/                   # Extracted page images (not tracked)
+│   └── <book>.pdf
+├── pages/                   # Extracted page PNGs (not tracked)
+│   └── <book>/
+│       ├── 01.png
+│       ├── 02.png
+│       └── ...
 ├── pages_enhanced/          # Enhanced images (not tracked)
-├── corpus/                  # JSONL output: corpus/<book>/<model>/*.jsonl
+│   └── <book>/
+│       ├── 01.png
+│       ├── 02.png
+│       └── ...
+├── corpus/                  # Extracted JSONL pairs
+│   └── <book>/
+│       └── <model>/
+│           ├── 01.jsonl
+│           ├── 02.jsonl
+│           └── ...
 └── reports/                 # Auto-generated quality reports
-    └── <book>/<model>/report.md
+    └── <book>/
+        └── <model>/
+            └── report.md
 ```
 
 ## License
