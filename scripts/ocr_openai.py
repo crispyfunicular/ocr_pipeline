@@ -117,12 +117,29 @@ MODEL_PRICING = {
     # o-series
     "o3": {"input": 2.00, "output": 8.00},
     "o4-mini": {"input": 1.10, "output": 4.40},
-    # Anthropic Claude
-    "claude-opus-4": {"input": 15.00, "output": 75.00},
+    # Anthropic Claude (prices in $/MTok: input / output)
+    # — Opus 4.6
+    "claude-opus-4-6": {"input": 5.00, "output": 25.00},
+    # — Opus 4.5
+    "claude-opus-4-5-20251101": {"input": 5.00, "output": 25.00},
     "claude-opus-4.5": {"input": 5.00, "output": 25.00},
-    "claude-sonnet-4": {"input": 3.00, "output": 15.00},
+    # — Opus 4.1
+    "claude-opus-4-1-20250805": {"input": 15.00, "output": 75.00},
+    # — Opus 4
+    "claude-opus-4-20250514": {"input": 15.00, "output": 75.00},
+    "claude-opus-4": {"input": 15.00, "output": 75.00},
+    # — Sonnet 4.6
+    "claude-sonnet-4-6": {"input": 3.00, "output": 15.00},
+    # — Sonnet 4.5
+    "claude-sonnet-4-5-20250929": {"input": 3.00, "output": 15.00},
     "claude-sonnet-4.5": {"input": 3.00, "output": 15.00},
+    # — Sonnet 4
+    "claude-sonnet-4-20250514": {"input": 3.00, "output": 15.00},
+    "claude-sonnet-4": {"input": 3.00, "output": 15.00},
+    # — Haiku 4.5
+    "claude-haiku-4-5-20251001": {"input": 1.00, "output": 5.00},
     "claude-haiku-4.5": {"input": 1.00, "output": 5.00},
+    # — Haiku 3.5
     "claude-haiku-3.5": {"input": 0.80, "output": 4.00},
     # Google Gemini
     "gemini-3.1-pro": {"input": 2.00, "output": 12.00},
@@ -506,6 +523,17 @@ def process_book_ocr(
     if not images:
         print(f"  ⚠️  No images found in {book_dir}/")
         return 0
+
+    # Filter out dropped pages
+    from scripts.utils import load_droplist, should_drop_page
+
+    drop_pages = load_droplist(book_dir.name)
+    if drop_pages:
+        before = len(images)
+        images = [img for img in images if not should_drop_page(img, drop_pages)]
+        skipped = before - len(images)
+        if skipped:
+            print(f"  ⏭️  {skipped} pages in droplist, skipping")
 
     total_pages = len(images)
     corpus_dir.mkdir(parents=True, exist_ok=True)

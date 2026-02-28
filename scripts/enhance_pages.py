@@ -679,6 +679,17 @@ def process_book(
         print(f"  ⚠️  No PNG files in {input_dir}/")
         return 0
 
+    # Filter out dropped pages
+    from scripts.utils import load_droplist, should_drop_page
+
+    drop_pages = load_droplist(input_dir.name)
+    if drop_pages:
+        before = len(images)
+        images = [img for img in images if not should_drop_page(img, drop_pages)]
+        skipped = before - len(images)
+        if skipped:
+            print(f"  ⏭️  {skipped} pages in droplist, skipping")
+
     print(f"\n📖 {input_dir.name}  —  {len(images)} pages")
 
     for i, img_path in enumerate(images, 1):

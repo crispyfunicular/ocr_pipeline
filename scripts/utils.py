@@ -133,6 +133,43 @@ def is_auth_error(err_msg: str) -> bool:
     return "401" in err_msg or "auth" in err_msg.lower()
 
 
+# ── Droplist ─────────────────────────────────────────────────────────
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+
+def load_droplist(book_name: str) -> set[int]:
+    """Load page numbers to skip for a book from droplist/<book>/drop_pages.json.
+
+    Returns an empty set if no droplist exists.
+    """
+    import json
+
+    drop_file = PROJECT_ROOT / "droplist" / book_name / "drop_pages.json"
+    if not drop_file.exists():
+        return set()
+    try:
+        data = json.loads(drop_file.read_text(encoding="utf-8"))
+        return {int(p) for p in data}
+    except (json.JSONDecodeError, ValueError) as e:
+        print(f"  ⚠️  Invalid droplist {drop_file}: {e}", file=sys.stderr)
+        return set()
+
+
+def should_drop_page(img_path: Path, drop_pages: set[int]) -> bool:
+    """Check if a page should be skipped based on droplist.
+
+    Extracts the page number from the filename stem (e.g. '17.png' → 17).
+    """
+    if not drop_pages:
+        return False
+    try:
+        page_num = int(img_path.stem)
+        return page_num in drop_pages
+    except ValueError:
+        return False
+
+
 # ── Target discovery ─────────────────────────────────────────────────
 
 

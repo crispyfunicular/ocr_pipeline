@@ -22,29 +22,42 @@ PDF_DIR = PROJECT_ROOT / "pdfs"
 PAGES_DIR = PROJECT_ROOT / "pages"
 
 
-def extract_pages(pdf_path: Path, output_dir: Path, dpi: int = 300) -> None:
+def extract_pages(pdf_path: Path, output_dir: Path, dpi: int = 300, book_name: str | None = None) -> None:
     """Extract every page of a PDF as a PNG image."""
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load droplist if book name is known
+    drop_pages: set[int] = set()
+    if book_name:
+        from scripts.utils import load_droplist
+
+        drop_pages = load_droplist(book_name)
 
     doc = fitz.open(pdf_path)
     total = doc.page_count
     print(f"\n📄 {pdf_path.name}  —  {total} pages  →  {output_dir}/")
+    if drop_pages:
+        print(f"  ⏭️  {len(drop_pages)} pages in droplist will be skipped")
 
     # Zoom matrix to reach the target DPI (PDF default = 72 DPI)
     zoom = dpi / 72
     matrix = fitz.Matrix(zoom, zoom)
 
+    extracted = 0
     for i, page in enumerate(doc):
         page_num = i + 1
+        if page_num in drop_pages:
+            continue
         out_file = output_dir / f"{page_num:02d}.png"
         pix = page.get_pixmap(matrix=matrix)
         pix.save(str(out_file))
         print(
             f"  [{page_num:3d}/{total}]  {out_file.name}  ({pix.width}×{pix.height} px)"
         )
+        extracted += 1
 
     doc.close()
-    print(f"  ✅ {total} images written")
+    print(f"  ✅ {extracted} images written" + (f" ({total - extracted} skipped)" if drop_pages else ""))
 
 
 def pdf_stem(pdf_path: Path) -> str:
@@ -114,7 +127,7 @@ def main(argv=None):
     for pdf in pdf_files:
         stem = pdf_stem(pdf)
         out = args.output / stem
-        extract_pages(pdf, out, dpi=args.dpi)
+        extract_pages(pdf, out, dpi=args.dpi, book_name=stem)
         books.append(stem)
 
     print(f"\n🎉 Done — all pages extracted to {args.output}/")

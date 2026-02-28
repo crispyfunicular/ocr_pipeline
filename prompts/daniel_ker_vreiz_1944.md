@@ -57,11 +57,13 @@ Procédure pas à pas :
 ```
 g/kanaouenn  →  supprimer « /k »  →  ganaouenn
 g/kontadenn  →  supprimer « /k »  →  gontadenn
-w/gwirionez  →  supprimer « /gw » →  wirionez
-w/gwech      →  supprimer « /gw » →  wech
+g/ker        →  supprimer « /k »  →  ger
+g/korden     →  supprimer « /k »  →  gorden
 c'h/koumoul  →  supprimer « /k »  →  c'houmoul
 c'h/kar      →  supprimer « /k »  →  c'har
+c'h/kae      →  supprimer « /k »  →  c'hae
 b/plijadur   →  supprimer « /p »  →  blijadur
+b/paner      →  supprimer « /p »  →  baner
 v/bro        →  supprimer « /b »  →  vro
 v/mamm       →  supprimer « /m »  →  vamm
 z/dor        →  supprimer « /d »  →  zor
@@ -69,17 +71,39 @@ d/tad        →  supprimer « /t »  →  dad
 f/penn       →  supprimer « /p »  →  fenn
 ```
 
+#### Cas spécial : digraphes et consonnes qui disparaissent
+
+Certaines mutations impliquent des **digraphes** (`gw`, `g` devant voyelle) qui ne suivent pas le schéma simple `X/Yzzz` :
+
+**`gw → w`** : supprimer `/gw` (le digraphe entier est la consonne radicale) :
+```
+w/gwern      →  supprimer « /gw » →  wern
+w/gwech      →  supprimer « /gw » →  wech
+```
+
+**`g → Ø`** : le `g` tombe entièrement devant une voyelle. La voyelle avant le `/` indique le début du mot résultant — elle ne s'ajoute PAS en plus :
+```
+o/gouel      →  le g tombe  →  ouel      (PAS « oouel »)
+```
+
+Il suffit de supprimer la consonne radicale `g` du mot original `gouel` → `ouel`.
+
 #### Exemples complets avec contexte (entrée image → sortie JSONL)
 
 ```
 ar g/kanaouenn (-ou) : la chanson   →  {"breton": "ar ganaouenn", "français": "la chanson"}
 ar g/kontadenn (-ou) : le conte     →  {"breton": "ar gontadenn", "français": "le conte"}
+ar g/korden : la corde              →  {"breton": "ar gorden", "français": "la corde"}
 ar w/gwirionez (-iou) : la vérité   →  {"breton": "ar wirionez", "français": "la vérité"}
 ar w/gwech (-ou) : la fois          →  {"breton": "ar wech", "français": "la fois"}
+ar w/gwern : le mât                 →  {"breton": "ar wern", "français": "le mât"}
 ar c'h/koumoul (e) : les nuages    →  {"breton": "ar c'houmoul", "français": "les nuages"}
 ar c'h/kar : le parent              →  {"breton": "ar c'har", "français": "le parent"}
+ar c'h/kae : le quai                →  {"breton": "ar c'hae", "français": "le quai"}
 ar g/ker : la ville                 →  {"breton": "ar ger", "français": "la ville"}
 ar b/plijadur : le plaisir          →  {"breton": "ar blijadur", "français": "le plaisir"}
+ar b/paner : le panier              →  {"breton": "ar baner", "français": "le panier"}
+ar o/gouel (-ou) : la voile          →  {"breton": "ar ouel", "français": "la voile"}
 ar v/bro : le pays                  →  {"breton": "ar vro", "français": "le pays"}
 ar v/mamm : la mère                 →  {"breton": "ar vamm", "français": "la mère"}
 ar z/dor : la porte                 →  {"breton": "ar zor", "français": "la porte"}
@@ -87,6 +111,8 @@ ar d/tad : le père                  →  {"breton": "ar dad", "français": "le 
 ```
 
 ⚠️ **Ne JAMAIS reproduire la barre oblique `/` ni la consonne radicale dans le JSONL de sortie.** Si le résultat contient un `/`, c'est une erreur.
+
+⚠️ **Validation obligatoire** : Avant d'écrire chaque paire, vérifiez que le champ `"breton"` ne contient aucun caractère `/`. Si c'est le cas, cela signifie que la mutation n'a pas été résolue correctement — **omettez cette paire entièrement** plutôt que de la produire avec une barre oblique.
 
 ### Exemples grammaticaux
 
@@ -126,5 +152,5 @@ Certaines pages ou zones de ce livre sont floues ou en petit corps. Appliquez le
 2. **Certitude à 100 %.** Si un mot, une lettre ou un accent n'est pas lisible avec une certitude absolue, **omettez la paire entière**. Il vaut mieux perdre une paire que d'en inventer une fausse.
 3. **Pas de substitution.** Ne remplacez jamais un mot illisible par un synonyme ou un mot proche qui « aurait du sens ». Par exemple, si vous lisez `ar souez` sur l'image, n'écrivez pas `ar geiz` même si les deux pourraient signifier quelque chose de similaire.
 4. **Pas d'invention.** N'ajoutez jamais de paires qui n'apparaissent pas explicitement sur la page. Chaque ligne du JSONL doit correspondre à une entrée visible sur l'image.
-5. **Orthographe exacte.** Recopiez l'orthographe exacte telle qu'elle apparaît sur l'image, y compris les lettres finales (ex : `beure` et non `beur`, `lenn` et non `len`).
+5. **Orthographe exacte.** Recopiez l'orthographe exacte telle qu'elle apparaît sur l'image.
 6. **La traduction française est sur l'image.** Le champ `"français"` doit être la traduction **imprimée sur la page**, pas celle que vous connaissez. Un même mot breton peut avoir plusieurs sens ; seul celui écrit sur l'image compte. Exemple : `lenn` peut signifier « lac » ou « lecture » — si l'image montre `: le lac`, écrivez `"le lac"`, jamais `"la lecture"`.

@@ -54,6 +54,9 @@ OCR_pipeline/
 ├── docres/                  ← Cloned DocRes repo + weights
 ├── resshift/                ← Cloned ResShift repo + weights (PreP-OCR)
 ├── compare/                 ← Enhancement comparison outputs
+├── droplist/                ← Per-book page exclusion lists
+│   └── <book>/
+│       └── drop_pages.json  ← JSON array of page numbers to skip
 ├── AGENTS.md
 └── ARCHITECTURE.md
 ```

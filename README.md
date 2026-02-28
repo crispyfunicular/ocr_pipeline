@@ -264,6 +264,9 @@ Merges per-page JSONL files into a final consolidated corpus. Not yet implemente
 │           ├── 01.jsonl
 │           ├── 02.jsonl
 │           └── ...
+├── droplist/                # Per-book page exclusion lists
+│   └── <book>/
+│       └── drop_pages.json  # JSON array of page numbers to skip
 └── reports/                 # Auto-generated quality reports
     └── <book>/
         └── <model>/
