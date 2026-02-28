@@ -185,10 +185,15 @@ def _stride_integral(img: np.ndarray, stride: int = 8):
     return padded, pad_h, pad_w
 
 
+# Default task chain: deshadow first (normalize lighting), then deblur
+# (sharpen text), then appearance (final background cleanup).
+DEFAULT_DOCRES_TASKS = ["deshadowing", "deblurring", "appearance"]
+
+
 def docres_restore(
     img: np.ndarray, task: str = "appearance", model_path: str | None = None
 ) -> np.ndarray:
-    """Apply DocRes AI document restoration.
+    """Apply a single DocRes AI document restoration task.
 
     Supported tasks: deshadowing, deblurring, appearance.
     The model removes shadows, deblurs text, or enhances appearance
@@ -219,7 +224,11 @@ def docres_restore(
 
     elif task == "deblurring":
         # Deblur prompt: high-frequency edges via Sobel
-        in_img, pad_h, pad_w = _stride_integral(img, 8)
+        if max(w, h) >= MAX_SIZE:
+            in_img = cv2.resize(img, (MAX_SIZE, MAX_SIZE))
+        else:
+            in_img = img
+        in_img, pad_h, pad_w = _stride_integral(in_img, 8)
         sx = cv2.Sobel(in_img, cv2.CV_16S, 1, 0)
         sy = cv2.Sobel(in_img, cv2.CV_16S, 0, 1)
         prompt = cv2.addWeighted(
@@ -239,7 +248,10 @@ def docres_restore(
             pred = torch.clamp(pred, 0, 1)
             pred = pred[0].permute(1, 2, 0).cpu().numpy()
             out = (pred * 255).astype(np.uint8)
-            return out[pad_h:, pad_w:]
+            out = out[pad_h:, pad_w:]
+            if max(w, h) >= MAX_SIZE:
+                out = cv2.resize(out, (w, h))
+            return out
 
     elif task == "appearance":
         # Appearance prompt: background estimation via dilation + median
@@ -313,17 +325,25 @@ def enhance_image(
     block_size: int = 51,
     c_offset: int = 15,
     use_docres: bool = False,
-    docres_task: str = "appearance",
+    docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
 ) -> np.ndarray:
     """Apply the full enhancement pipeline.
 
     Default: grayscale + CLAHE only — improves contrast while keeping
     text perfectly sharp for VLM-based OCR.
+
+    When DocRes is enabled, chains the requested tasks sequentially
+    (default: deshadowing → deblurring → appearance).
     """
     result = img
     if use_docres:
-        result = docres_restore(result, task=docres_task, model_path=docres_model)
+        import torch
+        tasks = docres_tasks or DEFAULT_DOCRES_TASKS
+        for i, task in enumerate(tasks):
+            result = docres_restore(result, task=task, model_path=docres_model)
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
     result = to_grayscale(result)
     result = apply_clahe(result, clip_limit=clip_limit)
     if denoise:
@@ -399,7 +419,7 @@ def process_book(
     out_format: str = "jpg",
     jpeg_quality: int = 85,
     use_docres: bool = False,
-    docres_task: str = "appearance",
+    docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
 ) -> int:
     """Process all pages of a single book directory. Returns count."""
@@ -427,7 +447,7 @@ def process_book(
             block_size=block_size,
             c_offset=c_offset,
             use_docres=use_docres,
-            docres_task=docres_task,
+            docres_tasks=docres_tasks,
             docres_model=docres_model,
         )
 
@@ -545,10 +565,11 @@ def main(argv=None):
         help="Disable DocRes AI document restoration (on by default)",
     )
     parser.add_argument(
-        "--docres-task",
+        "--docres-tasks",
+        nargs="+",
         choices=["deshadowing", "deblurring", "appearance"],
-        default="appearance",
-        help="DocRes task (default: appearance — best general-purpose)",
+        default=None,
+        help="DocRes tasks to run, in order (default: deshadowing deblurring appearance)",
     )
     parser.add_argument(
         "--docres-model",
@@ -583,7 +604,8 @@ def main(argv=None):
         f"{f' (q={args.jpeg_quality})' if args.format == 'jpg' else ''}"
     )
     if args.docres:
-        print(f"  🧠 DocRes AI restoration enabled (task: {args.docres_task})")
+        tasks = args.docres_tasks or DEFAULT_DOCRES_TASKS
+        print(f"  🧠 DocRes AI restoration enabled (tasks: {' → '.join(tasks)})")
     if args.upscale:
         print("  ↗️  2× Lanczos upscale enabled")
     if args.binarize:
@@ -610,7 +632,7 @@ def main(argv=None):
             out_format=args.format,
             jpeg_quality=args.jpeg_quality,
             use_docres=args.docres,
-            docres_task=args.docres_task,
+            docres_tasks=args.docres_tasks,
             docres_model=args.docres_model,
         )
         total += count
@@ -632,7 +654,7 @@ def main(argv=None):
             block_size=args.block_size,
             c_offset=args.c_offset,
             use_docres=args.docres,
-            docres_task=args.docres_task,
+            docres_tasks=args.docres_tasks,
             docres_model=args.docres_model,
         )
 

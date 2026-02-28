@@ -44,8 +44,8 @@ def cmd_enhance(args):
         argv.extend(["--targets"] + list(args.targets))
     if not args.docres:
         argv.append("--no-docres")
-    if args.docres_task:
-        argv.extend(["--docres-task", args.docres_task])
+    if args.docres_tasks:
+        argv.extend(["--docres-tasks"] + list(args.docres_tasks))
     return enhance_main(argv)
 
 
@@ -119,8 +119,8 @@ def cmd_run(args):
     enhance_argv = ["--targets"] + books if books else []
     if not args.docres:
         enhance_argv.append("--no-docres")
-    if args.docres_task:
-        enhance_argv.extend(["--docres-task", args.docres_task])
+    if args.docres_tasks:
+        enhance_argv.extend(["--docres-tasks"] + list(args.docres_tasks))
     enhance_main(enhance_argv)
 
     # Stage 3: OCR
@@ -186,10 +186,11 @@ Examples:
         help="Disable DocRes AI enhancement (on by default)",
     )
     p_run.add_argument(
-        "--docres-task",
+        "--docres-tasks",
+        nargs="+",
         choices=["deshadowing", "deblurring", "appearance"],
-        default="appearance",
-        help="DocRes task (default: appearance)",
+        default=None,
+        help="DocRes tasks to run, in order (default: deshadowing deblurring appearance)",
     )
     p_run.add_argument(
         "--model",
@@ -233,10 +234,11 @@ Examples:
         help="Disable DocRes AI enhancement (on by default)",
     )
     p_enhance.add_argument(
-        "--docres-task",
+        "--docres-tasks",
+        nargs="+",
         choices=["deshadowing", "deblurring", "appearance"],
-        default="appearance",
-        help="DocRes task (default: appearance)",
+        default=None,
+        help="DocRes tasks to run, in order (default: deshadowing deblurring appearance)",
     )
     p_enhance.set_defaults(func=cmd_enhance)
 
