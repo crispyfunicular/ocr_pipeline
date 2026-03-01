@@ -191,8 +191,10 @@ Par exemple pour « Tad, mamm, paotr, ki, pesked » / « Père, mère, garçon, 
 
 #### Phrases d'exercice en miroir (extraire quand le sens correspond)
 ```json
-{"breton": "Pelec'h eman ar bluenn-bloum? Ar bluenn-bloum a zo war ar bureo.", "français": "Où est le crayon? Le crayon est sur le bureau."}
-{"breton": "Pelec'h eman ar c'hreiz? Ar c'hreiz a zo aze er voest.", "français": "Où est la craie? La craie est là dans la boîte."}
+{"breton": "Pelec'h eman ar bluenn-bloum?", "français": "Où est le crayon?"}
+{"breton": "Ar bluenn-bloum a zo war ar bureo.", "français": "Le crayon est sur le bureau."}
+{"breton": "Pelec'h eman ar c'hreiz?", "français": "Où est la craie?"}
+{"breton": "Ar c'hreiz a zo aze er voest.", "français": "La craie est là dans la boîte."}
 ```
 
 #### Mots isolés en miroir
