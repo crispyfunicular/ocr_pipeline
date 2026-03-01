@@ -34,5 +34,38 @@ always use **relative paths** to read write files not absolute paths
 3. **Monitor progress**:
    - After each page, give a quick update to the user.
 
-4. **Review the results**:
-   - Provide a final summary table to the user with the number of pairs extracted per page.
+4. **Generate global summary report**:
+   - Read all per-page reports from `reports/<book_name>/antigravity/ocr/*.md` (exclude `report.md` itself)
+   - Generate `reports/<book_name>/antigravity/ocr/report.md` with the following structure:
+     ```markdown
+     # OCR Report — <book_name>
+
+     ## Statistiques globales
+
+     | Métrique | Valeur |
+     |---|---|
+     | Pages traitées | <count> |
+     | Paires extraites | <total> |
+     | Score moyen | <average score> |
+     | OK | <count> |
+     | Difficultés | <count> |
+     | Impossible | <count> |
+
+     ## Commentaire général
+
+     <Brief overall assessment of the book's OCR quality — 2-3 sentences>
+
+     ## Suggestions d'amélioration du prompt
+
+     ### [GLOBAL]
+     - <deduplicated suggestion 1>
+     - <deduplicated suggestion 2>
+
+     ### [BOOK]
+     - <deduplicated suggestion 1>
+     - <deduplicated suggestion 2>
+     ```
+   - **Deduplication**: merge semantically equivalent observations from different pages into a single bullet. Do not repeat the same idea even if phrased differently across pages.
+   - If no observations exist for a tag (`[GLOBAL]` or `[BOOK]`), write "Aucune" under that heading.
+   - Use `write_to_file` with overwrite to create/update this file.
+   - always use relative paths to read write files not absolute paths !!!

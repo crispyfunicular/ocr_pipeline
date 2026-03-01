@@ -56,7 +56,22 @@ always use **relative paths** to read write files not absolute paths
    - Use `write_to_file` to create the file
    - always use relative paths to read write files not absolute paths !!!
 
-7. **Show the report** to the user via `notify_user`, including:
+7. **Save the page report**:
+   - Create directory `reports/<book_name>/antigravity/ocr/` if needed
+   - Write the RAPPORT section to `reports/<book_name>/antigravity/ocr/<page_number>.md` with the following format:
+     ```markdown
+     # Page <page_number>
+
+     - **Statut**: <statut>
+     - **Score**: <score>
+     - **Paires extraites**: <number of pairs>
+     - **Remarques**: <remarques>
+     - **Observations workflow**: <observations>
+     ```
+   - Use `write_to_file` to create the file (overwrite if it already exists)
+   - always use relative paths to read write files not absolute paths !!!
+
+8. **Show the report** to the user via `notify_user`, including:
    - The RAPPORT section
    - Number of pairs extracted
    - Path to the saved JSONL file
