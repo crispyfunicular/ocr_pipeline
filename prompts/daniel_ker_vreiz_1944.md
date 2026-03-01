@@ -138,10 +138,12 @@ Les encadrés contiennent des règles grammaticales en français (ex : « *Les p
 
 ### Sections à exclure
 
+**ALERTE CRITIQUE : Il est formellement interdit de générer ou deviner la traduction française de ces exercices monolingues.** Si le texte français n'est pas imprimé de manière explicite sur la page, la ligne entière doit être REJETÉE. Démontrez que vous savez lire l'image, pas que vous savez traduire.
+
 - **Remarques** = explications grammaticales monolingues → **exclure**
 - **Règles numérotées** (1re Règle, 2e Règle, etc.) avec exemples purement grammaticaux sans traduction → **exclure**
 - **Textes de lecture** « LENNADENN » = texte continu monolingue breton → **exclure** entièrement. Même si le texte contient des mots français en italique entre parenthèses (ex. « *pour le soigner* », « *littéralement* »), ces éléments sont des gloses contextuelles, pas des traductions systématiques
-- **POELLADENNOU** (exercices) → **exclure** entièrement — les sections « Traduisez » et « Répondez en breton » sans réponse fournie ne sont pas exploitables
+- **POELLADENNOU** (exercices) → **exclure** entièrement — les sections « Traduisez » et « Répondez en breton » sans réponse fournie ne sont pas exploitables. 🚨 
 - **Conjugaison sans colonne française** : les formes de verbe `a so` avec situation (emaout, emaomp...) sans traduction en regard → **exclure**
 
 ### Qualité du scan et règle de lecture stricte
