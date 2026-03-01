@@ -46,7 +46,7 @@ source .venv/bin/activate
 ## Pipeline Overview
 
 ```
-PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → cleanup → corpus
+PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → review → corpus
 ```
 
 | Stage | Description | Script |
@@ -54,7 +54,7 @@ PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → cl
 | **extract** | Render PDF pages as 300 DPI PNGs | `scripts/extract_pages.py` |
 | **enhance** | DocRes AI restoration + PreP-OCR deblurring + CLAHE contrast | `scripts/enhance_pages.py` |
 | **ocr** | VLM-based bilingual text extraction | `scripts/ocr_openai.py` |
-| **cleanup** | Quality assurance on extracted JSONL | `scripts/cleanup_corpus.py` *(stub)* |
+| **review** | Quality assurance on extracted JSONL | `scripts/review_corpus.py` |
 | **corpus** | Merge per-page JSONL into final corpus | `scripts/build_corpus.py` *(stub)* |
 
 ## Pipeline Usage
@@ -214,11 +214,11 @@ Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to 
 
 ---
 
-## Cleanup *(stub)*
+## Review
 
-### Cleanup Overview
+### Review Overview
 
-Quality assurance pass on extracted JSONL files. Not yet implemented.
+Quality assurance pass on extracted JSONL files.
 
 ---
 
@@ -241,7 +241,7 @@ Merges per-page JSONL files into a final consolidated corpus. Not yet implemente
 │   ├── extract_pages.py     # PDF → PNG extraction
 │   ├── enhance_pages.py     # Image enhancement (DocRes + CLAHE)
 │   ├── ocr_openai.py        # VLM-based OCR (OpenAI / Anthropic)
-│   ├── cleanup_corpus.py    # JSONL quality assurance (stub)
+│   ├── review_corpus.py     # JSONL quality assurance
 │   └── build_corpus.py      # Final corpus merge (stub)
 ├── prompts/
 │   ├── extract_bilingual_corpus.md  # Base VLM extraction prompt

@@ -2,17 +2,18 @@
 """
 Automatic extraction of bilingual Breton-French corpus from scanned book pages.
 
-Sends each page image to a VLM (OpenAI or Anthropic Claude), parses structured
-JSONL output + quality report.
+Sends each page image to a VLM (OpenAI, Anthropic Claude, or Google Gemini),
+parses structured JSONL output + quality report.
 
 - Output: corpus/<book>/<model>/<page>.jsonl
 - Reports: reports/<book>/<model>/report.md
 - Resumable: skips pages whose .jsonl already exists
 
 Requires:
-  pip install openai anthropic
+  pip install openai anthropic google-genai
   export OPENAI_API_KEY='...'       # for OpenAI models
   export ANTHROPIC_API_KEY='...'    # for Claude models
+  export GEMINI_API_KEY='...'       # for Gemini models
 """
 
 import os
@@ -29,6 +30,13 @@ try:
     import anthropic as _anthropic_module
 except ImportError:
     _anthropic_module = None
+
+try:
+    import google.genai as _genai_module
+    from google.genai import types as _genai_types
+except ImportError:
+    _genai_module = None
+    _genai_types = None
 
 from scripts.utils import (
     ReportRow,
@@ -167,9 +175,11 @@ def estimate_cost(
 
 
 def detect_provider(model: str) -> str:
-    """Detect API provider from model name. Returns 'anthropic' or 'openai'."""
+    """Detect API provider from model name. Returns 'anthropic', 'google', or 'openai'."""
     if model.startswith("claude"):
         return "anthropic"
+    if model.startswith("gemini"):
+        return "google"
     return "openai"
 
 
@@ -177,13 +187,28 @@ def create_client(provider: str):
     """Create the appropriate API client for the given provider."""
     if provider == "anthropic":
         if _anthropic_module is None:
-            print("❌ anthropic package not installed. Run: pip install anthropic", file=sys.stderr)
+            print(
+                "❌ anthropic package not installed. Run: pip install anthropic",
+                file=sys.stderr,
+            )
             sys.exit(1)
         api_key = os.getenv("ANTHROPIC_API_KEY")
         if not api_key:
             print("❌ ANTHROPIC_API_KEY non définie.", file=sys.stderr)
             sys.exit(1)
         return _anthropic_module.Anthropic(api_key=api_key)
+    elif provider == "google":
+        if _genai_module is None:
+            print(
+                "❌ google-genai package not installed. Run: pip install google-genai",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            print("❌ GEMINI_API_KEY non définie.", file=sys.stderr)
+            sys.exit(1)
+        return _genai_module.Client(api_key=api_key)
     else:
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
@@ -240,7 +265,9 @@ def _call_openai(client, model: str, workflow: str, user_text: str, b64: str) ->
     }
 
 
-def _call_anthropic(client, model: str, workflow: str, user_text: str, b64: str) -> dict:
+def _call_anthropic(
+    client, model: str, workflow: str, user_text: str, b64: str
+) -> dict:
     """Call Anthropic Messages API. Returns normalized response dict."""
     response = client.messages.create(
         model=model,
@@ -271,6 +298,33 @@ def _call_anthropic(client, model: str, workflow: str, user_text: str, b64: str)
         "text": text,
         "prompt_tokens": usage.input_tokens if usage else 0,
         "completion_tokens": usage.output_tokens if usage else 0,
+    }
+
+
+def _call_google(client, model: str, workflow: str, user_text: str, b64: str) -> dict:
+    """Call Google Gemini API. Returns normalized response dict."""
+    image_bytes = base64.b64decode(b64)
+
+    config = _genai_types.GenerateContentConfig(
+        system_instruction=workflow,
+        temperature=0,
+        max_output_tokens=4000,
+    )
+
+    response = client.models.generate_content(
+        model=model,
+        contents=[
+            _genai_types.Part.from_bytes(data=image_bytes, mime_type="image/png"),
+            user_text,
+        ],
+        config=config,
+    )
+
+    usage = response.usage_metadata
+    return {
+        "text": response.text or "",
+        "prompt_tokens": usage.prompt_token_count if usage else 0,
+        "completion_tokens": usage.candidates_token_count if usage else 0,
     }
 
 
@@ -308,6 +362,8 @@ def process_single_image(
 
     if provider == "anthropic":
         result = _call_anthropic(client, model, workflow, user_text, b64)
+    elif provider == "google":
+        result = _call_google(client, model, workflow, user_text, b64)
     else:
         result = _call_openai(client, model, workflow, user_text, b64)
 
@@ -605,8 +661,12 @@ def process_book_ocr(
             err_msg = str(e)
             print(f"     ERREUR sur {img.name}: {err_msg}", file=sys.stderr)
             if is_auth_error(err_msg):
+                key_var = {
+                    "anthropic": "ANTHROPIC_API_KEY",
+                    "google": "GEMINI_API_KEY",
+                }.get(provider, "OPENAI_API_KEY")
                 print(
-                    "\n⛔ Erreur d'authentification. Vérifiez votre OPENAI_API_KEY.",
+                    f"\n⛔ Erreur d'authentification. Vérifiez votre {key_var}.",
                     file=sys.stderr,
                 )
                 sys.exit(1)
@@ -799,8 +859,12 @@ def main(argv=None):
             err_msg = str(e)
             print(f"  ERREUR: {err_msg}", file=sys.stderr)
             if is_auth_error(err_msg):
+                key_var = {
+                    "anthropic": "ANTHROPIC_API_KEY",
+                    "google": "GEMINI_API_KEY",
+                }.get(provider, "OPENAI_API_KEY")
                 print(
-                    "\n⛔ Erreur d'authentification. Vérifiez votre OPENAI_API_KEY.",
+                    f"\n⛔ Erreur d'authentification. Vérifiez votre {key_var}.",
                     file=sys.stderr,
                 )
                 sys.exit(1)

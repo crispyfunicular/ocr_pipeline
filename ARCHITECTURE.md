@@ -11,7 +11,7 @@ graph LR
     A[PDFs] -->|extract_pages.py| B[Raw PNGs 300dpi]
     B -->|enhance_pages.py| C[Enhanced PNGs]
     C -->|ocr_openai.py| D[JSONL corpus]
-    D -->|cleanup_corpus.py| E[QA'd JSONL]
+    D -->|review_corpus.py| E[QA'd JSONL]
     E -->|build_corpus.py| F[Final corpus]
     D --> G[reports/]
 ```
@@ -29,7 +29,7 @@ OCR_pipeline/
 │   ├── extract_pages.py     ← PDF → PNG
 │   ├── enhance_pages.py     ← Image enhancement (DocRes + PreP-OCR + CLAHE)
 │   ├── ocr_openai.py        ← VLM-based OCR extraction
-│   ├── cleanup_corpus.py    ← JSONL quality assurance (stub)
+│   ├── review_corpus.py     ← JSONL quality assurance
 │   └── build_corpus.py      ← Final corpus merge (stub)
 ├── prompts/
 │   ├── extract_bilingual_corpus.md   ← Base system prompt
@@ -102,9 +102,9 @@ Comparison tool (`pipeline.py compare`):
 - Auto-generates quality report in `reports/<book>/<model>/report.md`
 - Resumable (skips existing .jsonl files)
 
-### 4. Cleanup (`scripts/cleanup_corpus.py`) — Stub
+### 4. Review (`scripts/review_corpus.py`)
 
-Quality assurance on extracted JSONL. Not yet implemented.
+Quality assurance on extracted JSONL.
 
 ### 5. Corpus Build (`scripts/build_corpus.py`) — Stub
 

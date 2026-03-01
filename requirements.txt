@@ -21,4 +21,5 @@ timm
 # OCR extraction
 openai
 anthropic
+google-genai
 black
