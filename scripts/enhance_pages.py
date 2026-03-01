@@ -132,6 +132,7 @@ def _load_docres(model_path: str) -> object:
     # that makes ctypes.CDLL fail with UnicodeDecodeError. Pre-loading the
     # unversioned .so avoids the bug and lets PyTorch discover CUDA.
     import ctypes, ctypes.util
+
     if ctypes.util.find_library("cuda"):
         try:
             ctypes.cdll.LoadLibrary("/usr/lib/wsl/lib/libcuda.so")
@@ -360,6 +361,7 @@ def _load_resshift_sampler():
     configs = OmegaConf.load(str(config_path))
 
     from sampler import ResShiftSampler
+
     sampler = ResShiftSampler(
         configs,
         sf=1,
@@ -402,8 +404,12 @@ def prepocr_restore(img: np.ndarray) -> np.ndarray:
 
     # Tiled inference (mirrors ResShift's _process_per_image)
     with torch.no_grad():
-        if tensor_norm.shape[2] > sampler.chop_size or tensor_norm.shape[3] > sampler.chop_size:
+        if (
+            tensor_norm.shape[2] > sampler.chop_size
+            or tensor_norm.shape[3] > sampler.chop_size
+        ):
             from utils.util_image import ImageSpliterTh
+
             spliter = ImageSpliterTh(
                 tensor_norm,
                 sampler.chop_size,
@@ -470,7 +476,9 @@ def run_comparison(
         path = out_dir / f"{name}.png"
         cv2.imwrite(str(path), result)
         size_kb = path.stat().st_size / 1024
-        print(f"    ✅ {name}.png  ({result.shape[1]}×{result.shape[0]} px, {size_kb:.0f} KB)")
+        print(
+            f"    ✅ {name}.png  ({result.shape[1]}×{result.shape[0]} px, {size_kb:.0f} KB)"
+        )
 
     def _clear():
         if torch.cuda.is_available():
@@ -583,6 +591,7 @@ def enhance_image(
     result = img
     if use_docres:
         import torch
+
         tasks = docres_tasks or DEFAULT_DOCRES_TASKS
         for i, task in enumerate(tasks):
             result = docres_restore(result, task=task, model_path=docres_model)

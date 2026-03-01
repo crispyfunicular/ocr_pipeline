@@ -22,7 +22,9 @@ PDF_DIR = PROJECT_ROOT / "pdfs"
 PAGES_DIR = PROJECT_ROOT / "pages"
 
 
-def extract_pages(pdf_path: Path, output_dir: Path, dpi: int = 300, book_name: str | None = None) -> None:
+def extract_pages(
+    pdf_path: Path, output_dir: Path, dpi: int = 300, book_name: str | None = None
+) -> None:
     """Extract every page of a PDF as a PNG image."""
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -57,7 +59,10 @@ def extract_pages(pdf_path: Path, output_dir: Path, dpi: int = 300, book_name: s
         extracted += 1
 
     doc.close()
-    print(f"  ✅ {extracted} images written" + (f" ({total - extracted} skipped)" if drop_pages else ""))
+    print(
+        f"  ✅ {extracted} images written"
+        + (f" ({total - extracted} skipped)" if drop_pages else "")
+    )
 
 
 def pdf_stem(pdf_path: Path) -> str:
