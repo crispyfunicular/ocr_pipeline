@@ -13,18 +13,22 @@ The user should provide:
 
 If not provided, ask the user for the image path.
 
+## CRITICAL RULE
+
+always use **relative paths** to read write files not absolute paths
+
 ## Steps
 
 1. **Parse inputs** from the image path:
    - `book_name` = parent directory name (e.g. `bozec_methode_1933`)
    - `page_number` = filename stem (e.g. `25`)
-   - Project root = `/home/cam/git/modyco/breton/ocr_pipeline`
 
 2. **Read the global prompt**:
-   - `view_file` on `<project_root>/prompts/extract_bilingual_corpus.md`
+   - `view_file` on `prompts/extract_bilingual_corpus.md`
+   - always use relative paths to read write files not absolute paths !!!
 
 3. **Read the book-specific prompt** (if it exists):
-   - `view_file` on `<project_root>/prompts/<book_name>.md`
+   - `view_file` on `prompts/<book_name>.md`
 
 4. **View the page image**:
    - `view_file` on the image path (binary/image viewing)
@@ -47,9 +51,10 @@ If not provided, ask the user for the image path.
      ```
 
 6. **Save the JSONL output**:
-   - Create directory `<project_root>/corpus/<book_name>/antigravity/` if needed
-   - Write ONLY the JSONL lines (not the report) to `<project_root>/corpus/<book_name>/antigravity/<page_number>.jsonl`
+   - Create directory `corpus/<book_name>/antigravity/` if needed
+   - Write ONLY the JSONL lines (not the report) to `corpus/<book_name>/antigravity/<page_number>.jsonl`
    - Use `write_to_file` to create the file
+   - always use relative paths to read write files not absolute paths !!!
 
 7. **Show the report** to the user via `notify_user`, including:
    - The RAPPORT section
