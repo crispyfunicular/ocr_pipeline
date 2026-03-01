@@ -289,27 +289,57 @@ def review_target(target_dir: Path, out_report: Path):
     total_errors = 0
     total_warnings = 0
 
+    # Per-file stats for console output
+    file_stats = []  # list of (rel_path, n_pairs, n_errors, n_warnings)
+
     # Process files
     for file_path in jsonl_files:
+        file_pairs = 0
         try:
-            total_pairs += len(
+            file_pairs = len(
                 [l for l in file_path.read_text("utf-8").splitlines() if l.strip()]
             )
         except Exception:
             pass  # Counted as error during review anyway
+        total_pairs += file_pairs
 
         rel_path = (
             file_path.relative_to(target_dir) if target_dir.is_dir() else file_path.name
         )
         issues = review_file(file_path, seen_pairs)
+
+        file_errors = 0
+        file_warnings = 0
         if issues:
             all_issues[rel_path] = issues
             for _, results in issues:
                 for r in results:
                     if r.level.startswith("🔴"):
-                        total_errors += 1
+                        file_errors += 1
                     else:
-                        total_warnings += 1
+                        file_warnings += 1
+
+        total_errors += file_errors
+        total_warnings += file_warnings
+        file_stats.append((str(rel_path), file_pairs, file_errors, file_warnings))
+
+    # Print per-file console output
+    if file_stats:
+        name_width = max(len(s[0]) for s in file_stats)
+        for name, pairs, errs, warns in file_stats:
+            parts = [f"  {name:<{name_width}}  {pairs:>4} pairs"]
+            if errs:
+                parts.append(f"  {errs} error{'s' if errs != 1 else ''}")
+            if warns:
+                parts.append(f"  {warns} warning{'s' if warns != 1 else ''}")
+            print("".join(parts))
+
+        print(f"  {'─' * (name_width + 30)}")
+        print(
+            f"  Summary: {total_files} files, {total_pairs} pairs, "
+            f"{total_errors} error{'s' if total_errors != 1 else ''}, "
+            f"{total_warnings} warning{'s' if total_warnings != 1 else ''}"
+        )
 
     # Generate report
     out_report.parent.mkdir(parents=True, exist_ok=True)
@@ -349,7 +379,7 @@ def review_target(target_dir: Path, out_report: Path):
             report.append("")  # Empty line after table
 
     out_report.write_text("\n".join(report), encoding="utf-8")
-    print(f"  ✅ Report generated: {out_report}")
+    print(f"  ✅ Report: {out_report}")
 
 
 def main(argv=None):
@@ -377,10 +407,19 @@ def main(argv=None):
             # If it's a direct path that exists
             if p.exists():
                 if p.is_file() and p.suffix == ".jsonl":
-                    report_path = p.parent / f"{p.stem}_review.md"
+                    parent = p.parent
+                    try:
+                        rel = parent.resolve().relative_to(CORPUS_DIR.resolve())
+                        report_path = REPORTS_DIR / rel / f"{p.stem}_review.md"
+                    except ValueError:
+                        report_path = parent / f"{p.stem}_review.md"
                     targets_to_process.append((p, report_path))
                 elif p.is_dir():
-                    report_path = p / "review.md"
+                    try:
+                        rel = p.resolve().relative_to(CORPUS_DIR.resolve())
+                        report_path = REPORTS_DIR / rel / "review.md"
+                    except ValueError:
+                        report_path = p / "review.md"
                     targets_to_process.append((p, report_path))
             else:
                 # Treat as a book name inside corpus/
