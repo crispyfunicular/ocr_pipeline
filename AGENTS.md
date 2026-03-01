@@ -23,7 +23,7 @@ PDFs (pdfs/)
 |---------|-------------|
 | `python pipeline.py run [pdf ...]` | Full end-to-end pipeline |
 | `python pipeline.py extract [pdf ...]` | PDFs → PNGs |
-| `python pipeline.py enhance [book/image ...]` | Enhance (DocRes AI + CLAHE + denoise, all on by default) |
+| `python pipeline.py enhance [book/image ...]` | Enhance (classical by default; use `--docres` / `--prepocr` for AI) |
 | `python pipeline.py ocr [book ...] [--model X] [-o dir] [--debug]` | VLM-based OCR extraction |
 | `python pipeline.py review [book ...] [--model X]` | JSONL QA |
 | `python pipeline.py corpus [book ...] [-o dir]` | Final corpus merge (stub) |

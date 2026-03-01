@@ -30,14 +30,17 @@ The corpus spans **570 pages** across **9 historical Breton-language books**:
 
 ### Installation
 
-Run `./setup.sh` to automatically:
-1. Create a Python virtual environment (`.venv`)
-2. Install dependencies from `requirements.txt`
-3. Install PyTorch with CUDA 12.8 support
-4. Clone [DocRes](https://github.com/ZZZHANG-jx/DocRes) (CVPR 2024) and download model weights
+**Base setup** (venv + core Python deps + API key check):
 
 ```bash
 ./setup.sh
+source .venv/bin/activate
+```
+
+**With image enhancement tools** (PyTorch+CUDA, DocRes, ResShift — requires NVIDIA GPU):
+
+```bash
+./setup.sh --with-enhance
 source .venv/bin/activate
 ```
 
@@ -52,7 +55,7 @@ PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → re
 | Stage | Description | Script |
 |-------|-------------|--------|
 | **extract** | Render PDF pages as 300 DPI PNGs | `scripts/extract_pages.py` |
-| **enhance** | DocRes AI restoration + PreP-OCR deblurring + CLAHE contrast | `scripts/enhance_pages.py` |
+| **enhance** | CLAHE contrast + optional DocRes AI + PreP-OCR deblurring | `scripts/enhance_pages.py` |
 | **ocr** | VLM-based bilingual text extraction | `scripts/ocr_openai.py` |
 | **review** | Quality assurance on extracted JSONL | `scripts/review_corpus.py` |
 | **corpus** | Merge per-page JSONL into final corpus | `scripts/build_corpus.py` *(stub)* |
@@ -60,14 +63,14 @@ PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → re
 ## Pipeline Usage
 
 ```bash
-# Full pipeline — all PDFs
+# Full pipeline — all PDFs (classical enhancement only)
 python pipeline.py run
 
 # Full pipeline — one specific PDF
 python pipeline.py run pdfs/my_book.pdf
 
-# Full pipeline — no AI enhancement
-python pipeline.py run --no-docres
+# Full pipeline — with AI enhancement (requires --with-enhance setup)
+python pipeline.py run --docres --prepocr
 
 # Individual stages
 python pipeline.py extract
@@ -110,22 +113,22 @@ Applies image enhancement to improve OCR accuracy on degraded historical scans. 
    | `deblurring` | 2nd | Sharpen blurry or out-of-focus text |
    | `appearance` | 3rd | Final background cleanup and contrast normalization |
 
-2. **PreP-OCR deblurring** ([PreP-OCR](https://github.com/NikoGuan/PreP-OCR)) — a ResShift diffusion model trained specifically for historical document deblurring. Processes images in 256×256 tiles with 4-step diffusion sampling. **On by default.**
+2. **PreP-OCR deblurring** ([PreP-OCR](https://github.com/NikoGuan/PreP-OCR)) — a ResShift diffusion model trained specifically for historical document deblurring. Processes images in 256×256 tiles with 4-step diffusion sampling. **Off by default — enable with `--prepocr`.**
 
-3. **Classical enhancement** — grayscale conversion + CLAHE contrast equalization, with optional bilateral denoising and adaptive binarization.
+3. **Classical enhancement** — grayscale conversion + CLAHE contrast equalization, with optional bilateral denoising and adaptive binarization. **On by default.**
 
 ### Enhance Usage
 
 ```bash
-python pipeline.py enhance                                        # Full default: DocRes + PreP-OCR + classical
-python pipeline.py enhance --no-classical                         # DocRes + PreP-OCR only (keep color)
-python pipeline.py enhance --no-prepocr                           # DocRes + classical only (skip PreP-OCR)
-python pipeline.py enhance --no-docres                            # PreP-OCR + classical only (skip DocRes)
-python pipeline.py enhance --no-docres --no-prepocr --no-classical  # No enhancement (passthrough)
-python pipeline.py enhance --docres-tasks appearance              # Only one DocRes task
-python pipeline.py enhance --docres-tasks deshadowing deblurring  # Pick specific DocRes tasks
-python pipeline.py enhance my_book                                # Enhance one book
-python pipeline.py enhance pages/my_book/05.png                   # Enhance a single image
+python pipeline.py enhance                                        # Classical only (grayscale + CLAHE)
+python pipeline.py enhance --docres                                # DocRes AI + classical
+python pipeline.py enhance --prepocr                               # PreP-OCR + classical
+python pipeline.py enhance --docres --prepocr                      # Full: DocRes + PreP-OCR + classical
+python pipeline.py enhance --no-classical                          # No enhancement (passthrough)
+python pipeline.py enhance --docres --docres-tasks appearance      # Only one DocRes task
+python pipeline.py enhance --docres --docres-tasks deshadowing deblurring  # Pick specific DocRes tasks
+python pipeline.py enhance my_book                                 # Enhance one book
+python pipeline.py enhance pages/my_book/05.png                    # Enhance a single image
 
 # Direct script usage with all options
 python scripts/enhance_pages.py --binarize --upscale --compare 20
@@ -235,7 +238,8 @@ Merges per-page JSONL files into a final consolidated corpus. Not yet implemente
 ```
 ├── pipeline.py              # Unified CLI entry point
 ├── setup.sh                 # Environment setup script
-├── requirements.txt         # Python dependencies
+├── requirements.txt         # Core Python dependencies
+├── requirements-enhance.txt # Enhancement deps (installed with --with-enhance)
 ├── scripts/
 │   ├── utils.py             # Shared helpers (types, parsing, target discovery)
 │   ├── extract_pages.py     # PDF → PNG extraction

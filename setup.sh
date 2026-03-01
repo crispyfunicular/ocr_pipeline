@@ -3,27 +3,67 @@
 # setup.sh — Set up the OCR pipeline environment
 #
 # Usage:
-#   ./setup.sh
+#   ./setup.sh                  # Base setup (venv + Python deps + API key check)
+#   ./setup.sh --with-enhance   # Also install enhancement tools (PyTorch, DocRes, ResShift)
 #
 # This script:
 #   1. Creates a Python virtual environment (.venv)
 #   2. Installs Python dependencies from requirements.txt
-#   3. Installs PyTorch with CUDA support
-#   4. Clones DocRes repository and downloads model weights
+#   3. Checks API key configuration
+#
+# With --with-enhance, it additionally:
+#   4. Installs enhancement Python packages (requirements-enhance.txt)
+#   5. Installs PyTorch with CUDA support
+#   6. Clones DocRes repository and downloads model weights
+#   7. Clones ResShift / PreP-OCR and downloads model weights
 #
 
 set -euo pipefail
 
+# ── Parse arguments ───────────────────────────────────
+WITH_ENHANCE=false
+for arg in "$@"; do
+    case "$arg" in
+        --with-enhance) WITH_ENHANCE=true ;;
+        -h|--help)
+            echo "Usage: ./setup.sh [--with-enhance]"
+            echo ""
+            echo "Options:"
+            echo "  --with-enhance   Install image enhancement tools"
+            echo "                   (PyTorch+CUDA, DocRes, ResShift)"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $arg"
+            echo "Usage: ./setup.sh [--with-enhance]"
+            exit 1
+            ;;
+    esac
+done
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
+if [ "$WITH_ENHANCE" = true ]; then
+    TOTAL_STEPS=7
+else
+    TOTAL_STEPS=3
+fi
+
 echo "═══════════════════════════════════════════════════"
 echo "  🔧 OCR Pipeline — Environment Setup"
+if [ "$WITH_ENHANCE" = false ]; then
+    echo "     (base only — use --with-enhance for image"
+    echo "      enhancement tools)"
+fi
 echo "═══════════════════════════════════════════════════"
 
+STEP=0
+
 # ── 1. Virtual environment ────────────────────────────
+STEP=$((STEP + 1))
 echo ""
-echo "── Step 1/4: Virtual environment ──"
+echo "── Step ${STEP}/${TOTAL_STEPS}: Virtual environment ──"
 
 if [ -d ".venv" ]; then
     echo "  ✅ .venv already exists"
@@ -38,16 +78,42 @@ source .venv/bin/activate
 echo "  Activated: $(which python)"
 
 # ── 2. Python dependencies ────────────────────────────
+STEP=$((STEP + 1))
 echo ""
-echo "── Step 2/4: Python dependencies ──"
+echo "── Step ${STEP}/${TOTAL_STEPS}: Python dependencies ──"
 
 pip install --upgrade pip -q
 pip install -r requirements.txt
 echo "  ✅ requirements.txt installed"
 
-# ── 3. PyTorch with CUDA ──────────────────────────────
+# ── 3. API key check ─────────────────────────────────
+STEP=$((STEP + 1))
 echo ""
-echo "── Step 3/4: PyTorch with CUDA ──"
+echo "── Step ${STEP}/${TOTAL_STEPS}: API keys ──"
+
+if [ -n "${OPENAI_API_KEY:-}" ]; then
+    echo "  ✅ OPENAI_API_KEY is set"
+else
+    echo "  ⚠️  OPENAI_API_KEY is NOT set"
+    echo "     The OCR stage requires an OpenAI API key."
+    echo "     Set it with:  export OPENAI_API_KEY='sk-...'"
+fi
+
+# ── Enhancement tools (opt-in) ────────────────────────
+if [ "$WITH_ENHANCE" = true ]; then
+
+# ── 4. Enhancement Python dependencies ────────────────
+STEP=$((STEP + 1))
+echo ""
+echo "── Step ${STEP}/${TOTAL_STEPS}: Enhancement Python dependencies ──"
+
+pip install -r requirements-enhance.txt
+echo "  ✅ requirements-enhance.txt installed"
+
+# ── 5. PyTorch with CUDA ──────────────────────────────
+STEP=$((STEP + 1))
+echo ""
+echo "── Step ${STEP}/${TOTAL_STEPS}: PyTorch with CUDA ──"
 
 if python -c "import torch; assert torch.cuda.is_available()" 2>/dev/null; then
     echo "  ✅ PyTorch with CUDA already installed"
@@ -61,9 +127,10 @@ fi
 # Verify
 python -c "import torch; print(f'  PyTorch {torch.__version__} — CUDA: {torch.cuda.is_available()}')"
 
-# ── 4. DocRes (AI document restoration) ───────────────
+# ── 6. DocRes (AI document restoration) ───────────────
+STEP=$((STEP + 1))
 echo ""
-echo "── Step 4/4: DocRes setup ──"
+echo "── Step ${STEP}/${TOTAL_STEPS}: DocRes setup ──"
 
 DOCRES_DIR="docres"
 WEIGHTS_FILE="$DOCRES_DIR/checkpoints/docres.pkl"
@@ -87,9 +154,10 @@ else
     echo "  ✅ Weights downloaded ($(du -h "$WEIGHTS_FILE" | cut -f1))"
 fi
 
-# ── 5. ResShift / PreP-OCR (diffusion deblurring) ─────
+# ── 7. ResShift / PreP-OCR (diffusion deblurring) ─────
+STEP=$((STEP + 1))
 echo ""
-echo "── Step 5/6: ResShift (PreP-OCR deblurring) setup ──"
+echo "── Step ${STEP}/${TOTAL_STEPS}: ResShift (PreP-OCR deblurring) setup ──"
 
 RESSHIFT_DIR="resshift"
 RESSHIFT_WEIGHTS="$RESSHIFT_DIR/weights"
@@ -201,17 +269,7 @@ autoencoder:
 YAML
 echo "  ✅ Config written to $PREPOCR_CONFIG"
 
-# ── 6. API key check ─────────────────────────────────
-echo ""
-echo "── Step 6/6: API keys ──"
-
-if [ -n "${OPENAI_API_KEY:-}" ]; then
-    echo "  ✅ OPENAI_API_KEY is set"
-else
-    echo "  ⚠️  OPENAI_API_KEY is NOT set"
-    echo "     The OCR stage requires an OpenAI API key."
-    echo "     Set it with:  export OPENAI_API_KEY='sk-...'"
-fi
+fi  # end --with-enhance
 
 # ── Done ──────────────────────────────────────────────
 echo ""
@@ -221,6 +279,11 @@ echo ""
 echo "  Activate the environment:"
 echo "    source .venv/bin/activate"
 echo ""
+if [ "$WITH_ENHANCE" = false ]; then
+    echo "  To install enhancement tools (PyTorch, DocRes, ResShift):"
+    echo "    ./setup.sh --with-enhance"
+    echo ""
+fi
 echo "  Run the pipeline:"
 echo "    python pipeline.py run"
 echo "    python pipeline.py --help"

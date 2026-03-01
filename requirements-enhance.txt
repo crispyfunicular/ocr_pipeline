@@ -1,0 +1,13 @@
+# AI — DocRes document restoration (Restormer)
+# torch + torchvision installed separately with CUDA index (see setup.sh)
+einops
+scikit-image
+tqdm
+
+# AI — PreP-OCR / ResShift deblurring (diffusion-based)
+omegaconf
+loguru
+lpips
+albumentations
+loralib
+timm

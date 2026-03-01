@@ -23,6 +23,7 @@ OCR_pipeline/
 ├── pipeline.py              ← Unified CLI entry point
 ├── setup.sh                 ← One-command env setup
 ├── requirements.txt
+├── requirements-enhance.txt
 ├── scripts/
 │   ├── __init__.py
 │   ├── utils.py             ← Shared helpers (types, parsing, target discovery)
@@ -71,10 +72,10 @@ OCR_pipeline/
 
 ### 2. Enhancement (`scripts/enhance_pages.py`)
 
-Current default pipeline (in order, each can be disabled via CLI flags):
-1. **DocRes AI** — Restormer-based document restoration (deshadowing → deblurring → appearance) (`--no-docres`)
-2. **PreP-OCR** — ResShift diffusion deblurring (256×256 tiles, 4-step diffusion) (`--no-prepocr`)
-3. **Classical** — Grayscale conversion + CLAHE (clip_limit=1.5) (`--no-classical`)
+Current default pipeline (in order, each can be toggled via CLI flags):
+1. **DocRes AI** — Restormer-based document restoration (deshadowing → deblurring → appearance) (`--docres` to enable)
+2. **PreP-OCR** — ResShift diffusion deblurring (256×256 tiles, 4-step diffusion) (`--prepocr` to enable)
+3. **Classical** — Grayscale conversion + CLAHE (clip_limit=1.5) (`--no-classical` to disable)
 4. (Optional) Bilateral denoising (`--denoise`)
 5. (Optional) Adaptive Gaussian binarization + morphological cleanup (`--binarize`)
 6. (Optional) 2× Lanczos upscale (`--upscale`)

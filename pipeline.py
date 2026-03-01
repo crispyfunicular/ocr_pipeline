@@ -15,7 +15,7 @@ Usage:
     python pipeline.py run                          # full pipeline, all PDFs
     python pipeline.py run pdfs/my_book.pdf         # full pipeline, one PDF
     python pipeline.py extract                      # extract only, all PDFs
-    python pipeline.py enhance --no-docres             # enhance without AI
+    python pipeline.py enhance --docres --prepocr      # enhance with AI
     python pipeline.py ocr Manuel_1865             # OCR one book
 """
 
@@ -43,12 +43,12 @@ def cmd_enhance(args):
     argv = []
     if args.targets:
         argv.extend(["--targets"] + list(args.targets))
-    if not args.docres:
-        argv.append("--no-docres")
+    if args.docres:
+        argv.append("--docres")
     if args.docres_tasks:
         argv.extend(["--docres-tasks"] + list(args.docres_tasks))
-    if not args.prepocr:
-        argv.append("--no-prepocr")
+    if args.prepocr:
+        argv.append("--prepocr")
     if not args.classical:
         argv.append("--no-classical")
     return enhance_main(argv)
@@ -156,12 +156,12 @@ def cmd_run(args):
     print("✨ Stage 2/5: ENHANCE")
     print("─" * 60)
     enhance_argv = ["--targets"] + books if books else []
-    if not args.docres:
-        enhance_argv.append("--no-docres")
+    if args.docres:
+        enhance_argv.append("--docres")
     if args.docres_tasks:
         enhance_argv.extend(["--docres-tasks"] + list(args.docres_tasks))
-    if not args.prepocr:
-        enhance_argv.append("--no-prepocr")
+    if args.prepocr:
+        enhance_argv.append("--prepocr")
     if not args.classical:
         enhance_argv.append("--no-classical")
     enhance_main(enhance_argv)
@@ -211,7 +211,7 @@ Examples:
   %(prog)s run                            Full pipeline, all PDFs
   %(prog)s run pdfs/my_book.pdf           Full pipeline, one PDF
   %(prog)s extract                        Extract pages from all PDFs
-  %(prog)s enhance --no-docres               Enhance without AI restoration
+  %(prog)s enhance --docres --prepocr      Enhance with AI restoration
   %(prog)s ocr Manuel_1865                OCR one specific book
 """,
     )
@@ -224,11 +224,10 @@ Examples:
     )
     p_run.add_argument("--dpi", type=int, help="DPI for extraction (default: 300)")
     p_run.add_argument(
-        "--no-docres",
-        dest="docres",
-        action="store_false",
-        default=True,
-        help="Disable DocRes AI enhancement (on by default)",
+        "--docres",
+        action="store_true",
+        default=False,
+        help="Enable DocRes AI enhancement (requires --with-enhance setup)",
     )
     p_run.add_argument(
         "--docres-tasks",
@@ -238,11 +237,10 @@ Examples:
         help="DocRes tasks to run, in order (default: deshadowing deblurring appearance)",
     )
     p_run.add_argument(
-        "--no-prepocr",
-        dest="prepocr",
-        action="store_false",
-        default=True,
-        help="Disable PreP-OCR ResShift diffusion deblurring (on by default)",
+        "--prepocr",
+        action="store_true",
+        default=False,
+        help="Enable PreP-OCR ResShift diffusion deblurring (requires --with-enhance setup)",
     )
     p_run.add_argument(
         "--no-classical",
@@ -286,11 +284,10 @@ Examples:
         help="Book folder(s) or image file(s) to process (default: all)",
     )
     p_enhance.add_argument(
-        "--no-docres",
-        dest="docres",
-        action="store_false",
-        default=True,
-        help="Disable DocRes AI enhancement (on by default)",
+        "--docres",
+        action="store_true",
+        default=False,
+        help="Enable DocRes AI enhancement (requires --with-enhance setup)",
     )
     p_enhance.add_argument(
         "--docres-tasks",
@@ -300,11 +297,10 @@ Examples:
         help="DocRes tasks to run, in order (default: deshadowing deblurring appearance)",
     )
     p_enhance.add_argument(
-        "--no-prepocr",
-        dest="prepocr",
-        action="store_false",
-        default=True,
-        help="Disable PreP-OCR ResShift diffusion deblurring (on by default)",
+        "--prepocr",
+        action="store_true",
+        default=False,
+        help="Enable PreP-OCR ResShift diffusion deblurring (requires --with-enhance setup)",
     )
     p_enhance.add_argument(
         "--no-classical",

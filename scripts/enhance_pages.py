@@ -576,7 +576,7 @@ def enhance_image(
     use_docres: bool = False,
     docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
-    use_prepocr: bool = True,
+    use_prepocr: bool = False,
     use_classical: bool = True,
 ) -> np.ndarray:
     """Apply the full enhancement pipeline.
@@ -585,8 +585,8 @@ def enhance_image(
     text perfectly sharp for VLM-based OCR.
 
     Optional AI enhancements (run before classical processing):
-    - DocRes: deshadowing → deblurring → appearance (--no-docres to disable)
-    - PreP-OCR: ResShift diffusion deblurring (--no-prepocr to disable)
+    - DocRes: deshadowing → deblurring → appearance (--docres to enable)
+    - PreP-OCR: ResShift diffusion deblurring (--prepocr to enable)
     """
     result = img
     if use_docres:
@@ -677,7 +677,7 @@ def process_book(
     use_docres: bool = False,
     docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
-    use_prepocr: bool = True,
+    use_prepocr: bool = False,
     use_classical: bool = True,
 ) -> int:
     """Process all pages of a single book directory. Returns count."""
@@ -829,11 +829,10 @@ def main(argv=None):
         help="Adaptive threshold offset (default: 15, higher = more white)",
     )
     parser.add_argument(
-        "--no-docres",
-        dest="docres",
-        action="store_false",
-        default=True,
-        help="Disable DocRes AI document restoration (on by default)",
+        "--docres",
+        action="store_true",
+        default=False,
+        help="Enable DocRes AI document restoration (requires --with-enhance setup)",
     )
     parser.add_argument(
         "--docres-tasks",
@@ -849,11 +848,10 @@ def main(argv=None):
         help="Path to docres.pkl weights (default: ./docres/checkpoints/docres.pkl)",
     )
     parser.add_argument(
-        "--no-prepocr",
-        dest="prepocr",
-        action="store_false",
-        default=True,
-        help="Disable PreP-OCR ResShift diffusion deblurring (on by default)",
+        "--prepocr",
+        action="store_true",
+        default=False,
+        help="Enable PreP-OCR ResShift diffusion deblurring (requires --with-enhance setup)",
     )
     parser.add_argument(
         "--no-classical",
