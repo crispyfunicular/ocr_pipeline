@@ -13,7 +13,7 @@ PDFs (pdfs/)
   └── scripts/extract_pages.py ──→ Raw PNGs (pages/<book>/)
         └── scripts/enhance_pages.py ──→ Enhanced PNGs (pages_enhanced/<book>/)
               └── scripts/ocr_openai.py ──→ JSONL (corpus/<book>/<model>/) + report.md
-                    └── scripts/cleanup_corpus.py ──→ Quality-assured JSONL (stub)
+                    └── scripts/review_corpus.py ──→ Quality-assured JSONL
                           └── scripts/build_corpus.py ──→ Final corpus (stub)
 ```
 
@@ -25,7 +25,7 @@ PDFs (pdfs/)
 | `python pipeline.py extract [pdf ...]` | PDFs → PNGs |
 | `python pipeline.py enhance [book/image ...]` | Enhance (DocRes AI + CLAHE + denoise, all on by default) |
 | `python pipeline.py ocr [book ...] [--model X] [-o dir] [--debug]` | VLM-based OCR extraction |
-| `python pipeline.py cleanup [book ...] [-o dir]` | JSONL QA (stub) |
+| `python pipeline.py review [book ...] [--model X]` | JSONL QA |
 | `python pipeline.py corpus [book ...] [-o dir]` | Final corpus merge (stub) |
 
 All scripts also work standalone: `python scripts/extract_pages.py --help`

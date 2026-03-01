@@ -6,9 +6,10 @@ Stages:
     extract   — PDF → PNG pages (300 DPI)
     enhance   — Image enhancement (CLAHE + optional DocRes AI)
     ocr       — VLM-based bilingual text extraction (OpenAI / Anthropic)
-    cleanup   — JSONL quality assurance (stub)
+    review    — JSONL quality assurance
     corpus    — Merge JSONL into final corpus (stub)
     run       — Chain all stages end-to-end
+
 
 Usage:
     python pipeline.py run                          # full pipeline, all PDFs
@@ -105,16 +106,16 @@ def cmd_ocr(args):
     return ocr_main(argv)
 
 
-def cmd_cleanup(args):
-    """Run corpus cleanup (stub)."""
-    from scripts.cleanup_corpus import main as cleanup_main
+def cmd_review(args):
+    """Run corpus review."""
+    from scripts.review_corpus import main as review_main
 
     argv = []
     if args.targets:
-        argv.extend(["--targets"] + list(args.targets))
-    if args.output:
-        argv.extend(["--output", str(args.output)])
-    return cleanup_main(argv)
+        argv.extend(list(args.targets))
+    if hasattr(args, "model") and args.model:
+        argv.extend(["--model", args.model])
+    return review_main(argv)
 
 
 def cmd_corpus(args):
@@ -134,7 +135,7 @@ def cmd_run(args):
     from scripts.extract_pages import main as extract_main
     from scripts.enhance_pages import main as enhance_main
     from scripts.ocr_openai import main as ocr_main
-    from scripts.cleanup_corpus import main as cleanup_main
+    from scripts.review_corpus import main as review_main
     from scripts.build_corpus import main as corpus_main
 
     print("=" * 60)
@@ -178,12 +179,14 @@ def cmd_run(args):
         ocr_argv.extend(["--limit", str(args.limit)])
     ocr_main(ocr_argv)
 
-    # Stage 4: Cleanup
+    # Stage 4: Review
     print("\n" + "─" * 60)
-    print("🧹 Stage 4/5: CLEANUP")
+    print("🧹 Stage 4/5: REVIEW")
     print("─" * 60)
-    cleanup_argv = ["--targets"] + books if books else []
-    cleanup_main(cleanup_argv)
+    review_argv = books if books else []
+    if args.model:
+        review_argv.extend(["--model", args.model])
+    review_main(review_argv)
 
     # Stage 5: Corpus
     print("\n" + "─" * 60)
@@ -353,20 +356,21 @@ Examples:
     )
     p_ocr.set_defaults(func=cmd_ocr)
 
-    # --- cleanup ---
-    p_cleanup = subparsers.add_parser(
-        "cleanup", help="Quality assurance on extracted JSONL"
+    # --- review ---
+    p_review = subparsers.add_parser(
+        "review", help="Quality assurance on extracted JSONL"
     )
-    p_cleanup.add_argument(
-        "targets", nargs="*", help="Book folder(s) to process (default: all)"
+    p_review.add_argument(
+        "targets",
+        nargs="*",
+        help="Book folder(s) in corpus/, or arbitrary paths to .jsonl files/directories. Default: all books in corpus/.",
     )
-    p_cleanup.add_argument(
-        "-o",
-        "--output",
+    p_review.add_argument(
+        "--model",
         default=None,
-        help="Output directory for cleaned JSONL (stub).",
+        help="Specific model subfolder to target (e.g. antigravity).",
     )
-    p_cleanup.set_defaults(func=cmd_cleanup)
+    p_review.set_defaults(func=cmd_review)
 
     # --- corpus ---
     p_corpus = subparsers.add_parser("corpus", help="Build final merged corpus")
