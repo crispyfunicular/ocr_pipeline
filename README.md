@@ -217,6 +217,24 @@ Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to 
 
 ---
 
+## Droplist
+
+### Droplist Overview
+
+Some pages (covers, blank pages, appendices…) should be excluded from OCR processing. Each book can have a **droplist** — a JSON array of page numbers stored in `droplist/<book>/drop_pages.json`.
+
+### Droplist Usage
+
+```bash
+python pipeline.py ignore pages_enhanced/my_book/05.png              # Ignore one page
+python pipeline.py ignore pages_enhanced/my_book/01.png pages_enhanced/my_book/02.png  # Ignore multiple pages
+python pipeline.py ignore pages/my_book/84.png                       # Also works with pages/
+```
+
+Pages already in the droplist are skipped (idempotent). The JSON file is created automatically if it doesn't exist.
+
+---
+
 ## Review
 
 ### Review Overview
