@@ -429,7 +429,7 @@ def process_single_image(
 RAPPORT_HEADER = """\
 # Rapport d'extraction du corpus bilingue
 
-> Généré automatiquement par `ocr_openai.py`
+> Généré automatiquement par `ocr.py`
 > Dernière mise à jour : {date}
 > Livre : `{book_name}`
 > Modèle : `{model}`

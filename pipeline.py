@@ -8,6 +8,7 @@ Stages:
     ocr       — VLM-based bilingual text extraction (OpenAI / Anthropic)
     review    — JSONL quality assurance
     corpus    — Merge JSONL into final corpus (stub)
+    ignore    — Add pages to the per-book droplist
     run       — Chain all stages end-to-end
 
 
@@ -20,6 +21,7 @@ Usage:
 """
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -28,7 +30,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 
 def cmd_extract(args):
     """Extract pages from PDFs."""
-    from scripts.extract_pages import main as extract_main
+    from scripts.extract import main as extract_main
 
     argv = list(args.targets) if args.targets else []
     if args.dpi:
@@ -38,7 +40,7 @@ def cmd_extract(args):
 
 def cmd_enhance(args):
     """Enhance extracted pages."""
-    from scripts.enhance_pages import main as enhance_main
+    from scripts.enhance import main as enhance_main
 
     argv = []
     if args.targets:
@@ -57,7 +59,7 @@ def cmd_enhance(args):
 def cmd_compare(args):
     """Generate comparison matrix of all enhancement permutations."""
     from pathlib import Path
-    from scripts.enhance_pages import run_comparison, PROJECT_ROOT
+    from scripts.enhance import run_comparison, PROJECT_ROOT
     import cv2
 
     img_path = Path(args.image)
@@ -90,7 +92,7 @@ def cmd_compare(args):
 
 def cmd_ocr(args):
     """Run OCR extraction."""
-    from scripts.ocr_openai import main as ocr_main
+    from scripts.ocr import main as ocr_main
 
     argv = []
     if args.targets:
@@ -108,7 +110,7 @@ def cmd_ocr(args):
 
 def cmd_review(args):
     """Run corpus review."""
-    from scripts.review_corpus import main as review_main
+    from scripts.review import main as review_main
 
     argv = []
     if args.targets:
@@ -120,7 +122,7 @@ def cmd_review(args):
 
 def cmd_corpus(args):
     """Build final corpus (stub)."""
-    from scripts.build_corpus import main as corpus_main
+    from scripts.corpus import main as corpus_main
 
     argv = []
     if args.targets:
@@ -130,13 +132,61 @@ def cmd_corpus(args):
     return corpus_main(argv)
 
 
+def cmd_ignore(args):
+    """Add pages to the per-book droplist."""
+    IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".tiff", ".tif"}
+
+    for image in args.images:
+        img_path = Path(image).resolve()
+
+        # Validate file
+        if not img_path.exists():
+            print(f"❌ File not found: {image}", file=sys.stderr)
+            sys.exit(1)
+        if img_path.suffix.lower() not in IMAGE_EXTENSIONS:
+            print(f"❌ Not an image file: {image}", file=sys.stderr)
+            sys.exit(1)
+
+        # Extract book name and page number from path
+        book = img_path.parent.name
+        try:
+            page_num = int(img_path.stem)
+        except ValueError:
+            print(
+                f"❌ Cannot parse page number from filename: {img_path.name}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+        # Load or create droplist
+        drop_dir = PROJECT_ROOT / "droplist" / book
+        drop_file = drop_dir / "drop_pages.json"
+
+        if drop_file.exists():
+            data = json.loads(drop_file.read_text(encoding="utf-8"))
+            pages = set(data)
+        else:
+            pages = set()
+
+        if page_num in pages:
+            print(f"  ⏭️  {book} page {page_num} — already in droplist")
+            continue
+
+        pages.add(page_num)
+        drop_dir.mkdir(parents=True, exist_ok=True)
+        drop_file.write_text(
+            json.dumps(sorted(pages), indent=4) + "\n", encoding="utf-8"
+        )
+        print(f"  ✅ {book} page {page_num} — added to droplist")
+
+
 def cmd_run(args):
     """Run the full pipeline end-to-end."""
-    from scripts.extract_pages import main as extract_main
-    from scripts.enhance_pages import main as enhance_main
-    from scripts.ocr_openai import main as ocr_main
-    from scripts.review_corpus import main as review_main
-    from scripts.build_corpus import main as corpus_main
+    from scripts.extract import main as extract_main
+    from scripts.enhance import main as enhance_main
+    from scripts.ocr import main as ocr_main
+    from scripts.review import main as review_main
+    from scripts.corpus import main as corpus_main
 
     print("=" * 60)
     print("🚀 FULL PIPELINE")
@@ -252,7 +302,7 @@ Examples:
     p_run.add_argument(
         "--model",
         default=None,
-        help="OpenAI model to use for OCR (default: from ocr_openai.py)",
+        help="OpenAI model to use for OCR (default: from ocr.py)",
     )
     p_run.add_argument(
         "--debug",
@@ -322,6 +372,18 @@ Examples:
     )
     p_compare.set_defaults(func=cmd_compare)
 
+    # --- ignore ---
+    p_ignore = subparsers.add_parser(
+        "ignore",
+        help="Add page(s) to the per-book droplist",
+    )
+    p_ignore.add_argument(
+        "images",
+        nargs="+",
+        help="Image file(s) to ignore (e.g. pages_enhanced/my_book/05.png)",
+    )
+    p_ignore.set_defaults(func=cmd_ignore)
+
     # --- ocr ---
     p_ocr = subparsers.add_parser("ocr", help="Run OCR extraction via OpenAI VLM")
     p_ocr.add_argument(
@@ -330,7 +392,7 @@ Examples:
     p_ocr.add_argument(
         "--model",
         default=None,
-        help="Model to use (default: from ocr_openai.py). Supports OpenAI and Claude models.",
+        help="Model to use (default: from ocr.py). Supports OpenAI and Claude models.",
     )
     p_ocr.add_argument(
         "-o",
