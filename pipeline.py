@@ -7,6 +7,7 @@ Stages:
     enhance   — Image enhancement (CLAHE + optional DocRes AI)
     ocr       — VLM-based bilingual text extraction (OpenAI / Anthropic)
     review    — JSONL quality assurance
+    evaluate  — Compute WER and CER against human reference
     corpus    — Merge JSONL into final corpus (stub)
     ignore    — Add pages to the per-book droplist
     run       — Chain all stages end-to-end
@@ -118,6 +119,16 @@ def cmd_review(args):
     if hasattr(args, "model") and args.model:
         argv.extend(["--model", args.model])
     return review_main(argv)
+
+
+def cmd_evaluate(args):
+    """Run evaluation (WER/CER)."""
+    from scripts.evaluate import main as evaluate_main
+
+    argv = []
+    if args.targets:
+        argv.extend(list(args.targets))
+    return evaluate_main(argv)
 
 
 def cmd_corpus(args):
@@ -263,6 +274,7 @@ Examples:
   %(prog)s extract                        Extract pages from all PDFs
   %(prog)s enhance --docres --prepocr      Enhance with AI restoration
   %(prog)s ocr Manuel_1865                OCR one specific book
+  %(prog)s evaluate                       Compute CER & WER on all reference books
 """,
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -429,6 +441,15 @@ Examples:
         help="Specific model subfolder to target (e.g. antigravity).",
     )
     p_review.set_defaults(func=cmd_review)
+
+    # --- evaluate ---
+    p_evaluate = subparsers.add_parser(
+        "evaluate", help="Compute WER and CER for OCR outputs against human reference"
+    )
+    p_evaluate.add_argument(
+        "targets", nargs="*", help="Book folder(s) to evaluate (default: all in error_rates/)"
+    )
+    p_evaluate.set_defaults(func=cmd_evaluate)
 
     # --- corpus ---
     p_corpus = subparsers.add_parser("corpus", help="Build final merged corpus")
