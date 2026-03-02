@@ -8,12 +8,12 @@ A multi-stage pipeline for extracting bilingual Breton-French parallel text from
 
 ```mermaid
 graph LR
-    A[PDFs] -->|extract_pages.py| B[Raw PNGs 300dpi]
-    B -->|enhance_pages.py| C[Enhanced PNGs]
-    C -->|ocr_openai.py| D[JSONL corpus]
-    D -->|review_corpus.py| E[QA'd JSONL]
-    E -->|build_corpus.py| F[Final corpus]
-    D --> G[reports/]
+    A[pdfs/] -->|extract.py| B["pages/ (300dpi PNGs)"]
+    B -->|enhance.py| C[pages_enhanced/]
+    C -->|ocr.py| D["corpus/<book>/<model>/"]
+    D -->|review.py| E["reports/<book>/<model>/"]
+    D -->|corpus.py| F[Final corpus]
+    G["error_rates/<book>/"] -->|evaluate.py| H[WER / CER]
 ```
 
 ## Project Structure
@@ -27,11 +27,12 @@ OCR_pipeline/
 ├── scripts/
 │   ├── __init__.py
 │   ├── utils.py             ← Shared helpers (types, parsing, target discovery)
-│   ├── extract_pages.py     ← PDF → PNG
-│   ├── enhance_pages.py     ← Image enhancement (DocRes + PreP-OCR + CLAHE)
-│   ├── ocr_openai.py        ← VLM-based OCR extraction
-│   ├── review_corpus.py     ← JSONL quality assurance
-│   └── build_corpus.py      ← Final corpus merge (stub)
+│   ├── extract.py           ← PDF → PNG
+│   ├── enhance.py           ← Image enhancement (DocRes + PreP-OCR + CLAHE)
+│   ├── ocr.py               ← VLM-based OCR extraction
+│   ├── review.py            ← JSONL quality assurance
+│   ├── evaluate.py          ← WER/CER evaluation against human reference
+│   └── corpus.py            ← Final corpus merge (stub)
 ├── prompts/
 │   ├── extract_bilingual_corpus.md   ← Base system prompt
 │   ├── bozec_methode_1933.md         ← Book-specific overrides
@@ -64,21 +65,23 @@ OCR_pipeline/
 
 ## Stage Details
 
-### 1. Page Extraction (`scripts/extract_pages.py`)
+### 1. Page Extraction (`scripts/extract.py`)
 
 - Uses PyMuPDF to render each page at 300 DPI
 - Output: `pages/<pdf_stem>/NN.png` (2480×3509 px typical)
 - Handles multiple PDFs, auto-discovers from `pdfs/`
 
-### 2. Enhancement (`scripts/enhance_pages.py`)
+### 2. Enhancement (`scripts/enhance.py`)
 
-Current default pipeline (in order, each can be toggled via CLI flags):
-1. **DocRes AI** — Restormer-based document restoration (deshadowing → deblurring → appearance) (`--docres` to enable)
-2. **PreP-OCR** — ResShift diffusion deblurring (256×256 tiles, 4-step diffusion) (`--prepocr` to enable)
-3. **Classical** — Grayscale conversion + CLAHE (clip_limit=1.5) (`--no-classical` to disable)
-4. (Optional) Bilateral denoising (`--denoise`)
-5. (Optional) Adaptive Gaussian binarization + morphological cleanup (`--binarize`)
-6. (Optional) 2× Lanczos upscale (`--upscale`)
+**Default: no-op** — pages are copied from `pages/` to `pages_enhanced/` unchanged.
+
+All enhancements are opt-in flags (in processing order):
+1. **DocRes AI** — Restormer-based document restoration (deshadowing → deblurring → appearance) (`--docres`; requires `./setup.sh --with-enhance`)
+2. **PreP-OCR** — ResShift diffusion deblurring, 256×256 tiles, 4-step diffusion (`--prepocr`; requires `./setup.sh --with-enhance`)
+3. **Classical** — Grayscale conversion + CLAHE (clip_limit=1.5) (`--classical`)
+4. Bilateral denoising (`--denoise`)
+5. Adaptive Gaussian binarization + morphological cleanup (`--binarize`)
+6. 2× Lanczos upscale (`--upscale`)
 
 DocRes integration:
 - Model: Restormer (~26M params), weights from HuggingFace
@@ -95,7 +98,7 @@ Comparison tool (`pipeline.py compare`):
 - Generates all 18 permutations of DocRes/PreP-OCR/Classical for a single page
 - Output: `compare/<book>/<page>/` with 19 images (original + 18 variants)
 
-### 3. OCR Extraction (`scripts/ocr_openai.py`)
+### 3. OCR Extraction (`scripts/ocr.py`)
 
 - Sends each page image to the configured model (default: `gpt-5.2`, override with `--model`)
 - Extracts breton/français pairs as JSONL
@@ -103,11 +106,15 @@ Comparison tool (`pipeline.py compare`):
 - Auto-generates quality report in `reports/<book>/<model>/report.md`
 - Resumable (skips existing .jsonl files)
 
-### 4. Review (`scripts/review_corpus.py`)
+### 4. Review (`scripts/review.py`)
 
-Quality assurance on extracted JSONL.
+Quality assurance on extracted JSONL. Checks for missing keys, empty values, invalid characters, length imbalance, truncated entries, and more. Outputs `reports/<book>/<model>/review.md`.
 
-### 5. Corpus Build (`scripts/build_corpus.py`) — Stub
+### 5. Evaluate (`scripts/evaluate.py`)
+
+Computes WER and CER against manually corrected human references in `error_rates/<book>/human_reference/`. Reports metrics per page, per language (Breton and French).
+
+### 6. Corpus Build (`scripts/corpus.py`) — Stub
 
 Merge per-page JSONL into final unified corpus. Not yet implemented.
 

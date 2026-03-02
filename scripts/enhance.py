@@ -1,31 +1,37 @@
 #!/usr/bin/env python3
 """
-Safe image enhancement for Breton dictionary OCR pipeline.
+Image enhancement for Breton dictionary OCR pipeline.
 
-Applies conservative, non-hallucinating enhancement to scanned book pages:
-  1. (Optional) DocRes AI document restoration (--docres)
-  2. Grayscale conversion
-  3. CLAHE contrast equalization (makes faded ink pop)
+By default (no flags), this stage is a no-op: pages are copied from
+pages/ to pages_enhanced/ without any modification.
+
+Opt-in enhancement flags:
+  --classical   Grayscale + CLAHE contrast equalization
+  --docres      DocRes AI document restoration (deshadowing/deblurring/appearance)
+                Requires: ./setup.sh --with-enhance  (NVIDIA GPU)
+  --prepocr     PreP-OCR ResShift diffusion deblurring
+                Requires: ./setup.sh --with-enhance  (NVIDIA GPU)
 
 Optionally:
-  4. Bilateral denoising (--denoise, smooths paper grain but may soften text)
-  5. Adaptive Gaussian thresholding (--binarize)
+  --denoise     Bilateral denoising (smooths paper grain, may soften text)
+  --binarize    Adaptive Gaussian thresholding (B&W output)
+  --upscale     2× Lanczos upscale
 
-Default: grayscale + CLAHE only — sharpest text for VLM-based OCR.
 Outputs lossless PNG.
 
-By default, processes all subdirectories in pages/ and writes enhanced
-versions to pages_enhanced/<subdir>/.
+By default, processes all subdirectories in pages/ and writes to
+pages_enhanced/<subdir>/.
 
 Examples:
-    python enhance_pages.py                                 # all books
-    python enhance_pages.py --targets le_francais_par_le_breton
-    python enhance_pages.py --compare 33 --targets le_francais_par_le_breton
-    python enhance_pages.py --upscale                       # with 2× Lanczos
-    python enhance_pages.py --binarize                      # binary B&W output
-    python enhance_pages.py --format png                    # lossless PNG
-    python enhance_pages.py --docres                        # AI restoration
-    python enhance_pages.py --docres --docres-task deblurring
+    python enhance.py                                       # plain copy (no-op)
+    python enhance.py --classical                           # grayscale + CLAHE
+    python enhance.py --docres                              # DocRes AI only
+    python enhance.py --docres --classical                  # DocRes + CLAHE
+    python enhance.py --targets my_book --classical         # one book
+    python enhance.py --compare 33 --targets my_book        # comparison image
+    python enhance.py --upscale --classical                 # with 2× Lanczos
+    python enhance.py --binarize --classical                # binary B&W output
+    python enhance.py --docres --docres-tasks deblurring    # one DocRes task
 """
 
 import argparse
@@ -577,16 +583,20 @@ def enhance_image(
     docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
     use_prepocr: bool = False,
-    use_classical: bool = True,
+    use_classical: bool = False,
 ) -> np.ndarray:
-    """Apply the full enhancement pipeline.
+    """Apply the enhancement pipeline.
 
-    Default: grayscale + CLAHE only — improves contrast while keeping
-    text perfectly sharp for VLM-based OCR.
+    Default (no flags): returns the image unchanged — the caller will copy it
+    as-is to pages_enhanced/.
 
-    Optional AI enhancements (run before classical processing):
-    - DocRes: deshadowing → deblurring → appearance (--docres to enable)
-    - PreP-OCR: ResShift diffusion deblurring (--prepocr to enable)
+    Opt-in enhancements (run in this order):
+    1. DocRes AI restoration (--docres)
+    2. PreP-OCR ResShift deblurring (--prepocr)
+    3. Classical: grayscale + CLAHE (--classical)
+    4. Bilateral denoising (--denoise)
+    5. Adaptive binarization (--binarize)
+    6. 2× Lanczos upscale (--upscale)
     """
     result = img
     if use_docres:
@@ -678,7 +688,7 @@ def process_book(
     docres_tasks: list[str] | None = None,
     docres_model: str | None = None,
     use_prepocr: bool = False,
-    use_classical: bool = True,
+    use_classical: bool = False,
 ) -> int:
     """Process all pages of a single book directory. Returns count."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -752,7 +762,7 @@ def process_book(
 def main(argv=None):
     """Entry point. Pass argv list for programmatic use, or None for CLI."""
     parser = argparse.ArgumentParser(
-        description="Safe image enhancement for Breton dictionary OCR.",
+        description="Image enhancement for Breton dictionary OCR. Default: plain copy (no-op).",
         epilog="Processes pages/<book>/ → pages_enhanced/<book>/",
     )
     parser.add_argument(
@@ -776,6 +786,13 @@ def main(argv=None):
         help=f"Parent directory for enhanced output (default: {ENHANCED_DIR}/)",
     )
     parser.add_argument(
+        "--classical",
+        dest="classical",
+        action="store_true",
+        default=False,
+        help="Enable classical enhancement: grayscale + CLAHE contrast equalization",
+    )
+    parser.add_argument(
         "--upscale",
         action="store_true",
         help="Apply 2× Lanczos upscale (safe, useful for small text)",
@@ -783,14 +800,14 @@ def main(argv=None):
     parser.add_argument(
         "--binarize",
         action="store_true",
-        help="Apply adaptive binarization (B&W output). Default: off (grayscale)",
+        help="Apply adaptive binarization (B&W output, implies --classical)",
     )
     parser.add_argument(
-        "--no-denoise",
+        "--denoise",
         dest="denoise",
-        action="store_false",
-        default=True,
-        help="Disable bilateral denoising (on by default)",
+        action="store_true",
+        default=False,
+        help="Enable bilateral denoising (smooths paper grain, may soften text)",
     )
     parser.add_argument(
         "--format",
@@ -853,13 +870,7 @@ def main(argv=None):
         default=False,
         help="Enable PreP-OCR ResShift diffusion deblurring (requires --with-enhance setup)",
     )
-    parser.add_argument(
-        "--no-classical",
-        dest="classical",
-        action="store_false",
-        default=True,
-        help="Disable classical enhancement (grayscale + CLAHE, on by default)",
-    )
+
     args = parser.parse_args(argv)
 
     # Validate DocRes setup
@@ -878,23 +889,34 @@ def main(argv=None):
         print(f"❌ No targets found in {args.input_dir}/", file=sys.stderr)
         sys.exit(1)
 
+    # Detect no-op mode (no enhancement flags given)
+    any_enhancement = args.docres or args.prepocr or args.classical or args.binarize or args.upscale or args.denoise
+
     if book_dirs:
-        print(f"🔧 Enhancing {len(book_dirs)} book(s)")
+        print(f"🔧 {'Enhancing' if any_enhancement else 'Copying (no-op)'} {len(book_dirs)} book(s)")
     if single_images:
-        print(f"🔧 Enhancing {len(single_images)} individual image(s)")
+        print(f"🔧 {'Enhancing' if any_enhancement else 'Copying (no-op)'} {len(single_images)} individual image(s)")
     print(
         f"  📦 Output: {args.format.upper()}"
         f"{f' (q={args.jpeg_quality})' if args.format == 'jpg' else ''}"
     )
-    if args.docres:
-        tasks = args.docres_tasks or DEFAULT_DOCRES_TASKS
-        print(f"  🧠 DocRes AI restoration enabled (tasks: {' → '.join(tasks)})")
-    if args.prepocr:
-        print("  🧠 PreP-OCR ResShift deblurring enabled")
-    if args.upscale:
-        print("  ↗️  2× Lanczos upscale enabled")
-    if args.binarize:
-        print("  ⬛ Binarization enabled (adaptive Gaussian)")
+    if not any_enhancement:
+        print("  ℹ️  No enhancement flags given — pages will be copied as-is.")
+        print("      Use --classical for CLAHE, --docres/--prepocr for AI restoration.")
+    else:
+        if args.classical:
+            print("  🔲 Classical enhancement enabled (grayscale + CLAHE)")
+        if args.docres:
+            tasks = args.docres_tasks or DEFAULT_DOCRES_TASKS
+            print(f"  🧠 DocRes AI restoration enabled (tasks: {' → '.join(tasks)})")
+        if args.prepocr:
+            print("  🧠 PreP-OCR ResShift deblurring enabled")
+        if args.denoise:
+            print("  🔵 Bilateral denoising enabled")
+        if args.upscale:
+            print("  ↗️  2× Lanczos upscale enabled")
+        if args.binarize:
+            print("  ⬛ Binarization enabled (adaptive Gaussian)")
     if args.compare is not None:
         print(f"  📊 Comparison will be generated for page {args.compare}")
 

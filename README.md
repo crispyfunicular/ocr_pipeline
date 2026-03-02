@@ -4,7 +4,7 @@ A multi-stage pipeline for extracting bilingual **Breton-French** parallel corpo
 
 ## Corpus
 
-The corpus spans **570 pages** across **9 historical Breton-language books**:
+The corpus spans **570+ pages** across **10 historical Breton-language books**:
 
 | Book | Period | Type | Pages | Description |
 |------|--------|------|-------|-------------|
@@ -12,11 +12,25 @@ The corpus spans **570 pages** across **9 historical Breton-language books**:
 | `colloque_lourec_1884` | 1884 | Phrasebook | 74 | 4-column vocabulary lists by profession + conversational dialogues |
 | `colloque_1890` | 1890 | Phrasebook | 74 | Similar to 1884 edition, 4-column verb lists and dialogues |
 | `normant_lexique_1902` | 1902 | Dictionary | 71 | Breton→French dictionary with conjugation tables (KAOUT, BEZA) |
+| `le_gonidec_vocabulaire_1919` | 1919 | Vocabulary | — | French-Breton vocabulary |
 | `geriadur_lexique_1927` | 1927 | Medical lexicon | 22 | French→Breton anatomical/medical terminology with sub-entries |
+| `vallee_grand_dictionnaire_1931` | 1931 | Dictionary | — | Large Breton-French dictionary |
 | `roparz_cours_elementaire_1930` | 1930 | Course | 31 | Elementary Breton course with vocabulary, dialogues (DIVIZ), and exercises |
 | `bozec_methode_1933` | 1933 | Method | 78 | Breton method with facing-page bilingual lessons and illustrations |
 | `yez_hon_tadou_1940` | 1940 | Course | 96 | Breton course with GERIADUR word lists, word families, and conjugation |
 | `daniel_ker_vreiz_1944` | 1944 | Course | 37 | Breton course with vocabulary, grammar examples, and verb tables |
+
+### Droplist
+
+Not every page contains bilingual content — covers, blank pages, tables of contents, appendices, and illustration-only pages have no translation pairs to extract. Each book can have a **droplist** (`droplist/<book>/drop_pages.json`) to exclude these pages from the OCR stage, **reducing API costs and processing time**.
+
+```bash
+python pipeline.py ignore pages_enhanced/my_book/05.png              # Ignore one page
+python pipeline.py ignore pages_enhanced/my_book/01.png pages/my_book/02.png  # Multiple pages
+python pipeline.py ignore pages/my_book/84.png                       # Works with pages/ too
+```
+
+Pages already in the droplist are skipped (idempotent). The JSON file is created automatically if it doesn't exist.
 
 ---
 
@@ -26,7 +40,7 @@ The corpus spans **570 pages** across **9 historical Breton-language books**:
 
 - **Python 3.11+**
 - **NVIDIA GPU** with CUDA support (for DocRes enhancement; not required for OCR)
-- **API keys** — `OPENAI_API_KEY` and/or `ANTHROPIC_API_KEY` for the OCR stage
+- **API keys** — `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, and/or `GEMINI_API_KEY` for the OCR stage
 
 ### Installation
 
@@ -49,16 +63,17 @@ source .venv/bin/activate
 ## Pipeline Overview
 
 ```
-PDFs → extract → PNGs → enhance → Enhanced PNGs → ocr → JSONL → review → corpus
+pdfs/ → extract → pages/ → enhance → pages_enhanced/ → ocr → corpus/<book>/<model>/ → review → reports/ → corpus
 ```
 
-| Stage | Description | Script |
-|-------|-------------|--------|
-| **extract** | Render PDF pages as 300 DPI PNGs | `scripts/extract_pages.py` |
-| **enhance** | CLAHE contrast + optional DocRes AI + PreP-OCR deblurring | `scripts/enhance_pages.py` |
-| **ocr** | VLM-based bilingual text extraction | `scripts/ocr_openai.py` |
-| **review** | Quality assurance on extracted JSONL | `scripts/review_corpus.py` |
-| **corpus** | Merge per-page JSONL into final corpus | `scripts/build_corpus.py` *(stub)* |
+| # | Stage | Input | Output | Script | Description |
+|---|-------|-------|--------|--------|-------------|
+| 1 | **extract** | `pdfs/` | `pages/<book>/` | `scripts/extract.py` | Render PDF pages as 300 DPI PNGs |
+| 2 | **enhance** | `pages/<book>/` | `pages_enhanced/<book>/` | `scripts/enhance.py` | Copy pages (no-op by default) or apply opt-in enhancements |
+| 3 | **ocr** | `pages_enhanced/<book>/` | `corpus/<book>/<model>/` | `scripts/ocr.py` | VLM-based bilingual text extraction |
+| 4 | **review** | `corpus/<book>/<model>/` | `reports/<book>/<model>/` | `scripts/review.py` | Quality assurance on extracted JSONL |
+| 5 | **evaluate** | `error_rates/<book>/` | stdout | `scripts/evaluate.py` | Compute WER & CER against human reference |
+| 6 | **corpus** | `corpus/<book>/<model>/` | *(configurable)* | `scripts/corpus.py` | Merge per-page JSONL into final corpus *(stub)* |
 
 ## Pipeline Usage
 
@@ -94,7 +109,7 @@ python pipeline.py extract pdfs/my_book.pdf           # One specific PDF
 python pipeline.py extract pdfs/a.pdf pdfs/b.pdf      # Multiple PDFs
 
 # Direct script usage with extra options
-python scripts/extract_pages.py --dpi 400 pdfs/my_book.pdf
+python scripts/extract.py --dpi 400 pdfs/my_book.pdf
 ```
 
 ---
@@ -103,35 +118,41 @@ python scripts/extract_pages.py --dpi 400 pdfs/my_book.pdf
 
 ### Enhance Overview
 
-Applies image enhancement to improve OCR accuracy on degraded historical scans. The default pipeline chains three stages:
+By default, `enhance` is a **no-op**: pages are copied from `pages/` to `pages_enhanced/` without any processing. All enhancements are explicit opt-in flags. Three reasons:
 
-1. **DocRes AI restoration** ([CVPR 2024](https://github.com/ZZZHANG-jx/DocRes)) — a Restormer model with Dynamic Task-Specific Prompts that runs **three tasks sequentially** by default:
+- **GPU required** for AI models (DocRes, PreP-OCR) — not available in all environments
+- **Heavy dependencies** — PyTorch, model weights (~1 GB) only installed with `./setup.sh --with-enhance`
+- **Frontier VLMs work better on originals** — modern models like `gpt-5.2` handle degraded scans well enough that preprocessing can hurt more than it helps
 
-   | Task | Order | Purpose |
-   |------|-------|---------|
-   | `deshadowing` | 1st | Remove shadows from book bindings and uneven lighting |
-   | `deblurring` | 2nd | Sharpen blurry or out-of-focus text |
-   | `appearance` | 3rd | Final background cleanup and contrast normalization |
+> [!IMPORTANT]
+> `--docres` and `--prepocr` require an NVIDIA GPU and heavy dependencies. Run `./setup.sh --with-enhance` before using them. `--classical` works with the base install.
 
-2. **PreP-OCR deblurring** ([PreP-OCR](https://github.com/NikoGuan/PreP-OCR)) — a ResShift diffusion model trained specifically for historical document deblurring. Processes images in 256×256 tiles with 4-step diffusion sampling. **Off by default — enable with `--prepocr`.**
+Available flags (applied in this order):
 
-3. **Classical enhancement** — grayscale conversion + CLAHE contrast equalization, with optional bilateral denoising and adaptive binarization. **On by default.**
+| Flag | What it does | Requires |
+|------|-------------|----------|
+| `--classical` | Grayscale + CLAHE contrast equalization | Base install |
+| `--docres` | DocRes AI: deshadowing → deblurring → appearance ([CVPR 2024](https://github.com/ZZZHANG-jx/DocRes)) | `--with-enhance` + GPU |
+| `--prepocr` | PreP-OCR ResShift diffusion deblurring, 256×256 tiles ([PreP-OCR](https://github.com/NikoGuan/PreP-OCR)) | `--with-enhance` + GPU |
+| `--denoise` | Bilateral denoising (smooths paper grain) | Base install |
+| `--binarize` | Adaptive Gaussian binarization (B&W output) | Base install |
+| `--upscale` | 2× Lanczos upscale | Base install |
 
 ### Enhance Usage
 
 ```bash
-python pipeline.py enhance                                        # Classical only (grayscale + CLAHE)
-python pipeline.py enhance --docres                                # DocRes AI + classical
-python pipeline.py enhance --prepocr                               # PreP-OCR + classical
-python pipeline.py enhance --docres --prepocr                      # Full: DocRes + PreP-OCR + classical
-python pipeline.py enhance --no-classical                          # No enhancement (passthrough)
-python pipeline.py enhance --docres --docres-tasks appearance      # Only one DocRes task
-python pipeline.py enhance --docres --docres-tasks deshadowing deblurring  # Pick specific DocRes tasks
-python pipeline.py enhance my_book                                 # Enhance one book
-python pipeline.py enhance pages/my_book/05.png                    # Enhance a single image
+python pipeline.py enhance                                        # No-op: plain copy to pages_enhanced/
+python pipeline.py enhance --classical                            # Grayscale + CLAHE
+python pipeline.py enhance --docres                               # DocRes AI only (requires --with-enhance)
+python pipeline.py enhance --docres --classical                   # DocRes + CLAHE
+python pipeline.py enhance --prepocr --classical                  # PreP-OCR + CLAHE
+python pipeline.py enhance --docres --prepocr --classical         # Full: DocRes + PreP-OCR + CLAHE
+python pipeline.py enhance --docres --docres-tasks appearance     # Only one DocRes task
+python pipeline.py enhance my_book                                # One book
+python pipeline.py enhance pages/my_book/05.png                   # Single image
 
-# Direct script usage with all options
-python scripts/enhance_pages.py --binarize --upscale --compare 20
+# Direct script usage
+python scripts/enhance.py --classical --binarize --upscale
 ```
 
 ---
@@ -173,28 +194,32 @@ The model returns structured JSONL pairs and a quality report (status, score, re
 | Provider | Models | API key env var |
 |----------|--------|-----------------|
 | OpenAI | `gpt-5.2` (default), `gpt-4.1-mini`, `o3`, etc. | `OPENAI_API_KEY` |
-| Anthropic | `claude-sonnet-4`, `claude-haiku-4.5`, etc. | `ANTHROPIC_API_KEY` |
+| Anthropic | `claude-sonnet-4-6`, `claude-haiku-4.5`, `claude-opus-4`, etc. | `ANTHROPIC_API_KEY` |
+| Google | `gemini-3.1-pro`, `gemini-3-flash`, `gemini-2.5-pro`, etc. | `GEMINI_API_KEY` |
 
 ### OCR Usage
 
 ```bash
-python pipeline.py ocr                                # All books, default model
-python pipeline.py ocr my_book                        # One book
-python pipeline.py ocr --model gpt-4.1-mini           # Cheaper model
-python pipeline.py ocr --model claude-sonnet-4         # Anthropic
-python pipeline.py ocr pages/my_book/05.png            # Single image
-python pipeline.py ocr --debug pages/my_book/05.png    # Show full prompts & response
-python pipeline.py ocr --limit 5 my_book               # Random sample of 5 pages
+python pipeline.py ocr                                  # All books, default model
+python pipeline.py ocr my_book                          # One book
+python pipeline.py ocr --model gpt-4.1-mini             # Cheaper OpenAI model
+python pipeline.py ocr --model claude-sonnet-4-6        # Anthropic
+python pipeline.py ocr --model gemini-3.1-pro           # Google Gemini
+python pipeline.py ocr pages/my_book/05.png             # Single image
+python pipeline.py ocr --debug pages/my_book/05.png     # Show full prompts & response
+python pipeline.py ocr --limit 5 my_book                # Random sample of 5 pages
 ```
 
 ### Cost Estimation
 
-| Model | Avg cost/page | Avg time/page | Accuracy | Full run (570 pages) |
-|-------|--------------|---------------|----------|----------------------|
-| `gpt-4.1-mini` | ~$0.004 | ~16s | Good — occasional column misalignment and OCR typos | **~$2.30** / ~2.5h |
-| `gpt-5.2` | ~$0.021 | ~10s | Better precision, correct alignment, cleaner OCR | **~$12** / ~1.5h |
+| Model | Provider | Avg cost/page | Avg time/page | Accuracy | Full run (570 pages) |
+|-------|----------|--------------|---------------|----------|----------------------|
+| `gpt-4.1-mini` | OpenAI | ~$0.004 | ~16s | Good — occasional column misalignment and OCR typos | **~$2.30** / ~2.5h |
+| `gemini-3.1-pro` | Google | ~$0.010 | — | Not yet benchmarked | **~$5.70** |
+| `claude-sonnet-4-6` | Anthropic | ~$0.015 | — | Not yet benchmarked | **~$8.50** |
+| `gpt-5.2` | OpenAI | ~$0.021 | ~10s | Better precision, correct alignment, cleaner OCR | **~$12** / ~1.5h |
 
-> **Recommendation:** Use `gpt-5.2` (default) for production runs — the higher accuracy justifies the ~5× cost. Use `gpt-4.1-mini` for rapid iteration and prompt testing.
+> **Recommendation:** Use `gpt-5.2` (default) for production runs — the higher accuracy justifies the ~5× cost. Use `gpt-4.1-mini` for rapid iteration and prompt testing. Cost estimates for Gemini and Anthropic are based on token pricing from `ocr.py` and are not yet benchmarked on this corpus.
 
 ### Prompt System
 
@@ -217,29 +242,52 @@ Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to 
 
 ---
 
-## Droplist
 
-### Droplist Overview
-
-Some pages (covers, blank pages, appendices…) should be excluded from OCR processing. Each book can have a **droplist** — a JSON array of page numbers stored in `droplist/<book>/drop_pages.json`.
-
-### Droplist Usage
-
-```bash
-python pipeline.py ignore pages_enhanced/my_book/05.png              # Ignore one page
-python pipeline.py ignore pages_enhanced/my_book/01.png pages_enhanced/my_book/02.png  # Ignore multiple pages
-python pipeline.py ignore pages/my_book/84.png                       # Also works with pages/
-```
-
-Pages already in the droplist are skipped (idempotent). The JSON file is created automatically if it doesn't exist.
-
----
 
 ## Review
 
 ### Review Overview
 
-Quality assurance pass on extracted JSONL files.
+Scans all extracted JSONL files for common errors and quality issues. Checks include:
+
+- Missing or extra keys
+- Empty values
+- Invalid characters (outside expected Breton/French character sets)
+- Length imbalance between Breton and French sides (ratio ≥ 3×)
+- Single-character entries, extremely long entries (> 256 chars)
+- Digit-only entries, truncated entries, identical Breton/French pairs
+
+Generates a Markdown report at `reports/<book>/<model>/review.md`.
+
+### Review Usage
+
+```bash
+python pipeline.py review                                 # All books
+python pipeline.py review my_book                        # One book
+python pipeline.py review --model gpt-5.2 my_book        # Specific model subfolder
+python pipeline.py review corpus/my_book/gpt-5.2/05.jsonl  # Single JSONL file
+```
+
+---
+
+## Evaluate
+
+### Evaluate Overview
+
+Computes **Word Error Rate (WER)** and **Character Error Rate (CER)** for OCR outputs against manually corrected human references. Useful for benchmarking model and prompt improvements.
+
+Each book to evaluate needs:
+- `error_rates/<book>/human_reference/` — gold-standard JSONL files (manually corrected)
+- `error_rates/<book>/jsonl/` — hypothesis JSONL files (OCR output to evaluate)
+
+Metrics are computed separately for the Breton and French sides of each pair.
+
+### Evaluate Usage
+
+```bash
+python pipeline.py evaluate                    # All books in error_rates/
+python pipeline.py evaluate my_book            # One specific book
+```
 
 ---
 
@@ -260,11 +308,12 @@ Merges per-page JSONL files into a final consolidated corpus. Not yet implemente
 ├── requirements-enhance.txt # Enhancement deps (installed with --with-enhance)
 ├── scripts/
 │   ├── utils.py             # Shared helpers (types, parsing, target discovery)
-│   ├── extract_pages.py     # PDF → PNG extraction
-│   ├── enhance_pages.py     # Image enhancement (DocRes + CLAHE)
-│   ├── ocr_openai.py        # VLM-based OCR (OpenAI / Anthropic)
-│   ├── review_corpus.py     # JSONL quality assurance
-│   └── build_corpus.py      # Final corpus merge (stub)
+│   ├── extract.py           # PDF → PNG extraction
+│   ├── enhance.py           # Image enhancement (DocRes + PreP-OCR + CLAHE)
+│   ├── ocr.py               # VLM-based OCR (OpenAI / Anthropic)
+│   ├── review.py            # JSONL quality assurance
+│   ├── evaluate.py          # WER/CER evaluation against human reference
+│   └── corpus.py            # Final corpus merge (stub)
 ├── prompts/
 │   ├── extract_bilingual_corpus.md  # Base VLM extraction prompt
 │   └── <book_name>.md              # Book-specific prompts (×9)
@@ -286,13 +335,17 @@ Merges per-page JSONL files into a final consolidated corpus. Not yet implemente
 │           ├── 01.jsonl
 │           ├── 02.jsonl
 │           └── ...
+├── error_rates/             # WER/CER evaluation data
+│   └── <book>/
+│       ├── human_reference/ # Gold-standard JSONL (manually corrected)
+│       └── jsonl/           # Hypothesis JSONL (OCR output to evaluate)
 ├── droplist/                # Per-book page exclusion lists
 │   └── <book>/
 │       └── drop_pages.json  # JSON array of page numbers to skip
 └── reports/                 # Auto-generated quality reports
     └── <book>/
         └── <model>/
-            └── report.md
+            └── review.md
 ```
 
 ## License

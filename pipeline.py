@@ -52,8 +52,8 @@ def cmd_enhance(args):
         argv.extend(["--docres-tasks"] + list(args.docres_tasks))
     if args.prepocr:
         argv.append("--prepocr")
-    if not args.classical:
-        argv.append("--no-classical")
+    if args.classical:
+        argv.append("--classical")
     return enhance_main(argv)
 
 
@@ -223,8 +223,8 @@ def cmd_run(args):
         enhance_argv.extend(["--docres-tasks"] + list(args.docres_tasks))
     if args.prepocr:
         enhance_argv.append("--prepocr")
-    if not args.classical:
-        enhance_argv.append("--no-classical")
+    if args.classical:
+        enhance_argv.append("--classical")
     enhance_main(enhance_argv)
 
     # Stage 3: OCR
@@ -305,11 +305,11 @@ Examples:
         help="Enable PreP-OCR ResShift diffusion deblurring (requires --with-enhance setup)",
     )
     p_run.add_argument(
-        "--no-classical",
+        "--classical",
         dest="classical",
-        action="store_false",
-        default=True,
-        help="Disable classical enhancement (grayscale + CLAHE, on by default)",
+        action="store_true",
+        default=False,
+        help="Enable classical enhancement (grayscale + CLAHE)",
     )
     p_run.add_argument(
         "--model",
@@ -365,11 +365,11 @@ Examples:
         help="Enable PreP-OCR ResShift diffusion deblurring (requires --with-enhance setup)",
     )
     p_enhance.add_argument(
-        "--no-classical",
+        "--classical",
         dest="classical",
-        action="store_false",
-        default=True,
-        help="Disable classical enhancement (grayscale + CLAHE, on by default)",
+        action="store_true",
+        default=False,
+        help="Enable classical enhancement (grayscale + CLAHE)",
     )
     p_enhance.set_defaults(func=cmd_enhance)
 
