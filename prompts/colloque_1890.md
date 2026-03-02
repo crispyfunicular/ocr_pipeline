@@ -34,11 +34,13 @@ Les pages de vocabulaire présentent 4 colonnes :
 
 ### Synonymes avec « ou »
 
-Quand un mot breton ou français présente des variantes avec « ou » ou « , » (virgule), conservez-les toutes dans le même champ :
+Quand un mot breton ou français présente des variantes avec « ou » ou « , » (virgule), créez une entrée distincte pour chaque variante :
+
 ```json
-{"breton": "Bale ou Querzet", "français": "Marcher"}
-{"breton": "Goada, Dic'hoada", "français": "Saigner"}
-{"breton": "Gallega, Komz gallek", "français": "Parler français"}
+{"breton": "Bale", "français": "Marcher"}
+{"breton": "Querzet", "français": "Marcher"}
+{"breton": "Goada", "français": "Saigner"}
+{"breton": "Dic'hoada", "français": "Saigner"}
 ```
 
 ### Dialogues conversationnels
@@ -54,6 +56,7 @@ Extrayez chaque paire de phrases indépendamment :
 {"breton": "Bez' em beuz e ker eunn ti a zo leun a varc'hadourez.", "français": "J'ai en ville une maison qui est remplie de marchandises."}
 {"breton": "Mont a rinn.", "français": "Je n'y manquerai pas."}
 ```
+
 
 ### Titres de sections thématiques
 
