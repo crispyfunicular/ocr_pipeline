@@ -28,7 +28,7 @@ FRENCH_CHARS = set(
 
 # Common variables
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CORPUS_DIR = PROJECT_ROOT / "corpus"
+OCR_DIR = PROJECT_ROOT / "ocr"
 REPORTS_DIR = PROJECT_ROOT / "reports"
 
 CheckResult = collections.namedtuple(
@@ -390,7 +390,7 @@ def main(argv=None):
     parser.add_argument(
         "targets",
         nargs="*",
-        help="Book folder(s) in corpus/, or arbitrary paths to .jsonl files/directories. Default: all books in corpus/.",
+        help="Book folder(s) in ocr/, or arbitrary paths to .jsonl files/directories. Default: all books in ocr/.",
     )
     parser.add_argument(
         "--model",
@@ -409,21 +409,21 @@ def main(argv=None):
                 if p.is_file() and p.suffix == ".jsonl":
                     parent = p.parent
                     try:
-                        rel = parent.resolve().relative_to(CORPUS_DIR.resolve())
+                        rel = parent.resolve().relative_to(OCR_DIR.resolve())
                         report_path = REPORTS_DIR / rel / f"{p.stem}_review.md"
                     except ValueError:
                         report_path = parent / f"{p.stem}_review.md"
                     targets_to_process.append((p, report_path))
                 elif p.is_dir():
                     try:
-                        rel = p.resolve().relative_to(CORPUS_DIR.resolve())
+                        rel = p.resolve().relative_to(OCR_DIR.resolve())
                         report_path = REPORTS_DIR / rel / "review.md"
                     except ValueError:
                         report_path = p / "review.md"
                     targets_to_process.append((p, report_path))
             else:
-                # Treat as a book name inside corpus/
-                book_dir = CORPUS_DIR / t
+                # Treat as a book name inside ocr/
+                book_dir = OCR_DIR / t
                 if book_dir.exists() and book_dir.is_dir():
                     models = (
                         [args.model]
@@ -437,13 +437,13 @@ def main(argv=None):
                             targets_to_process.append((model_dir, report_path))
                 else:
                     print(
-                        f"❌ Target not found: {t} (neither a direct path nor a known book in corpus/)",
+                        f"❌ Target not found: {t} (neither a direct path nor a known book in ocr/)",
                         file=sys.stderr,
                     )
     else:
-        # Default: all books in corpus directory
-        if CORPUS_DIR.exists():
-            for book_dir in [d for d in CORPUS_DIR.iterdir() if d.is_dir()]:
+        # Default: all books in ocr directory
+        if OCR_DIR.exists():
+            for book_dir in [d for d in OCR_DIR.iterdir() if d.is_dir()]:
                 models = (
                     [args.model]
                     if args.model

@@ -5,7 +5,7 @@ Automatic extraction of bilingual Breton-French corpus from scanned book pages.
 Sends each page image to a VLM (OpenAI, Anthropic Claude, or Google Gemini),
 parses structured JSONL output + quality report.
 
-- Output: corpus/<book>/<model>/<page>.jsonl
+- Output: ocr/<book>/<model>/<page>.jsonl
 - Reports: reports/<book>/<model>/report.md
 - Resumable: skips pages whose .jsonl already exists
 
@@ -560,7 +560,7 @@ def write_rapport(
 def process_book_ocr(
     client: OpenAI,
     book_dir: Path,
-    corpus_dir: Path,
+    ocr_dir: Path,
     workflow: str,
     rapport_path: Path | None = None,
     model: str = DEFAULT_MODEL,
@@ -592,13 +592,13 @@ def process_book_ocr(
             print(f"  ⏭️  {skipped} pages in droplist, skipping")
 
     total_pages = len(images)
-    corpus_dir.mkdir(parents=True, exist_ok=True)
+    ocr_dir.mkdir(parents=True, exist_ok=True)
     if rapport_path:
         rapport_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Resume: skip if the .jsonl already exists (even if empty)
     to_process = [
-        img for img in images if not (corpus_dir / f"{img.stem}.jsonl").exists()
+        img for img in images if not (ocr_dir / f"{img.stem}.jsonl").exists()
     ]
 
     # Apply --limit: random sample
@@ -622,7 +622,7 @@ def process_book_ocr(
             )
 
             # Save JSONL
-            jsonl_path = corpus_dir / f"{img.stem}.jsonl"
+            jsonl_path = ocr_dir / f"{img.stem}.jsonl"
             n_pairs = write_jsonl(jsonl_path, result["jsonl"])
             cost_str = format_cost(result["cost"])
             print(
@@ -671,7 +671,7 @@ def process_book_ocr(
                 )
                 sys.exit(1)
             # Other errors: create empty file and continue
-            (corpus_dir / f"{img.stem}.jsonl").touch()
+            (ocr_dir / f"{img.stem}.jsonl").touch()
             rows.append(
                 ReportRow(
                     image=img.name,
@@ -740,7 +740,7 @@ def main(argv=None):
         default=None,
         help="Output path. For books: parent directory (JSONL goes to <dir>/<book>/). "
         "For a single image: directory or .jsonl file path. "
-        "Default: corpus/<book>/<model>/",
+        "Default: ocr/<book>/<model>/",
     )
     parser.add_argument(
         "--debug",
@@ -761,8 +761,8 @@ def main(argv=None):
     pages_dir = PROJECT_ROOT / "pages"
     reports_root = PROJECT_ROOT / "reports"
 
-    # Default corpus root: corpus/   (overridden by --output)
-    corpus_root = args.output if args.output is not None else PROJECT_ROOT / "corpus"
+    # Default OCR output root: ocr/   (overridden by --output)
+    ocr_root = args.output if args.output is not None else PROJECT_ROOT / "ocr"
 
     workflow = get_workflow_prompt()
 
@@ -783,14 +783,14 @@ def main(argv=None):
     if is_single_book:
         print(f"📥 Entrée : {book_dirs[0].resolve()}/")
         print(
-            f"📂 Sortie : {(corpus_root / book_dirs[0].name / args.model).resolve()}/"
+            f"📂 Sortie : {(ocr_root / book_dirs[0].name / args.model).resolve()}/"
         )
     elif is_single_image:
         print(f"📥 Entrée : {single_images[0].resolve()}")
         img_book = single_images[0].parent.name
-        print(f"📂 Sortie : {(corpus_root / img_book / args.model).resolve()}/")
+        print(f"📂 Sortie : {(ocr_root / img_book / args.model).resolve()}/")
     else:
-        print(f"📂 Sortie : {corpus_root.resolve()}/")
+        print(f"📂 Sortie : {ocr_root.resolve()}/")
 
     total_processed = 0
 
@@ -802,13 +802,13 @@ def main(argv=None):
         print(f"{'─' * 60}")
 
         book_workflow = workflow + get_book_prompt(book_name)
-        book_corpus_dir = corpus_root / book_name / args.model
+        book_ocr_dir = ocr_root / book_name / args.model
         book_rapport_path = reports_root / book_name / args.model / "report.md"
 
         n = process_book_ocr(
             client,
             book_dir,
-            book_corpus_dir,
+            book_ocr_dir,
             book_workflow,
             rapport_path=book_rapport_path,
             model=args.model,
@@ -836,9 +836,9 @@ def main(argv=None):
                 jsonl_path = args.output
                 jsonl_path.parent.mkdir(parents=True, exist_ok=True)
             else:
-                img_corpus_dir = corpus_root / book_name / args.model
-                img_corpus_dir.mkdir(parents=True, exist_ok=True)
-                jsonl_path = img_corpus_dir / f"{img_path.stem}.jsonl"
+                img_ocr_dir = ocr_root / book_name / args.model
+                img_ocr_dir.mkdir(parents=True, exist_ok=True)
+                jsonl_path = img_ocr_dir / f"{img_path.stem}.jsonl"
 
             n_pairs = write_jsonl(jsonl_path, result["jsonl"])
             cost_str = format_cost(result["cost"])
@@ -873,11 +873,11 @@ def main(argv=None):
     if is_single_book:
         book_name = book_dirs[0].name
         print(f"✅ Terminé. {total_processed} images traitées ({book_name}).")
-        print(f"   Corpus : {(corpus_root / book_name / args.model).resolve()}/")
+        print(f"   OCR : {(ocr_root / book_name / args.model).resolve()}/")
         print(f"   Rapports : {(reports_root / book_name / args.model).resolve()}/")
     elif book_dirs:
         print(f"✅ Terminé. {total_processed} images traitées.")
-        print(f"   Corpus : {corpus_root.resolve()}/")
+        print(f"   OCR : {ocr_root.resolve()}/")
         print(f"   Rapports : {reports_root.resolve()}/")
     else:
         print(f"✅ Terminé. {total_processed} images traitées.")
@@ -888,7 +888,7 @@ def main(argv=None):
                 print(f"   JSONL : {args.output.resolve()}")
             else:
                 print(
-                    f"   JSONL : {(corpus_root / img_book / args.model / f'{img_path.stem}.jsonl').resolve()}"
+                    f"   JSONL : {(ocr_root / img_book / args.model / f'{img_path.stem}.jsonl').resolve()}"
                 )
     print(f"{'═' * 60}")
 
