@@ -1,0 +1,1179 @@
+{"breton": "mamm", "français": "mère"}
+{"breton": "ar vamm", "français": "la mère"}
+{"breton": "taol", "français": "table"}
+{"breton": "an daol", "français": "la table"}
+{"breton": "va zaol", "français": "ma table"}
+{"breton": "ar c'haier", "français": "le cahier"}
+{"breton": "ar c'haierou", "français": "les cahiers"}
+{"breton": "ar c'hreion", "français": "le crayon"}
+{"breton": "ar c'hreionou", "français": "les crayons"}
+{"breton": "ar paper", "français": "le papier"}
+{"breton": "ar paperou", "français": "les papiers"}
+{"breton": "ar prenestr", "français": "la fenêtre"}
+{"breton": "ar prenestrou", "français": "les fenêtres"}
+{"breton": "an tad", "français": "le père"}
+{"breton": "an tadou", "français": "les pères"}
+{"breton": "ar ger", "français": "le mot"}
+{"breton": "ar geriou", "français": "les mots"}
+{"breton": "ar gwele", "français": "le lit"}
+{"breton": "ar gweleou", "français": "les lits"}
+{"breton": "ar bank", "français": "le banc"}
+{"breton": "ar bankou", "français": "les bancs"}
+{"breton": "ar marc'had", "français": "le marché"}
+{"breton": "ar marc'hadou", "français": "les marchés"}
+{"breton": "an hent", "français": "la route"}
+{"breton": "an hentou", "français": "les routes"}
+{"breton": "an ano", "français": "le nom"}
+{"breton": "an anoiou", "français": "les noms"}
+{"breton": "al levr", "français": "le livre"}
+{"breton": "al levriou", "français": "les livres"}
+{"breton": "ar gentel", "français": "la leçon"}
+{"breton": "ar c'henteliou", "français": "les leçons"}
+{"breton": "ar gador", "français": "la chaise"}
+{"breton": "ar c'hadoriou", "français": "les chaises"}
+{"breton": "ar bluenn", "français": "la plume"}
+{"breton": "ar pluennou", "français": "les plumes"}
+{"breton": "an taoliou", "français": "les tables"}
+{"breton": "an daolenn du", "français": "le tableau noir"}
+{"breton": "an taolennou du", "français": "les tableaux noirs"}
+{"breton": "ar c'hodell", "français": "la poche"}
+{"breton": "ar godellou", "français": "les poches"}
+{"breton": "ar werenn", "français": "le verre"}
+{"breton": "ar gwerennou", "français": "les verres"}
+{"breton": "ar voest", "français": "la boîte"}
+{"breton": "ar boestou", "français": "les boîtes"}
+{"breton": "ar voger", "français": "le mur"}
+{"breton": "ar mogeriou", "français": "les murs"}
+{"breton": "ar mammou", "français": "les mères"}
+{"breton": "an nor", "français": "la porte"}
+{"breton": "an doriou", "français": "les portes"}
+{"breton": "an armel", "français": "l'armoire"}
+{"breton": "an armeliou", "français": "les armoires"}
+{"breton": "al leur-di", "français": "le plancher"}
+{"breton": "al leuriou-ti", "français": "les planchers"}
+{"breton": "ar chupenn", "français": "la veste"}
+{"breton": "ar chupennou", "français": "les vestes"}
+{"breton": "ya", "français": "oui"}
+{"breton": "aze", "français": "là"}
+{"breton": "nann", "français": "non"}
+{"breton": "setu aze", "français": "voilà"}
+{"breton": "eo", "français": "si"}
+{"breton": "d'in", "français": "à moi"}
+{"breton": "amañ", "français": "ici"}
+{"breton": "petra eo se ?", "français": "qu'est-ce cela ?"}
+{"breton": "setu amañ", "français": "voici"}
+{"breton": "pelec'h emañ ?", "français": "où est ? où sont ?"}
+{"breton": "ha", "français": "et"}
+{"breton": "aze emañ", "français": "là est, là sont"}
+{"breton": "an ti", "français": "la maison"}
+{"breton": "ar c'hi", "français": "le chien"}
+{"breton": "eun ti", "français": "une maison"}
+{"breton": "eun hent", "français": "une route"}
+{"breton": "eul levr", "français": "un livre"}
+{"breton": "eur vamm", "français": "une mère"}
+{"breton": "eur c'hi", "français": "un chien"}
+{"breton": "bara", "français": "du pain"}
+{"breton": "kig", "français": "de la viande"}
+{"breton": "gwin", "français": "du vin"}
+{"breton": "eun tamm bara", "français": "un morceau de pain"}
+{"breton": "hent an ti", "français": "la route de la maison"}
+{"breton": "hent ti an tad", "français": "la route de la maison du père"}
+{"breton": "gwelout a ran", "français": "je vois"}
+{"breton": "gwelout a rez", "français": "tu vois"}
+{"breton": "gwelout a ra", "français": "il (elle) voit"}
+{"breton": "gwelout a reomp", "français": "nous voyons"}
+{"breton": "gwelout a rit", "français": "vous voyez"}
+{"breton": "gwelout a reont", "français": "ils (elles) voient"}
+{"breton": "gwelout a reer", "français": "on voit"}
+{"breton": "ha gwelout a ran ?", "français": "vois-je ?"}
+{"breton": "ha gwelout a rez ?", "français": "vois-tu ?"}
+{"breton": "ha gwelout a ra ?", "français": "voit-il (elle) ?"}
+{"breton": "ha gwelout a reomp ?", "français": "voyons-nous ?"}
+{"breton": "ha gwelout a rit ?", "français": "voyez-vous ?"}
+{"breton": "ha gwelout a reont ?", "français": "voient-ils (elles) ?"}
+{"breton": "ha gwelout a reer ?", "français": "voit-on ?"}
+{"breton": "gwelout", "français": "voir"}
+{"breton": "kemerout", "français": "prendre"}
+{"breton": "serri", "français": "fermer"}
+{"breton": "digeri", "français": "ouvrir"}
+{"breton": "diskouez", "français": "montrer"}
+{"breton": "gwelit !", "français": "voyez !"}
+{"breton": "kemerit !", "français": "prenez !"}
+{"breton": "serrit !", "français": "fermez !"}
+{"breton": "digorit !", "français": "ouvrez !"}
+{"breton": "diskouezit !", "français": "montrez !"}
+{"breton": "Gwelout a rit ?", "français": "Voyez-vous ?"}
+{"breton": "Pelec'h emañ ar c'hi", "français": "Où est le chien ?"}
+{"breton": "Aze emañ", "français": "Il est là"}
+{"breton": "Yann", "français": "Jean"}
+{"breton": "ar Breizad", "français": "le Breton"}
+{"breton": "ar Gall", "français": "le Français"}
+{"breton": "ar brezoneg", "français": "le breton"}
+{"breton": "ar galleg", "français": "le français"}
+{"breton": "ar skol", "français": "l'école"}
+{"breton": "an tog", "français": "le chapeau"}
+{"breton": "al liou", "français": "la couleur, l'encre"}
+{"breton": "moan", "français": "mince"}
+{"breton": "naet", "français": "propre"}
+{"breton": "kempenn", "français": "propre"}
+{"breton": "louz", "français": "sale"}
+{"breton": "gwenn", "français": "blanc"}
+{"breton": "du", "français": "noir"}
+{"breton": "ruz", "français": "rouge"}
+{"breton": "melen", "français": "jaune"}
+{"breton": "glas", "français": "bleu, vert"}
+{"breton": "brezonek", "français": "breton"}
+{"breton": "gallek", "français": "français"}
+{"breton": "bras", "français": "grand"}
+{"breton": "bihan", "français": "petit"}
+{"breton": "hir", "français": "long"}
+{"breton": "berr", "français": "court"}
+{"breton": "teo", "français": "épais"}
+{"breton": "tano", "français": "mince"}
+{"breton": "komz", "français": "parler"}
+{"breton": "kompren", "français": "comprendre"}
+{"breton": "goulenn", "français": "demander"}
+{"breton": "respont", "français": "répondre"}
+{"breton": "gwer", "français": "vert"}
+{"breton": "ne... ket, n'... ket", "français": "ne...pas"}
+{"breton": "ivez", "français": "aussi"}
+{"breton": "bremañ", "français": "maintenant"}
+{"breton": "goude", "français": "après"}
+{"breton": "war", "français": "sur"}
+{"breton": "dindan", "français": "sous"}
+{"breton": "gant", "français": "avec"}
+{"breton": "skriva", "français": "écrire"}
+{"breton": "merka", "français": "marquer"}
+{"breton": "diverka", "français": "effacer"}
+{"breton": "studia", "français": "étudier"}
+{"breton": "eul levr bras", "français": "un grand livre"}
+{"breton": "levriou bras", "français": "de grands livres"}
+{"breton": "ar voest ruz", "français": "la boîte rouge"}
+{"breton": "boestou ruz", "français": "les boîtes rouges"}
+{"breton": "Breiziz", "français": "les Bretons"}
+{"breton": "me a zo", "français": "je suis"}
+{"breton": "te a zo", "français": "tu es"}
+{"breton": "heñ a zo", "français": "il est"}
+{"breton": "hi a zo", "français": "elle est"}
+{"breton": "ni a zo", "français": "nous sommes"}
+{"breton": "c'houi a zo", "français": "vous êtes"}
+{"breton": "i a zo", "français": "ils (elles) sont"}
+{"breton": "an tog a zo bras", "français": "le chapeau est grand"}
+{"breton": "bras eo an tog", "français": "le chapeau est grand"}
+{"breton": "ar voger a zo gwenn", "français": "le mur est blanc"}
+{"breton": "gwenn eo ar voger", "français": "le mur est blanc"}
+{"breton": "an tog n'eo ket bras", "français": "le chapeau n'est pas grand"}
+{"breton": "n'eo ket gwenn ar voger", "français": "le mur n'est pas blanc"}
+{"breton": "Per", "français": "Pierre"}
+{"breton": "Breiz", "français": "la Bretagne"}
+{"breton": "Bro-C'hall", "français": "la France"}
+{"breton": "Bro-Saoz", "français": "l'Angleterre"}
+{"breton": "an istor", "français": "l'histoire"}
+{"breton": "ar bed", "français": "le monde"}
+{"breton": "ar vro", "français": "le pays"}
+{"breton": "an douar", "français": "la terre"}
+{"breton": "ar maez", "français": "la campagne"}
+{"breton": "ar c'hoad", "français": "le bois"}
+{"breton": "an dour", "français": "l'eau"}
+{"breton": "ar mor", "français": "la mer"}
+{"breton": "an aod", "français": "le rivage"}
+{"breton": "ar stêr", "français": "la rivière"}
+{"breton": "ar gartenn", "français": "la carte"}
+{"breton": "uhel", "français": "haut"}
+{"breton": "izel", "français": "bas"}
+{"breton": "kroumm", "français": "courbe"}
+{"breton": "eeun", "français": "droit"}
+{"breton": "doun", "français": "profond"}
+{"breton": "unan", "français": "un"}
+{"breton": "daou", "français": "deux"}
+{"breton": "diou", "français": "deux"}
+{"breton": "tri", "français": "trois"}
+{"breton": "teir", "français": "trois"}
+{"breton": "pevar", "français": "quatre"}
+{"breton": "peder", "français": "quatre"}
+{"breton": "pemp", "français": "cinq"}
+{"breton": "c'houec'h", "français": "six"}
+{"breton": "seiz", "français": "sept"}
+{"breton": "eiz", "français": "huit"}
+{"breton": "nao", "français": "neuf"}
+{"breton": "dek", "français": "dix"}
+{"breton": "e-kichen", "français": "auprès de"}
+{"breton": "ouz", "français": "contre"}
+{"breton": "dirak", "français": "devant"}
+{"breton": "a-dreñv", "français": "derrière"}
+{"breton": "e-barz", "français": "dans, dedans"}
+{"breton": "a-raok", "français": "avant (de)"}
+{"breton": "dija", "français": "déjà"}
+{"breton": "c'hoaz", "français": "encore"}
+{"breton": "piou ?", "français": "qui ?"}
+{"breton": "pet ?", "français": "combien (de) ?"}
+{"breton": "Pet kador a zo en ti", "français": "Combien de chaises y a-t-il dans la maison ?"}
+{"breton": "Seiz kador a zo en ti", "français": "Il y a sept chaises dans la maison"}
+{"breton": "Serri a ran", "français": "Je ferme"}
+{"breton": "me a serr", "français": "je ferme"}
+{"breton": "te a serr", "français": "tu fermes"}
+{"breton": "heñ a serr", "français": "il ferme"}
+{"breton": "hi a serr", "français": "elle ferme"}
+{"breton": "ni a serr", "français": "nous fermons"}
+{"breton": "c'houi a serr", "français": "vous fermez"}
+{"breton": "i a serr", "français": "ils (elles) ferment"}
+{"breton": "Serri", "français": "fermer"}
+{"breton": "serret", "français": "fermé"}
+{"breton": "Kemerout", "français": "prendre"}
+{"breton": "kemeret", "français": "pris"}
+{"breton": "me a gemer", "français": "je prends"}
+{"breton": "te a gemer", "français": "tu prends"}
+{"breton": "heñ a gemer", "français": "il prend"}
+{"breton": "hi a gemer", "français": "elle prend"}
+{"breton": "ni a gemer", "français": "nous prenons"}
+{"breton": "c'houi a gemer", "français": "vous prenez"}
+{"breton": "i a gemer", "français": "ils (elles) prennent"}
+{"breton": "Prena", "français": "acheter"}
+{"breton": "Tresa", "français": "dessiner"}
+{"breton": "Garmi", "français": "crier"}
+{"breton": "Gwelout", "français": "voir"}
+{"breton": "Bale", "français": "se promener"}
+{"breton": "Mirout", "français": "garder"}
+{"breton": "Deski", "français": "apprendre"}
+{"breton": "bennoz", "français": "bénédiction"}
+{"breton": "telenn", "français": "harpe"}
+{"breton": "gwrizienn", "français": "racine"}
+{"breton": "pajenn", "français": "page"}
+{"breton": "mez", "français": "honte"}
+{"breton": "gloaz", "français": "blessure"}
+{"breton": "kroaz", "français": "croix"}
+{"breton": "geun", "français": "marais"}
+{"breton": "truez", "français": "pitié"}
+{"breton": "beaj", "français": "voyage"}
+{"breton": "pobl", "français": "peuple"}
+{"breton": "kontadenn", "français": "conte"}
+{"breton": "an Aotrou", "français": "Monsieur"}
+{"breton": "an Itron", "français": "Madame"}
+{"breton": "an Dimezell", "français": "Mademoiselle"}
+{"breton": "ar sal", "français": "la salle"}
+{"breton": "ar gambr", "français": "la chambre"}
+{"breton": "ar gwer", "français": "le verre"}
+{"breton": "an houarn", "français": "le fer"}
+{"breton": "an dir", "français": "l'acier"}
+{"breton": "al ler", "français": "le cuir"}
+{"breton": "ar maen", "français": "la pierre"}
+{"breton": "an aour", "français": "l'or"}
+{"breton": "an arc'hant", "français": "l'argent"}
+{"breton": "ar butun", "français": "le tabac"}
+{"breton": "aes", "français": "facile"}
+{"breton": "diaes", "français": "difficile"}
+{"breton": "kreñv", "français": "fort"}
+{"breton": "gwan", "français": "faible"}
+{"breton": "pounner", "français": "lourd"}
+{"breton": "skañv", "français": "léger"}
+{"breton": "paour", "français": "pauvre"}
+{"breton": "pinvidik", "français": "riche"}
+{"breton": "mat", "français": "bon, bien"}
+{"breton": "met", "français": "mais"}
+{"breton": "hogen", "français": "mais"}
+{"breton": "tre", "français": "très"}
+{"breton": "kalz", "français": "beaucoup"}
+{"breton": "nebeut", "français": "peu"}
+{"breton": "hizio", "français": "aujourd'hui"}
+{"breton": "betek", "français": "jusqu'à"}
+{"breton": "koulskoude", "français": "cependant"}
+{"breton": "da", "français": "à ; de ; pour"}
+{"breton": "ober", "français": "faire"}
+{"breton": "mont", "français": "aller"}
+{"breton": "dont", "français": "venir"}
+{"breton": "selaou", "français": "écouter"}
+{"breton": "klevout", "français": "entendre"}
+{"breton": "sellout", "français": "regarder"}
+{"breton": "lavarout", "français": "dire"}
+{"breton": "tevel", "français": "se taire"}
+{"breton": "sevel", "français": "(se) lever"}
+{"breton": "lenn", "français": "lire"}
+{"breton": "konta", "français": "compter, conter"}
+{"breton": "butuni", "français": "fumer"}
+{"breton": "gant petra eo graet ?", "français": "en quoi est fait ?"}
+{"breton": "unnek", "français": "11"}
+{"breton": "daouzek", "français": "12"}
+{"breton": "trizek", "français": "13"}
+{"breton": "pevarzek", "français": "14"}
+{"breton": "pemzek", "français": "15"}
+{"breton": "c'houezek", "français": "16"}
+{"breton": "seitek", "français": "17"}
+{"breton": "triouec'h", "français": "18"}
+{"breton": "naontek", "français": "19"}
+{"breton": "ugent", "français": "20"}
+{"breton": "kenta", "français": "premier"}
+{"breton": "diweza", "français": "dernier"}
+{"breton": "An Aotrou Riou a dav", "français": "Monsieur Riou se tait"}
+{"breton": "Savit, Aotrou Riou !", "français": "Levez-vous, Monsieur Riou !"}
+{"breton": "aes-tre", "français": "très facile"}
+{"breton": "nebeut-tre", "français": "très peu"}
+{"breton": "Mari", "français": "Marie"}
+{"breton": "Katell", "français": "Catherine"}
+{"breton": "Marc'harid", "français": "Marguerite"}
+{"breton": "Herri", "français": "Henri"}
+{"breton": "Paol", "français": "Paul"}
+{"breton": "an amzer", "français": "le temps"}
+{"breton": "ar montr", "français": "la montre"}
+{"breton": "ar montr-mañ", "français": "cette montre-ci"}
+{"breton": "ar montr-se", "français": "cette montre-là"}
+{"breton": "ar montr-hont", "français": "cette montre là-bas"}
+{"breton": "ar bloaz", "français": "l'an"}
+{"breton": "ar bloavez", "français": "l'année"}
+{"breton": "ar miz", "français": "le mois"}
+{"breton": "ar sizun", "français": "la semaine"}
+{"breton": "an deiz", "français": "le jour"}
+{"breton": "an devez", "français": "la journée"}
+{"breton": "an eur", "français": "l'heure"}
+{"breton": "ar munud", "français": "la minute"}
+{"breton": "ar c'hard-eur", "français": "le quart-d'heure"}
+{"breton": "an hanter-eur", "français": "la demi-heure"}
+{"breton": "an noz", "français": "la nuit"}
+{"breton": "sklaer", "français": "clair"}
+{"breton": "teñval", "français": "sombre"}
+{"breton": "brao", "français": "beau, joli"}
+{"breton": "kaer", "français": "beau"}
+{"breton": "fall", "français": "mauvais"}
+{"breton": "tomm", "français": "chaud"}
+{"breton": "yen", "français": "froid"}
+{"breton": "alies", "français": "souvent"}
+{"breton": "a-walc'h", "français": "assez"}
+{"breton": "a-wechou", "français": "quelquefois"}
+{"breton": "e-pad", "français": "pendant"}
+{"breton": "nemet", "français": "moins"}
+{"breton": "dec'h", "français": "hier"}
+{"breton": "warc'hoaz", "français": "demain"}
+{"breton": "na(g)", "français": "ni"}
+{"breton": "pe", "français": "ou"}
+{"breton": "pe ?", "français": "quel(s) ? quelle(s) ?"}
+{"breton": "peseurt ?", "français": "quelle(s) sorte(s) de ?"}
+{"breton": "petore ?", "français": "quelle(s) sorte(s) de ?"}
+{"breton": "peur ?", "français": "quand ?"}
+{"breton": "pegoulz ?", "français": "quand ?"}
+{"breton": "me eo", "français": "c'est moi"}
+{"breton": "c'hoarzin", "français": "rire"}
+{"breton": "gouela", "français": "pleurer"}
+{"breton": "labourat", "français": "travailler"}
+{"breton": "kousket", "français": "dormir"}
+{"breton": "dihuni", "français": "(se) réveiller"}
+{"breton": "padout", "français": "durer"}
+{"breton": "dilun", "français": "lundi"}
+{"breton": "al lun", "français": "le lundi"}
+{"breton": "dimeurz", "français": "mardi"}
+{"breton": "ar meurz", "français": "le mardi"}
+{"breton": "dimerc'her", "français": "mercredi"}
+{"breton": "ar merc'her", "français": "le m."}
+{"breton": "diriaou", "français": "jeudi"}
+{"breton": "ar yaou", "français": "le jeudi"}
+{"breton": "digwener", "français": "vendredi"}
+{"breton": "ar gwener", "français": "le vendredi"}
+{"breton": "disadorn", "français": "samedi"}
+{"breton": "ar sadorn", "français": "le samedi"}
+{"breton": "disul", "français": "dimanche"}
+{"breton": "ar sul", "français": "le dimanc."}
+{"breton": "da lun", "français": "le lundi"}
+{"breton": "genver", "français": "janvier"}
+{"breton": "c'houevrer", "français": "février"}
+{"breton": "meurz", "français": "mars"}
+{"breton": "ebrel", "français": "avril"}
+{"breton": "mae", "français": "mai"}
+{"breton": "mezeven", "français": "juin"}
+{"breton": "gouere", "français": "juillet"}
+{"breton": "eost", "français": "août"}
+{"breton": "gwengolo", "français": "septembre"}
+{"breton": "here", "français": "octobre"}
+{"breton": "du", "français": "novembre"}
+{"breton": "kerzu", "français": "décembre"}
+{"breton": "unan-war-nugent", "français": "21"}
+{"breton": "daou-war-nugent", "français": "22"}
+{"breton": "tri-war-nugent", "français": "23"}
+{"breton": "tregont", "français": "30"}
+{"breton": "unan ha tregont", "français": "31"}
+{"breton": "daou-ugent", "français": "40"}
+{"breton": "unan ha daou-ugent", "français": "41"}
+{"breton": "hanter-kant", "français": "50"}
+{"breton": "tri-ugent", "français": "60"}
+{"breton": "dek ha tri-ugent", "français": "70"}
+{"breton": "pevar-ugent", "français": "80"}
+{"breton": "dek ha pevar-ugent", "français": "90"}
+{"breton": "kant", "français": "100"}
+{"breton": "daou c'hant", "français": "200"}
+{"breton": "mil", "français": "1000"}
+{"breton": "eur milion", "français": "1.000.000"}
+{"breton": "eil diweza", "français": "avant-dernier"}
+{"breton": "diou bluenn war-nugent", "français": "22 plumes"}
+{"breton": "seiz tog ha tri-ugent", "français": "67 chapeaux"}
+{"breton": "na gemerit ket !", "français": "ne prenez pas !"}
+{"breton": "na brenit ket !", "français": "n'achetez pas !"}
+{"breton": "na dresit ket !", "français": "ne dessinez pas !"}
+{"breton": "na c'houlennit ket !", "français": "ne demandez pas !"}
+{"breton": "na welit ket !", "français": "ne voyez pas !"}
+{"breton": "na vutunit ket !", "français": "ne fumez pas !"}
+{"breton": "na virit ket !", "français": "ne gardez pas !"}
+{"breton": "na zigorit ket !", "français": "n'ouvrez pas !"}
+{"breton": "na bras na bihan", "français": "ni grand ni petit"}
+{"breton": "an den", "français": "l'être humain"}
+{"breton": "ar vuhez", "français": "la vie"}
+{"breton": "ar maro", "français": "la mort"}
+{"breton": "an oad", "français": "l'âge"}
+{"breton": "an tiegez", "français": "la famille"}
+{"breton": "ar gwaz", "français": "l'homme"}
+{"breton": "ar vaouez", "français": "la femme"}
+{"breton": "ar pried", "français": "l'époux, l'épouse"}
+{"breton": "ar wreg", "français": "la femme (épouse)"}
+{"breton": "ar mab", "français": "le fils"}
+{"breton": "ar verc'h", "français": "la fille"}
+{"breton": "ar breur", "français": "le frère"}
+{"breton": "ar c'hoar", "français": "la sœur"}
+{"breton": "an tad-koz", "français": "le grand-père"}
+{"breton": "ar vamm-goz", "français": "la grand'mère"}
+{"breton": "an eontr", "français": "l'oncle"}
+{"breton": "ar voereb", "français": "la tante"}
+{"breton": "ar c'henderv", "français": "le cousin"}
+{"breton": "ar geniterv", "français": "la cousine"}
+{"breton": "an tad-kaer", "français": "le beau-père"}
+{"breton": "ar vamm-gaer", "français": "la belle-mère"}
+{"breton": "ar bugel", "français": "l'enfant"}
+{"breton": "ar paotr", "français": "le garçon"}
+{"breton": "ar plac'h", "français": "la fille"}
+{"breton": "ar c'har", "français": "le parent"}
+{"breton": "ar gêr", "français": "la ville"}
+{"breton": "ar blijadur", "français": "le plaisir"}
+{"breton": "beo", "français": "vivant"}
+{"breton": "maro", "français": "mort"}
+{"breton": "yaouank", "français": "jeune"}
+{"breton": "koz", "français": "vieux"}
+{"breton": "laouen", "français": "gai"}
+{"breton": "trist", "français": "triste"}
+{"breton": "koant", "français": "joli"}
+{"breton": "divalo", "français": "laid"}
+{"breton": "skuiz", "français": "fatigué"}
+{"breton": "diskuiz", "français": "reposé"}
+{"breton": "siouaz", "français": "hélas"}
+{"breton": "eta", "français": "donc"}
+{"breton": "all", "français": "autre"}
+{"breton": "ebet", "français": "aucun, pas de"}
+{"breton": "bemdeiz", "français": "chaque jour"}
+{"breton": "bemnoz", "français": "chaque nuit"}
+{"breton": "neuze", "français": "alors"}
+{"breton": "ouspenn", "français": "en outre"}
+{"breton": "hepken", "français": "seulement"}
+{"breton": "evel", "français": "comme"}
+{"breton": "daoust ha ?", "français": "est-ce que ?"}
+{"breton": "rak", "français": "car"}
+{"breton": "avat", "français": "cependant"}
+{"breton": "er gêr, d'ar g.", "français": "à la maison"}
+{"breton": "e", "français": "son, sa, ses (possesseur masculin)"}
+{"breton": "genel", "français": "mettre au monde"}
+{"breton": "mervel", "français": "mourir"}
+{"breton": "ankounac'haat", "français": "oublier"}
+{"breton": "karout", "français": "aimer"}
+{"breton": "kregi", "français": "commencer"}
+{"breton": "echui", "français": "finir"}
+{"breton": "gallout", "français": "pouvoir"}
+{"breton": "kasaat", "français": "haïr"}
+{"breton": "kregi en tog", "français": "saisir le chapeau"}
+{"breton": "Me a wel", "français": "je vois"}
+{"breton": "klevout a ran", "français": "j'entends"}
+{"breton": "digeri a ran", "français": "j'ouvre"}
+{"breton": "me a zigor", "français": "j'ouvre"}
+{"breton": "an nor a zigoran da Ber", "français": "j'ouvre la porte à Pierre"}
+{"breton": "an nor a zigorez da Ber", "français": "tu ouvres la porte à Pierre"}
+{"breton": "an nor a zigor da Ber", "français": "il (elle) ouvre la porte à Pierre"}
+{"breton": "an nor a zigoromp da Ber", "français": "nous ouvrons la porte à Pierre"}
+{"breton": "an nor a zigorit da Ber", "français": "vous ouvrez la porte à Pierre"}
+{"breton": "an nor a zigoront da Ber", "français": "ils (elles) ouvrent la porte à Pierre"}
+{"breton": "an nor a zigorer da Ber", "français": "on ouvre la porte à Pierre"}
+{"breton": "da Ber e tigoran an nor", "français": "j'ouvre la porte à Pierre"}
+{"breton": "da Ber e tigorez an nor", "français": "tu ouvres la porte à Pierre"}
+{"breton": "da Ber e tigor an nor", "français": "il (elle) ouvre la porte à Pierre"}
+{"breton": "da Ber e tigoromp an nor", "français": "nous ouvrons la porte à Pierre"}
+{"breton": "da Ber e tigorit an nor", "français": "vous ouvrez la porte à Pierre"}
+{"breton": "da Ber e tigoront an nor", "français": "ils (elles) ouvrent la porte à Pierre"}
+{"breton": "da Ber e tigorer an nor", "français": "on ouvre la porte à Pierre"}
+{"breton": "ne zigoran ket", "français": "je n'ouvre pas"}
+{"breton": "me a zigor an nor da Ber", "français": "c'est moi qui ouvre la porte à Pierre"}
+{"breton": "an nor a zigoran da Ber", "français": "c'est la porte que j'ouvre à Pierre"}
+{"breton": "da Ber e tigoran a nor", "français": "c'est à Pierre que j'ouvre la porte"}
+{"breton": "me a v/bez trist alies", "français": "Je suis souvent triste"}
+{"breton": "te a vez trist alies", "français": "tu es souvent triste"}
+{"breton": "heñ (hi) a vez trist alies", "français": "il (elle) est souvent triste"}
+{"breton": "ni a vez trist alies", "français": "nous sommes souvent triste"}
+{"breton": "c'houi a vez trist alies", "français": "vous êtes souvent triste"}
+{"breton": "i a vez trist alies", "français": "ils (elles) sont souvent triste"}
+{"breton": "alies e v/bezan trist", "français": "Je suis souvent triste"}
+{"breton": "alies e vezez trist", "français": "tu es souvent triste"}
+{"breton": "alies e vez trist", "français": "il (elle) est souvent triste"}
+{"breton": "alies e vezomp trist", "français": "nous sommes souvent triste"}
+{"breton": "alies e vezit trist", "français": "vous êtes souvent triste"}
+{"breton": "alies e vezont trist", "français": "ils (elles) sont souvent triste"}
+{"breton": "ne vezan ket trist alies", "français": "je ne suis pas souvent triste"}
+{"breton": "Montroulez", "français": "Morlaix"}
+{"breton": "e ti", "français": "chez"}
+{"breton": "e ti", "français": "à la maison de"}
+{"breton": "Kastell-Paol", "français": "St-Pol-de-Léon"}
+{"breton": "Sant-Brieg", "français": "St-Brieuc"}
+{"breton": "ar yezadur", "français": "grammaire"}
+{"breton": "ez an", "français": "je vais"}
+{"breton": "a adlennan", "français": "je relis"}
+{"breton": "ez it", "français": "allez-vous"}
+{"breton": "Loeiz", "français": "Louis"}
+{"breton": "Erwan", "français": "Yves"}
+{"breton": "an tan", "français": "le feu"}
+{"breton": "an oabl", "français": "le firmament"}
+{"breton": "ar stered", "français": "les étoiles"}
+{"breton": "an heol", "français": "le soleil"}
+{"breton": "al loar", "français": "la lune"}
+{"breton": "ar goulou", "français": "la lumière"}
+{"breton": "ar c'houmoul", "français": "les nuages"}
+{"breton": "ar sklerijenn", "français": "la clarté"}
+{"breton": "an deñvalijenn", "français": "l'obscurité"}
+{"breton": "al luc'hed", "français": "les éclairs"}
+{"breton": "ar c'hurun", "français": "le tonnerre"}
+{"breton": "an avel", "français": "le vent"}
+{"breton": "ar glao", "français": "la pluie"}
+{"breton": "ar barrad-glao", "français": "l'averse"}
+{"breton": "ar barr-amzer", "français": "la tempête"}
+{"breton": "an arne", "français": "l'orage"}
+{"breton": "ar vrumenn", "français": "la brume"}
+{"breton": "an nevez-amzer", "français": "le printemps"}
+{"breton": "an hañv", "français": "l'été"}
+{"breton": "an diskar-amzer", "français": "l'automne"}
+{"breton": "ar goañv", "français": "l'hiver"}
+{"breton": "ar c'hreisteiz", "français": "le sud ; midi"}
+{"breton": "an hanternoz", "français": "le nord ; minuit"}
+{"breton": "ar sav-heol", "français": "l'est"}
+{"breton": "ar c'huz-heol", "français": "l'ouest"}
+{"breton": "an endervez", "français": "l'après-midi"}
+{"breton": "an abardaez", "français": "le soir"}
+{"breton": "an ezomm", "français": "le besoin"}
+{"breton": "an dro", "français": "le tour"}
+{"breton": "fur", "français": "sage"}
+{"breton": "drouk", "français": "méchant"}
+{"breton": "gleb", "français": "mouillé"}
+{"breton": "sec'h", "français": "sec"}
+{"breton": "krog", "français": "commencé"}
+{"breton": "echu", "français": "fini"}
+{"breton": "nevez", "français": "nouveau"}
+{"breton": "ret", "français": "nécessaire"}
+{"breton": "abred", "français": "tôt"}
+{"breton": "diwezat", "français": "tard"}
+{"breton": "bremaik", "français": "tout-à-l'heure"}
+{"breton": "e-tro", "français": "vers"}
+{"breton": "er-maez", "français": "au-dehors"}
+{"breton": "abaoe", "français": "depuis"}
+{"breton": "adarre", "français": "de nouveau"}
+{"breton": "ken", "français": "si, tellement"}
+{"breton": "zoken", "français": "même"}
+{"breton": "evit", "français": "pour"}
+{"breton": "pegen !", "français": "combien !"}
+{"breton": "pa", "français": "quand"}
+{"breton": "diskar", "français": "abattre"}
+{"breton": "koueza", "français": "tomber"}
+{"breton": "gervel", "français": "appeler"}
+{"breton": "kuzat", "français": "cacher"}
+{"breton": "golei", "français": "couvrir"}
+{"breton": "tomma", "français": "chauffer"}
+{"breton": "tremen", "français": "passer"}
+{"breton": "c'houeza", "français": "souffler"}
+{"breton": "pa welan", "français": "quand je vois"}
+{"breton": "pa 'z an", "français": "quand je vais"}
+{"breton": "ar c'houmoul", "français": "les nuages (en général)"}
+{"breton": "eur goumoulenn", "français": "un nuage"}
+{"breton": "eur steredenn", "français": "une étoile"}
+{"breton": "paour e oan", "français": "j'étais pauvre"}
+{"breton": "e voen", "français": "je fus pauvre"}
+{"breton": "e vin", "français": "je serai pauvre"}
+{"breton": "e vefen (vijen)", "français": "je serais pauvre"}
+{"breton": "me a zo bet bihan", "français": "j'ai été petit"}
+{"breton": "bihan oun bet", "français": "j'ai été petit"}
+{"breton": "aze edon", "français": "j'étais là"}
+{"breton": "aze edos", "français": "tu étais là"}
+{"breton": "aze edo", "français": "il (elle) était là"}
+{"breton": "aze edomp", "français": "nous étions là"}
+{"breton": "aze edoc'h", "français": "vous étiez là"}
+{"breton": "aze edont", "français": "ils (elles) étaient là"}
+{"breton": "aze edod", "français": "on était là"}
+{"breton": "alies e vezen skuiz", "français": "j'étais souvent fatigué"}
+{"breton": "alies e vezes skuiz", "français": "tu étais souvent fatigué"}
+{"breton": "alies e veze skuiz", "français": "il (elle) était souvent fatigué"}
+{"breton": "alies e vezemp skuiz", "français": "nous étions souvent fatigués"}
+{"breton": "alies e vezec'h skuiz", "français": "vous étiez souvent fatigués"}
+{"breton": "alies e vezent skuiz", "français": "ils (elles) étaient souvent fatigués"}
+{"breton": "alies e vezed skuiz", "français": "on était souvent fatigué"}
+{"breton": "am boa", "français": "j'avais"}
+{"breton": "am boe", "français": "j'eus"}
+{"breton": "am bo", "français": "j'aurai"}
+{"breton": "am befe (bije)", "français": "j'aurais (une table)"}
+{"breton": "gantañ", "français": "avec lui"}
+{"breton": "e (ez, ec'h)", "français": "que"}
+{"breton": "kaout riou", "français": "avoir froid"}
+{"breton": "riou", "français": "le froid que l'on ressent"}
+{"breton": "yen eo an amzer", "français": "le temps est froid"}
+{"breton": "riou am eus", "français": "j'ai froid"}
+{"breton": "al lec'h", "français": "l'endroit"}
+{"breton": "an houl", "français": "les vagues"}
+{"breton": "an traez", "français": "le sable"}
+{"breton": "an enezenn", "français": "l'île"}
+{"breton": "ar porz", "français": "le port"}
+{"breton": "ar c'hae", "français": "le quai"}
+{"breton": "ar roc'h", "français": "le rocher"}
+{"breton": "ar vag", "français": "la barque"}
+{"breton": "al lestr", "français": "le navire"}
+{"breton": "ar wern", "français": "le mât"}
+{"breton": "ar ouel", "français": "la voile"}
+{"breton": "ar stur", "français": "le gouvernail"}
+{"breton": "an eor", "français": "l'ancre"}
+{"breton": "ar roued", "français": "le filet"}
+{"breton": "al linenn", "français": "la ligne"}
+{"breton": "ar gorden", "français": "la corde"}
+{"breton": "ar chadenn", "français": "la chaîne"}
+{"breton": "ar martolod", "français": "le marin"}
+{"breton": "ar pesketaer", "français": "le pêcheur"}
+{"breton": "ar perc'henn", "français": "le propriétaire"}
+{"breton": "ar pesk", "français": "le poisson"}
+{"breton": "ar baner", "français": "le panier"}
+{"breton": "ar bern", "français": "le tas"}
+{"breton": "al lizer", "français": "la lettre"}
+{"breton": "al lenn", "français": "le lac"}
+{"breton": "ar beure", "français": "le matin"}
+{"breton": "ar ganaouenn", "français": "la chanson"}
+{"breton": "ar gontadenn", "français": "le conte"}
+{"breton": "ar souez", "français": "l'étonnement"}
+{"breton": "ar wirionez", "français": "la vérité"}
+{"breton": "ar c'hoant", "français": "le désir"}
+{"breton": "ar wech", "français": "la fois"}
+{"breton": "fresk", "français": "frais"}
+{"breton": "leun", "français": "plein"}
+{"breton": "goullo", "français": "vide"}
+{"breton": "gouest", "français": "capable"}
+{"breton": "ampart", "français": "adroit"}
+{"breton": "a, eus", "français": "de"}
+{"breton": "ma", "français": "si ; que"}
+{"breton": "pell", "français": "loin"}
+{"breton": "tost", "français": "près"}
+{"breton": "diouz", "français": "de (avec idée d'éloignement)"}
+{"breton": "e-kreiz", "français": "au milieu de"}
+{"breton": "en em laza", "français": "se tuer"}
+{"breton": "kana", "français": "chanter"}
+{"breton": "lakaat", "français": "mettre"}
+{"breton": "chom", "français": "rester"}
+{"breton": "degouezout", "français": "arriver"}
+{"breton": "kerzout", "français": "marcher"}
+{"breton": "dougen", "français": "porter"}
+{"breton": "rankout", "français": "être obligé de"}
+{"breton": "tapout", "français": "attraper"}
+{"breton": "pesketa", "français": "pêcher"}
+{"breton": "leunia", "français": "remplir"}
+{"breton": "goullonderi", "français": "vider"}
+{"breton": "dastum", "français": "(r)amasser"}
+{"breton": "teurel", "français": "lancer"}
+{"breton": "rei", "français": "donner"}
+{"breton": "trei", "français": "tourner"}
+{"breton": "skei", "français": "frapper, jeter"}
+{"breton": "gortoz", "français": "attendre"}
+{"breton": "ma teuan", "français": "si je viens"}
+{"breton": "ma 'z an", "français": "si je vais"}
+{"breton": "an dud a zigoras an nor", "français": "les gens ouvrirent la porte"}
+{"breton": "ar yec'hed", "français": "la santé"}
+{"breton": "ar c'hleñved", "français": "la maladie"}
+{"breton": "ar c'horf", "français": "le corps"}
+{"breton": "ar gwad", "français": "le sang"}
+{"breton": "ar c'hroc'hen", "français": "la peau"}
+{"breton": "ar penn", "français": "la tête"}
+{"breton": "ar bleo", "français": "les cheveux"}
+{"breton": "an tal", "français": "le front"}
+{"breton": "al lagad", "français": "l'œil"}
+{"breton": "ar skouarn", "français": "l'oreille"}
+{"breton": "ar fri", "français": "le nez"}
+{"breton": "ar genou", "français": "la bouche"}
+{"breton": "an dant", "français": "la dent"}
+{"breton": "an teod", "français": "la langue"}
+{"breton": "ar vuzell", "français": "la lèvre"}
+{"breton": "an elgez", "français": "le menton"}
+{"breton": "ar baro", "français": "la barbe"}
+{"breton": "an dremm", "français": "le visage"}
+{"breton": "ar gouzoug", "français": "le cou"}
+{"breton": "ar bruched", "français": "la poitrine"}
+{"breton": "ar skevent", "français": "les poumons"}
+{"breton": "ar galon", "français": "le cœur"}
+{"breton": "ar skoaz", "français": "l'épaule"}
+{"breton": "ar vrec'h", "français": "le bras"}
+{"breton": "an ezel", "français": "le membre"}
+{"breton": "ar c'hein", "français": "le dos"}
+{"breton": "ar c'hof", "français": "le ventre"}
+{"breton": "an dourn", "français": "la main"}
+{"breton": "ar biz", "français": "le doigt"}
+{"breton": "ar c'har", "français": "la jambe"}
+{"breton": "ar glin", "français": "le genou"}
+{"breton": "an troad", "français": "le pied"}
+{"breton": "an derzienn", "français": "la fièvre"}
+{"breton": "ar boan", "français": "la douleur, la peine"}
+{"breton": "ar glac'har", "français": "le chagrin"}
+{"breton": "ar medisin", "français": "le médecin"}
+{"breton": "yac'h", "français": "bien portant"}
+{"breton": "klañv", "français": "malade"}
+{"breton": "kalonek", "français": "courageux"}
+{"breton": "dehou", "français": "droit"}
+{"breton": "kleiz", "français": "gauche"}
+{"breton": "dall", "français": "aveugle"}
+{"breton": "mut", "français": "muet"}
+{"breton": "bouzar", "français": "sourd"}
+{"breton": "kamm", "français": "boiteux"}
+{"breton": "treut", "français": "maigre"}
+{"breton": "lart", "français": "gras"}
+{"breton": "ledan", "français": "large"}
+{"breton": "striz", "français": "étroit"}
+{"breton": "gwall", "français": "très"}
+{"breton": "kennebeut", "français": "non plus"}
+{"breton": "marteze", "français": "peut-être"}
+{"breton": "diwar", "français": "de"}
+{"breton": "penaos ?", "français": "comment ?"}
+{"breton": "perak ?", "français": "pourquoi ?"}
+{"breton": "debri", "français": "manger"}
+{"breton": "eva", "français": "boire"}
+{"breton": "anavezout", "français": "connaître"}
+{"breton": "kavout", "français": "trouver"}
+{"breton": "klemm", "français": "se plaindre"}
+{"breton": "c'hoarvezout", "français": "arriver (événement)"}
+{"breton": "terri", "français": "casser"}
+{"breton": "kredi", "français": "croire"}
+{"breton": "Kalz Bretoned a zo e Paris", "français": "il y a beaucoup de Bretons à Paris"}
+{"breton": "ar boued", "français": "la nourriture"}
+{"breton": "ar bleud", "français": "la farine"}
+{"breton": "ar bara", "français": "le pain"}
+{"breton": "ar c'hig", "français": "la viande"}
+{"breton": "al laez", "français": "le lait"}
+{"breton": "ar c'hoaven", "français": "la crème"}
+{"breton": "an dienn", "français": "la crème"}
+{"breton": "an amann", "français": "le beurre"}
+{"breton": "ar fourmaj", "français": "le fromage"}
+{"breton": "ar yod", "français": "la bouillie"}
+{"breton": "ar c'hrampouez", "français": "les crêpes"}
+{"breton": "ar gouign", "français": "le gâteau"}
+{"breton": "ar wastell", "français": "le gâteau"}
+{"breton": "an holen", "français": "le sel"}
+{"breton": "ar sistr", "français": "le cidre"}
+{"breton": "ar gwin", "français": "le vin"}
+{"breton": "ar gwinegr", "français": "le vinaigre"}
+{"breton": "an eoul", "français": "l'huile"}
+{"breton": "ar c'hafe", "français": "le café"}
+{"breton": "an te", "français": "le thé"}
+{"breton": "ar sukr", "français": "le sucre"}
+{"breton": "an tamm", "français": "le morceau"}
+{"breton": "ar banne", "français": "la goutte"}
+{"breton": "an naon", "français": "la faim"}
+{"breton": "ar sec'hed", "français": "la soif"}
+{"breton": "ar pred", "français": "le repas"}
+{"breton": "al lein", "français": "le petit déjeuner"}
+{"breton": "ar verenn", "français": "le déjeuner"}
+{"breton": "ar goan", "français": "le dîner"}
+{"breton": "ar gegin", "français": "la cuisine"}
+{"breton": "al loa", "français": "la cuiller"}
+{"breton": "ar fourchetez", "français": "la fourchette"}
+{"breton": "ar gontell", "français": "le couteau"}
+{"breton": "ar voutailh", "français": "la bouteille"}
+{"breton": "ar c'hustum", "français": "la coutume"}
+{"breton": "ar c'hiz", "français": "la mode, la façon"}
+{"breton": "kriz", "français": "cru"}
+{"breton": "poaz", "français": "cuit"}
+{"breton": "c'houek", "français": "doux"}
+{"breton": "trenk", "français": "aigre"}
+{"breton": "sall", "français": "salé"}
+{"breton": "c'houero", "français": "amer"}
+{"breton": "tener", "français": "tendre"}
+{"breton": "kalet", "français": "dur"}
+{"breton": "klouar", "français": "tiède"}
+{"breton": "lemm", "français": "aigu, coupant"}
+{"breton": "arabat", "français": "il ne faut pas"}
+{"breton": "hep", "français": "sans"}
+{"breton": "gant ma", "français": "pourvu que"}
+{"breton": "leina", "français": "déjeuner (matin)"}
+{"breton": "merenna", "français": "déjeuner (midi)"}
+{"breton": "koania", "français": "dîner"}
+{"breton": "poaza", "français": "cuire"}
+{"breton": "teuzi", "français": "fondre"}
+{"breton": "birvi", "français": "bouillir"}
+{"breton": "degas", "français": "apporter"}
+{"breton": "trouc'ha", "français": "couper"}
+{"breton": "torcha", "français": "essuyer"}
+{"breton": "lonka", "français": "avaler"}
+{"breton": "lipat", "français": "lécher"}
+{"breton": "gwalc'hi", "français": "laver"}
+{"breton": "kerc'hat", "français": "aller chercher"}
+{"breton": "plijout", "français": "plaire"}
+{"breton": "va", "français": "mon, ma, mes"}
+{"breton": "d'am", "français": "à mon, à ma, à mes"}
+{"breton": "em", "français": "dans mon, dans ma, dans mes"}
+{"breton": "da", "français": "ton, ta, tes"}
+{"breton": "d'az", "français": "à ton, à ta, à tes"}
+{"breton": "ez", "français": "dans ton, dans ta, dans tes"}
+{"breton": "he", "français": "son, sa, ses (possesseur féminin)"}
+{"breton": "hec'h", "français": "son, sa, ses (possesseur féminin)"}
+{"breton": "hor", "français": "notre, nos"}
+{"breton": "hon", "français": "notre, nos"}
+{"breton": "hol", "français": "notre, nos"}
+{"breton": "ho", "français": "votre, vos"}
+{"breton": "hoc'h", "français": "votre, vos"}
+{"breton": "o", "français": "leur, leurs"}
+{"breton": "va c'horf", "français": "mon corps"}
+{"breton": "o fenn", "français": "leur (leurs) tête(s)"}
+{"breton": "poan am em zroad", "français": "j'ai mal au pied."}
+{"breton": "ho kodell", "français": "votre poche"}
+{"breton": "ez kwerenn", "français": "dans ton verre"}
+{"breton": "ho tent", "français": "vos dents"}
+{"breton": "ro se d'az preur", "français": "donne cela à ton frère"}
+{"breton": "hor c'hador", "français": "notre chaise."}
+{"breton": "an dilhad", "français": "les vêtements"}
+{"breton": "ar gwiskamant", "français": "le costume"}
+{"breton": "ar c'hoef", "français": "la coiffe"}
+{"breton": "ar sae", "français": "la robe"}
+{"breton": "ar vroz", "français": "la jupe"}
+{"breton": "an hiviz", "français": "la chemise (femme)"}
+{"breton": "an tavañjer", "français": "le tablier"}
+{"breton": "ar porpant", "français": "le veston"}
+{"breton": "ar jiletenn", "français": "le gilet"}
+{"breton": "ar bragou", "français": "le pantalon"}
+{"breton": "ar roched", "français": "la chemise (homme)"}
+{"breton": "al loer", "français": "le bas"}
+{"breton": "ar votez", "français": "le soulier"}
+{"breton": "ar mouchouer", "français": "le mouchoir"}
+{"breton": "ar gouriz", "français": "la ceinture"}
+{"breton": "ar vantell", "français": "le manteau"}
+{"breton": "ar vaneg", "français": "le gant"}
+{"breton": "ar bouton", "français": "le bouton"}
+{"breton": "an neud", "français": "le fil"}
+{"breton": "an nadoz", "français": "l'aiguille"}
+{"breton": "ar spilhenn", "français": "l'épingle"}
+{"breton": "ar grib", "français": "le peigne"}
+{"breton": "al las", "français": "le lacet"}
+{"breton": "ar sizailh", "français": "les ciseaux"}
+{"breton": "al lien", "français": "la toile"}
+{"breton": "ar gloan", "français": "la laine"}
+{"breton": "ar seiz", "français": "la soie"}
+{"breton": "ar voulouz", "français": "le velours"}
+{"breton": "ar pez", "français": "la pièce"}
+{"breton": "an dousen", "français": "la douzaine"}
+{"breton": "ar gwenneg", "français": "le sou"}
+{"breton": "ar real", "français": "cinq sous"}
+{"breton": "ar skoed", "français": "trois francs"}
+{"breton": "al lur", "français": "le franc"}
+{"breton": "an dra", "français": "la chose"}
+{"breton": "bennak", "français": "quelconque"}
+{"breton": "eun dra-bennak", "français": "quelque chose"}
+{"breton": "ker", "français": "cher"}
+{"breton": "marc'had-mat", "français": "bon marché"}
+{"breton": "atao", "français": "toujours"}
+{"breton": "gwechall", "français": "autrefois"}
+{"breton": "warlene", "français": "l'année dernière"}
+{"breton": "netra", "français": "rien"}
+{"breton": "biskoaz", "français": "jamais (passé)"}
+{"breton": "biken", "français": "jamais (futur)"}
+{"breton": "peogwir", "français": "puisque"}
+{"breton": "digant", "français": "d'avec"}
+{"breton": "pegement ?", "français": "combien ?"}
+{"breton": "demat", "français": "bonjour"}
+{"breton": "kenavo", "français": "au revoir"}
+{"breton": "re", "français": "trop"}
+{"breton": "gwiska", "français": "vêtir"}
+{"breton": "brousta", "français": "brosser"}
+{"breton": "kanna", "français": "laver le linge"}
+{"breton": "plega", "français": "plier"}
+{"breton": "regi", "français": "déchirer"}
+{"breton": "kriba", "français": "peigner"}
+{"breton": "aoza", "français": "préparer"}
+{"breton": "derc'hel", "français": "tenir"}
+{"breton": "gwerza", "français": "vendre"}
+{"breton": "kousta", "français": "coûter"}
+{"breton": "paea", "français": "payer"}
+{"breton": "dleout", "français": "devoir"}
+{"breton": "ar c'hastell", "français": "le château"}
+{"breton": "an doenn", "français": "le toit"}
+{"breton": "ar solier", "français": "le grenier"}
+{"breton": "ar c'hao", "français": "la cave"}
+{"breton": "ar bazenn", "français": "la marche"}
+{"breton": "ar volz", "français": "la voûte"}
+{"breton": "ar peul", "français": "le poteau"}
+{"breton": "an tour", "français": "la tour"}
+{"breton": "an oaled", "français": "le foyer"}
+{"breton": "ar siminal", "français": "la cheminée"}
+{"breton": "ar forn", "français": "le four"}
+{"breton": "an arrebeuri", "français": "les meubles"}
+{"breton": "an arc'h", "français": "le coffre"}
+{"breton": "an horolaj", "français": "l'horloge"}
+{"breton": "ar melezour", "français": "le miroir"}
+{"breton": "ar varaz", "français": "le baquet"}
+{"breton": "ar gaoter", "français": "la marmite"}
+{"breton": "ar pod", "français": "le pot"}
+{"breton": "ar plad", "français": "le plat"}
+{"breton": "ar c'helorn", "français": "le seau"}
+{"breton": "ar sailh", "français": "le seau"}
+{"breton": "ar porz", "français": "la cour"}
+{"breton": "ar c'horn", "français": "le coin"}
+{"breton": "al liorz", "français": "le jardin"}
+{"breton": "ar puñs", "français": "le puits"}
+{"breton": "ar skeul", "français": "l'échelle"}
+{"breton": "al logell", "français": "la niche"}
+{"breton": "ar planken", "français": "la planche"}
+{"breton": "ar sac'h", "français": "le sac"}
+{"breton": "ar c'harr", "français": "la voiture"}
+{"breton": "an alc'houez", "français": "la clef"}
+{"breton": "ar rod", "français": "la roue"}
+{"breton": "an ibil", "français": "la cheville"}
+{"breton": "an tach", "français": "le clou"}
+{"breton": "ar morzol", "français": "le marteau"}
+{"breton": "an tu", "français": "le côté ; le moyen"}
+{"breton": "an traon", "français": "le bas"}
+{"breton": "ar c'hrec'h", "français": "le haut"}
+{"breton": "eürus", "français": "heureux"}
+{"breton": "gwalleürus", "français": "malheureux"}
+{"breton": "kleuz", "français": "creux"}
+{"breton": "dereat", "français": "convenable"}
+{"breton": "holl", "français": "tout, tous"}
+{"breton": "dre", "français": "par, à travers"}
+{"breton": "dre-holl", "français": "partout"}
+{"breton": "dreist", "français": "par-dessus"}
+{"breton": "dreist-holl", "français": "surtout"}
+{"breton": "en-dro (da)", "français": "autour (de)"}
+{"breton": "a-us (da)", "français": "au-dessus (de)"}
+{"breton": "eveljust", "français": "naturellement"}
+{"breton": "eme", "français": "dit"}
+{"breton": "skuba", "français": "balayer"}
+{"breton": "azeza", "français": "s'asseoir"}
+{"breton": "pignat", "français": "monter"}
+{"breton": "diskenn", "français": "descendre"}
+{"breton": "paouez", "français": "cesser"}
+{"breton": "degemer", "français": "recevoir"}
+{"breton": "klask", "français": "chercher"}
+{"breton": "douja", "français": "respecter"}
+{"breton": "c'hoari", "français": "jouer"}
+{"breton": "pokat da", "français": "embrasser"}
+{"breton": "Doue", "français": "Dieu"}
+{"breton": "ar baradoz", "français": "le paradis"}
+{"breton": "ar sant", "français": "le saint"}
+{"breton": "an ael", "français": "l'ange"}
+{"breton": "an ene", "français": "l'âme"}
+{"breton": "ar spered", "français": "l'esprit"}
+{"breton": "an diaoul", "français": "le diable"}
+{"breton": "an ifern", "français": "l'enfer"}
+{"breton": "an eskob", "français": "l'évêque"}
+{"breton": "ar beleg", "français": "le prêtre"}
+{"breton": "an iliz", "français": "l'église"}
+{"breton": "an aoter", "français": "l'autel"}
+{"breton": "ar barrez", "français": "la paroisse"}
+{"breton": "an oferenn", "français": "la messe"}
+{"breton": "ar gousperou", "français": "les vêpres"}
+{"breton": "ar bedenn", "français": "la prière"}
+{"breton": "ar vered", "français": "le cimetière"}
+{"breton": "ar bez", "français": "la tombe"}
+{"breton": "ar c'hloc'h", "français": "la cloche"}
+{"breton": "ar gouel", "français": "la fête"}
+{"breton": "ar paour", "français": "le pauvre"}
+{"breton": "an aluzen", "français": "l'aumône"}
+{"breton": "an daerou", "français": "les larmes"}
+{"breton": "ar gaou", "français": "le mensonge"}
+{"breton": "ar c'heuz", "français": "le regret"}
+{"breton": "ar garantez", "français": "l'amour, l'amitié"}
+{"breton": "ar gasoni", "français": "la haine"}
+{"breton": "an dudi", "français": "le plaisir, le charme"}
+{"breton": "ar peoc'h", "français": "la paix"}
+{"breton": "an doare", "français": "la manière"}
+{"breton": "an toull", "français": "le trou"}
+{"breton": "al lost", "français": "la queue"}
+{"breton": "an darn", "français": "la partie"}
+{"breton": "an ti-kêr", "français": "la mairie"}
+{"breton": "ar roue", "français": "le roi"}
+{"breton": "ar barz", "français": "le poète"}
+{"breton": "ar micherour", "français": "l'ouvrier"}
+{"breton": "ar mestr-skol", "français": "l'instituteur"}
+{"breton": "ar c'helenner", "français": "le professeur"}
+{"breton": "ar barner", "français": "le juge"}
+{"breton": "ar c'higer", "français": "le boucher"}
+{"breton": "ar miliner", "français": "le meunier"}
+{"breton": "ar c'hemener", "français": "le tailleur"}
+{"breton": "ar soudard", "français": "le soldat"}
+{"breton": "ar vatez", "français": "la servante"}
+{"breton": "ar mevel", "français": "le domestique"}
+{"breton": "ar mignon", "français": "l'ami"}
+{"breton": "an enebour", "français": "l'ennemi"}
+{"breton": "an estren", "français": "l'étranger"}
+{"breton": "onest", "français": "honnête"}
+{"breton": "gwir", "français": "vrai"}
+{"breton": "gaou", "français": "faux"}
+{"breton": "keit", "français": "autant, aussi long"}
+{"breton": "e keit-se", "français": "pendant ce temps"}
+{"breton": "pegeit ?", "français": "combien de temps ?"}
+{"breton": "kement", "français": "tellement"}
+{"breton": "e-pad ma", "français": "pendant que"}
+{"breton": "pedi", "français": "prier, inviter"}
+{"breton": "dimezi", "français": "se marier"}
+{"breton": "soni", "français": "sonner"}
+{"breton": "dañsal", "français": "danser"}
+{"breton": "servija", "français": "servir"}
+{"breton": "derc'hel soñj", "français": "se souvenir"}
+{"breton": "senti (ouz)", "français": "obéir (à)"}
+{"breton": "test", "français": "témoin"}
+{"breton": "eun implijad", "français": "un employé"}
+{"breton": "implijidi", "français": "des employés"}
+{"breton": "ar C'hernevad", "français": "le Cornouaillais"}
+{"breton": "Kerneviz", "français": "les Cornouaillais"}
+{"breton": "ar marc'hadour", "français": "le marchand"}
+{"breton": "ar varc'hadourien", "français": "les marchands"}
+{"breton": "eun amezeg", "français": "un voisin"}
+{"breton": "amezeien", "français": "des voisins"}
+{"breton": "eun tiig", "français": "une petite maison"}
+{"breton": "tiez", "français": "des maisons"}
+{"breton": "tiezigou", "français": "des petites maisons"}
+{"breton": "ar marc'h", "français": "le cheval"}
+{"breton": "ar c'hezeg", "français": "les chevaux"}
+{"breton": "ar vran", "français": "le corbeau"}
+{"breton": "ar brini", "français": "les corbeaux"}
+{"breton": "ar vugale", "français": "les enfants"}
+{"breton": "ar manac'h", "français": "le moine"}
+{"breton": "ar venec'h", "français": "les moines"}
+{"breton": "ar yar", "français": "la poule"}
+{"breton": "ar yer", "français": "les poules"}
+{"breton": "ar chas", "français": "les chiens"}
+{"breton": "ar c'haz", "français": "le chat"}
+{"breton": "ar c'hizier", "français": "les chats"}
+{"breton": "ar c'had", "français": "le lièvre"}
+{"breton": "ar gedon", "français": "les lièvres"}
+{"breton": "al laer", "français": "le voleur"}
+{"breton": "al laeron", "français": "les voleurs"}
+{"breton": "ar c'hirri", "français": "les voitures"}
+{"breton": "ar c'heginer", "français": "le cuisinier"}
+{"breton": "ar geginerien", "français": "les cuisiniers"}
+{"breton": "ar vedisined", "français": "les médecins"}
+{"breton": "ar vantell goz", "français": "le vieux manteau"}
+{"breton": "keginerien goz", "français": "de vieux cuisiniers"}
+{"breton": "ar vaouez koz", "français": "la vieille femme"}
+{"breton": "medisined koz", "français": "de vieux médecins"}
+{"breton": "ar menez", "français": "la montagne"}
+{"breton": "an draonienn", "français": "la vallée"}
+{"breton": "ar wenodenn", "français": "le sentier"}
+{"breton": "ar pont", "français": "le pont"}
+{"breton": "ar poull", "français": "la mare"}
+{"breton": "an dachenn", "français": "le terrain"}
+{"breton": "ar c'hleuz", "français": "le fossé"}
+{"breton": "ar gloued", "français": "la barrière"}
+{"breton": "ar park", "français": "le champ"}
+{"breton": "ar prad", "français": "la prairie"}
+{"breton": "an had", "français": "la semence"}
+{"breton": "ar gwez", "français": "les arbres"}
+{"breton": "an delienn", "français": "la feuille"}
+{"breton": "ar brank", "français": "la branche"}
+{"breton": "ar vaz", "français": "le bâton"}
+{"breton": "ar vodenn", "français": "le buisson"}
+{"breton": "ar frouez", "français": "les fruits"}
+{"breton": "an aval", "français": "la pomme"}
+{"breton": "an aval-douar", "français": "la p. de terre"}
+{"breton": "ar per", "français": "les poires"}
+{"breton": "ar c'hraon", "français": "les noix"}
+{"breton": "ar c'haol", "français": "les choux"}
+{"breton": "ar piz", "français": "les pois"}
+{"breton": "ar greun", "français": "les graines"}
+{"breton": "an ed", "français": "le blé"}
+{"breton": "an ed-du", "français": "le blé noir"}
+{"breton": "ar segal", "français": "le seigle"}
+{"breton": "ar c'herc'h", "français": "l'avoine"}
+{"breton": "ar foenn", "français": "le foin"}
+{"breton": "ar geot", "français": "l'herbe"}
+{"breton": "ar bleun", "français": "les fleurs"}
+{"breton": "ar vereuri", "français": "la métairie"}
+{"breton": "an ozac'h", "français": "le chef de ménage"}
+{"breton": "ar c'hanfard", "français": "le gamin"}
+{"breton": "ar forc'h", "français": "la fourche"}
+{"breton": "ar bal", "français": "la pelle, bêche"}
+{"breton": "an neuz", "français": "l'aspect"}
+{"breton": "dare", "français": "mûr"}
+{"breton": "blot", "français": "mou"}
+{"breton": "brein", "français": "pourri"}
+{"breton": "sounn", "français": "d'aplomb"}
+{"breton": "goustad", "français": "doucement"}
+{"breton": "buan", "français": "vite"}
+{"breton": "henvel (ouz)", "français": "semblable (à)"}
+{"breton": "disheñvel (diouz)", "français": "dissemblable"}
+{"breton": "war-lerc'h", "français": "après"}
+{"breton": "neketa", "français": "n'est-ce pas"}
+{"breton": "abaoe ma", "français": "depuis que"}
+{"breton": "a-enep", "français": "contre"}
+{"breton": "an eil hag egile", "français": "l'un et l'autre"}
+{"breton": "an eil hag eben", "français": "l'une et l'autre"}
+{"breton": "an eil re hag ar re all", "français": "les uns et les autres"}
+{"breton": "hada", "français": "semer"}
+{"breton": "arat", "français": "labourer"}
+{"breton": "planta", "français": "planter"}
+{"breton": "tenna", "français": "tirer"}
+{"breton": "karga", "français": "charger"}
+{"breton": "heja", "français": "secouer"}
+{"breton": "diwall", "français": "prendre garde"}
+{"breton": "laerez", "français": "voler"}
+{"breton": "nijal", "français": "voler (oiseau)"}
+{"breton": "kastiza", "français": "punir"}
+{"breton": "al loen", "français": "l'animal"}
+{"breton": "ar gazeg", "français": "la jument"}
+{"breton": "an ebeul", "français": "le poulain"}
+{"breton": "an azen", "français": "l'âne"}
+{"breton": "ar vuoc'h", "français": "la vache"}
+{"breton": "an taro", "français": "le taureau"}
+{"breton": "an ejen", "français": "le bœuf"}
+{"breton": "al leue", "français": "le veau"}
+{"breton": "an dañvad", "français": "le mouton"}
+{"breton": "an oan", "français": "l'agneau"}
+{"breton": "ar moc'h", "français": "les porcs"}
+{"breton": "ar pemoc'h", "français": "le porc"}
+{"breton": "ar c'havr", "français": "la chèvre"}
+{"breton": "al logod", "français": "les souris"}
+{"breton": "ar raz", "français": "le rat"}
+{"breton": "an evn", "français": "l'oiseau"}
+{"breton": "al labous", "français": "l'oiseau"}
+{"breton": "ar c'hilhog", "français": "le coq"}
+{"breton": "an houad", "français": "le canard"}
+{"breton": "ar waz", "français": "l'oie"}
+{"breton": "ar c'helien", "français": "les mouches"}
+{"breton": "ar gwenan", "français": "les abeilles"}
+{"breton": "an askell", "français": "l'aile"}
+{"breton": "ar plu", "français": "les plumes"}
+{"breton": "an naer", "français": "le serpent"}
+{"breton": "ar preñv", "français": "le ver"}
+{"breton": "ar vi", "français": "l'œuf"}
+{"breton": "ar grogen", "français": "la coquille"}
+{"breton": "an neiz", "français": "le nid"}
+{"breton": "ar marchosi", "français": "l'écurie"}
+{"breton": "ar gaoued", "français": "la cage"}
+{"breton": "ar c'hraou", "français": "l'étable"}
+{"breton": "ar rastell", "français": "le ratelier, rateau"}
+{"breton": "an taol", "français": "le coup"}
+{"breton": "ar c'houlz", "français": "le moment"}
+{"breton": "ar pennad", "français": "le moment"}
+{"breton": "an dibab", "français": "le choix"}
+{"breton": "ar vouez", "français": "la voix"}
+{"breton": "ar yez", "français": "la langue"}
+{"breton": "doñv", "français": "domestique"}
+{"breton": "gouez", "français": "sauvage"}
+{"breton": "sioul", "français": "tranquille"}
+{"breton": "taer", "français": "violent"}
+{"breton": "hogos", "français": "presque"}
+{"breton": "kentoc'h (eget)", "français": "plutôt (que)"}
+{"breton": "daoust da", "français": "malgré"}
+{"breton": "daoust ma", "français": "bien que"}
+{"breton": "kerkent (ha ma)", "français": "aussitôt (que)"}
+{"breton": "maga", "français": "nourrir"}
+{"breton": "lammat", "français": "sauter"}
+{"breton": "bounta", "français": "pousser"}
+{"breton": "heulia", "français": "suivre"}
+{"breton": "soñjal (e)", "français": "penser (à)"}
+{"breton": "koll", "français": "perdre"}
+{"breton": "gounit", "français": "gagner"}
+{"breton": "dispign", "français": "dépenser"}
+{"breton": "dozvi", "français": "pondre"}
+{"breton": "kreski", "français": "croître"}
+{"breton": "dibab", "français": "choisir"}
+{"breton": "mein ar voger", "français": "Les pierres du mur"}
+{"breton": "mein moger al liorz", "français": "Les pierres du mur du jardin"}
+{"breton": "mein moger liorz Yann", "français": "Les pierres du mur du jardin de Jean"}
+{"breton": "tog an Aotrou Gwilhou", "français": "Le chapeau de Monsieur Guillou"}
+{"breton": "Kenavo, Aotrou Gwilhou", "français": "Au revoir, Monsieur Guillou"}
+{"breton": "pet bugel ?", "français": "Combien d'enfants"}
+{"breton": "pemp bugel", "français": "Cinq enfants"}
+{"breton": "pemp den war-nugent", "français": "25 personnes"}
+{"breton": "dek den ha tri-ugent", "français": "70 personnes"}

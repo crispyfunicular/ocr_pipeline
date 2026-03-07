@@ -1,6 +1,6 @@
 # Corpus Review Report
 
-**Target:** `corpus/normant_lexique_1902/antigravity`
+**Target:** `ocr/normant_lexique_1902/antigravity`
 
 **Files scanned:** 60
 **Total pairs:** 2102

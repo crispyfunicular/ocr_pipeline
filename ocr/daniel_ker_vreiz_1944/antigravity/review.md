@@ -1,6 +1,6 @@
 # Corpus Review Report
 
-**Target:** `corpus/daniel_ker_vreiz_1944/antigravity`
+**Target:** `ocr/daniel_ker_vreiz_1944/antigravity`
 
 **Files scanned:** 21
 **Total pairs:** 1210
