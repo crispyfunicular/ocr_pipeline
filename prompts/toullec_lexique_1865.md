@@ -20,7 +20,7 @@ Les pages de préface présentent du texte continu breton (gauche) / français (
 - **Supprimez** systématiquement : les marques de genre (f., m., c.), les abréviations grammaticales (adj., v., s., pl.), les numéros d'ordre
 - **Supprimez** les variantes entre parenthèses sauf si elles constituent un mot distinct utile (ex : `Anet (d'an holl)` → `Anet`, `Moreau (cheval)` → `Moreau`)
 - **Supprimez** les annotations en italique après le mot principal (ex : `Kintuz, grignoux` → `Kintuz`, `Kruel digaloun` → `Kruel`)
-- Quand une entrée a plusieurs traductions séparées par des virgules, gardez-les toutes dans le champ français
+- Quand une entrée a plusieurs traductions séparées par des virgules, créez **une paire JSONL par traduction**. Exemple : `Eur persoun — Un recteur, un desservant` → `{"breton": "Eur persoun", "français": "Un recteur"}` + `{"breton": "Eur persoun", "français": "un desservant"}`
 - Extrayez chaque entrée comme une paire indépendante
 
 ### Suffixes de genre (adjectifs)
@@ -28,6 +28,36 @@ Les pages d'adjectifs utilisent des tirets pour indiquer la forme féminine : `O
 
 ### Disposition en 4 colonnes
 Certaines pages (vocabulaire, adjectifs) présentent **4 colonnes** : BR1, FR1, BR2, FR2. Traitez chaque paire (BR1/FR1) et (BR2/FR2) indépendamment. Ne mélangez pas les colonnes gauche et droite.
+
+### Accolades (regroupements avec `{`)
+Certaines entrées utilisent une **accolade** pour regrouper plusieurs sous-entrées sous un mot commun. Alignez **ligne par ligne** les sous-entrées bretonne et française, en préfixant chacune avec le mot commun. Exemple :
+```
+Bara { fresk       Du pain { frais
+      { diasez               rassis
+      { loued                 moisi
+```
+Produit :
+```json
+{"breton": "Bara fresk", "français": "Du pain frais"}
+{"breton": "Bara diasez", "français": "Du pain rassis"}
+{"breton": "Bara loued", "français": "Du pain moisi"}
+```
+Autre exemple :
+```
+Eun akt { a feiz         Un acte { de foi
+         { a esperans             d'espérance
+         { a garantez             de charité
+         { a adoration            d'adoration
+         { a gontrision           de contrition
+```
+Produit :
+```json
+{"breton": "Eun akt a feiz", "français": "Un acte de foi"}
+{"breton": "Eun akt a esperans", "français": "Un acte d'espérance"}
+{"breton": "Eun akt a garantez", "français": "Un acte de charité"}
+{"breton": "Eun akt a adoration", "français": "Un acte d'adoration"}
+{"breton": "Eun akt a gontrision", "français": "Un acte de contrition"}
+```
 
 ### Qualité du scan
 Ce lexique de 1865 a un texte petit mais net. Les caractères sont lisibles dans la très grande majorité des cas. Ne laissez pas la taille de la police vous décourager — si vous pouvez lire le mot, extrayez-le.
