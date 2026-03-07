@@ -51,8 +51,8 @@ always use **relative paths** to read write files not absolute paths
      ```
 
 6. **Save the JSONL output**:
-   - Create directory `corpus/<book_name>/antigravity/` if needed
-   - Write ONLY the JSONL lines (not the report) to `corpus/<book_name>/antigravity/<page_number>.jsonl`
+   - Create directory `ocr/<book_name>/antigravity/` if needed
+   - Write ONLY the JSONL lines (not the report) to `ocr/<book_name>/antigravity/<page_number>.jsonl`
    - Use `write_to_file` to create the file
    - always use relative paths to read write files not absolute paths !!!
 

@@ -8,7 +8,7 @@ Stages:
     ocr       — VLM-based bilingual text extraction (OpenAI / Anthropic)
     review    — JSONL quality assurance
     evaluate  — Compute WER and CER against human reference
-    corpus    — Merge JSONL into final corpus (stub)
+    corpus    — Deduplicate and merge review output into corpus/<book>.jsonl
     ignore    — Add pages to the per-book droplist
     run       — Chain all stages end-to-end
 
@@ -110,14 +110,16 @@ def cmd_ocr(args):
 
 
 def cmd_review(args):
-    """Run corpus review."""
+    """Copy OCR output to review/ and run quality assurance."""
     from scripts.review import main as review_main
 
     argv = []
     if args.targets:
         argv.extend(list(args.targets))
-    if hasattr(args, "model") and args.model:
+    if args.model:
         argv.extend(["--model", args.model])
+    if args.yes:
+        argv.append("--yes")
     return review_main(argv)
 
 
@@ -132,7 +134,7 @@ def cmd_evaluate(args):
 
 
 def cmd_corpus(args):
-    """Build final corpus (stub)."""
+    """Build corpus from reviewed output."""
     from scripts.corpus import main as corpus_main
 
     argv = []
@@ -247,6 +249,7 @@ def cmd_run(args):
     review_argv = books if books else []
     if args.model:
         review_argv.extend(["--model", args.model])
+    review_argv.append("--yes")  # Non-interactive in pipeline mode
     review_main(review_argv)
 
     # Stage 5: Corpus
@@ -410,7 +413,7 @@ Examples:
         "-o",
         "--output",
         default=None,
-        help="Output directory for JSONL files (default: corpus/<book>/<model>/)",
+        help="Output directory for JSONL files (default: ocr/<book>/<model>/)",
     )
     p_ocr.add_argument(
         "--debug",
@@ -428,17 +431,22 @@ Examples:
 
     # --- review ---
     p_review = subparsers.add_parser(
-        "review", help="Quality assurance on extracted JSONL"
+        "review", help="Copy OCR output to review/ and run quality assurance"
     )
     p_review.add_argument(
         "targets",
         nargs="*",
-        help="Book folder(s) in corpus/, or arbitrary paths to .jsonl files/directories. Default: all books in corpus/.",
+        help="Book folder(s) to review. Default: all books in ocr/.",
     )
     p_review.add_argument(
         "--model",
         default=None,
-        help="Specific model subfolder to target (e.g. antigravity).",
+        help="Model subfolder to copy from (default: antigravity).",
+    )
+    p_review.add_argument(
+        "--yes", "-y",
+        action="store_true",
+        help="Skip confirmation prompts (non-interactive mode).",
     )
     p_review.set_defaults(func=cmd_review)
 
@@ -452,15 +460,15 @@ Examples:
     p_evaluate.set_defaults(func=cmd_evaluate)
 
     # --- corpus ---
-    p_corpus = subparsers.add_parser("corpus", help="Build final merged corpus")
+    p_corpus = subparsers.add_parser("corpus", help="Build corpus from reviewed output")
     p_corpus.add_argument(
-        "targets", nargs="*", help="Book folder(s) to process (default: all)"
+        "targets", nargs="*", help="Book folder(s) to process (default: all in review/)"
     )
     p_corpus.add_argument(
         "-o",
         "--output",
         default=None,
-        help="Output directory or file for final corpus (stub).",
+        help="Output root directory (default: corpus/).",
     )
     p_corpus.set_defaults(func=cmd_corpus)
 

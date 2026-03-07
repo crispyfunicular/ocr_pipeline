@@ -136,6 +136,12 @@ Exemple : `G. Diskouezit d'in ho fri.` → `Diskouezit d'in ho fri.`
 ### Orthographe bretonne
 Normalisez les variantes d'apostrophes et de diacritiques tout en conservant la fidélité à l'imprimé. En cas de doute sur un caractère, appliquez la règle critique : **ignorez le mot plutôt que deviner**.
 
+### Caractères ASCII obligatoires
+Les lettres latines de base (`a-z`, `A-Z`) doivent **toujours** être écrites avec des caractères ASCII (U+0041–U+005A, U+0061–U+007A). N'utilisez **jamais** de caractères cyrilliques visuellement similaires (par exemple `е` cyrillique U+0435 au lieu de `e` ASCII U+0065). Les seuls caractères non-ASCII autorisés sont les lettres accentuées françaises et bretonnes (`é`, `è`, `ê`, `ë`, `à`, `â`, `ù`, `û`, `ô`, `ï`, `î`, `ç`, `œ`, `ü`, etc.).
+
+### Virgules finales
+Supprimez les virgules situées à la toute fin d'un segment extrait. Un segment ne doit jamais se terminer par une virgule.
+
 ### Formes abrégées
 Quand une forme féminine bretonne est abrégée ou coupée par la mise en page (ex : suffixe « -ez » séparé), reconstituez le mot complet uniquement si vous en êtes certain.
 

@@ -29,7 +29,9 @@ FRENCH_CHARS = set(
 # Common variables
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OCR_DIR = PROJECT_ROOT / "ocr"
+REVIEW_DIR = PROJECT_ROOT / "review"
 REPORTS_DIR = PROJECT_ROOT / "reports"
+DEFAULT_MODEL = "antigravity"
 
 CheckResult = collections.namedtuple(
     "CheckResult", ["level", "rule", "message", "breton", "francais"]
@@ -381,86 +383,105 @@ def review_target(target_dir: Path, out_report: Path):
     out_report.write_text("\n".join(report), encoding="utf-8")
     print(f"  ✅ Report: {out_report}")
 
+def copy_to_review(book_name: str, model: str, yes: bool = False) -> Path | None:
+    """Copy JSONL files from ocr/<book>/<model>/ to review/<book>/.
+
+    If review/<book>/ already exists, prompts for confirmation before erasing.
+    Returns the review directory path, or None if the user declined.
+    """
+    import shutil
+
+    src_dir = OCR_DIR / book_name / model
+    dst_dir = REVIEW_DIR / book_name
+
+    if not src_dir.exists():
+        print(
+            f"  ⚠️  Model folder not found: {src_dir.relative_to(PROJECT_ROOT)}",
+            file=sys.stderr,
+        )
+        return None
+
+    # Confirmation before erasing existing content
+    if dst_dir.exists() and any(dst_dir.iterdir()):
+        if not yes:
+            answer = input(
+                f"  ⚠️  This will erase the current content of review/{book_name}/. Continue? (y/N) "
+            )
+            if answer.strip().lower() != "y":
+                print(f"  ⏭️  Skipped {book_name}")
+                return None
+        shutil.rmtree(dst_dir)
+
+    dst_dir.mkdir(parents=True, exist_ok=True)
+
+    jsonl_files = sorted(src_dir.glob("*.jsonl"))
+    copied = 0
+    for f in jsonl_files:
+        content = f.read_text(encoding="utf-8").strip()
+        if not content:
+            continue  # Skip empty files
+        shutil.copy2(f, dst_dir / f.name)
+        copied += 1
+
+    print(f"  📋 Copied {copied} files from ocr/{book_name}/{model}/ → review/{book_name}/")
+    return dst_dir
+
 
 def main(argv=None):
     """Entry point. Pass argv list for programmatic use, or None for CLI."""
     parser = argparse.ArgumentParser(
-        description="Quality assurance on extracted JSONL corpus.",
+        description="Copy JSONL from OCR output to review/ staging folder, then run quality assurance.",
     )
     parser.add_argument(
         "targets",
         nargs="*",
-        help="Book folder(s) in ocr/, or arbitrary paths to .jsonl files/directories. Default: all books in ocr/.",
+        help="Book folder(s) to review. Default: all books in ocr/.",
     )
     parser.add_argument(
         "--model",
-        default=None,
-        help="Specific model subfolder to target (e.g. antigravity).",
+        default=DEFAULT_MODEL,
+        help=f"Model subfolder to copy from (default: {DEFAULT_MODEL}).",
+    )
+    parser.add_argument(
+        "--yes", "-y",
+        action="store_true",
+        help="Skip confirmation prompts (non-interactive mode).",
     )
     args = parser.parse_args(argv)
 
-    targets_to_process = []  # list of (target_path, report_path)
-
+    # Discover books
     if args.targets:
-        for t in args.targets:
-            p = Path(t)
-            # If it's a direct path that exists
-            if p.exists():
-                if p.is_file() and p.suffix == ".jsonl":
-                    parent = p.parent
-                    try:
-                        rel = parent.resolve().relative_to(OCR_DIR.resolve())
-                        report_path = REPORTS_DIR / rel / f"{p.stem}_review.md"
-                    except ValueError:
-                        report_path = parent / f"{p.stem}_review.md"
-                    targets_to_process.append((p, report_path))
-                elif p.is_dir():
-                    try:
-                        rel = p.resolve().relative_to(OCR_DIR.resolve())
-                        report_path = REPORTS_DIR / rel / "review.md"
-                    except ValueError:
-                        report_path = p / "review.md"
-                    targets_to_process.append((p, report_path))
-            else:
-                # Treat as a book name inside ocr/
-                book_dir = OCR_DIR / t
-                if book_dir.exists() and book_dir.is_dir():
-                    models = (
-                        [args.model]
-                        if args.model
-                        else [d.name for d in book_dir.iterdir() if d.is_dir()]
-                    )
-                    for model in models:
-                        model_dir = book_dir / model
-                        if model_dir.exists() and model_dir.is_dir():
-                            report_path = REPORTS_DIR / t / model / "review.md"
-                            targets_to_process.append((model_dir, report_path))
-                else:
-                    print(
-                        f"❌ Target not found: {t} (neither a direct path nor a known book in ocr/)",
-                        file=sys.stderr,
-                    )
+        books = args.targets
     else:
-        # Default: all books in ocr directory
-        if OCR_DIR.exists():
-            for book_dir in [d for d in OCR_DIR.iterdir() if d.is_dir()]:
-                models = (
-                    [args.model]
-                    if args.model
-                    else [d.name for d in book_dir.iterdir() if d.is_dir()]
-                )
-                for model in models:
-                    model_dir = book_dir / model
-                    if model_dir.exists() and model_dir.is_dir():
-                        report_path = REPORTS_DIR / book_dir.name / model / "review.md"
-                        targets_to_process.append((model_dir, report_path))
+        if not OCR_DIR.exists():
+            print(f"❌ OCR directory not found: {OCR_DIR}", file=sys.stderr)
+            return
+        books = sorted(
+            d.name for d in OCR_DIR.iterdir()
+            if d.is_dir() and (d / args.model).is_dir()
+        )
 
-    if not targets_to_process:
-        print("ℹ️ No valid targets found to review.", file=sys.stderr)
+    if not books:
+        print("ℹ️  No books found to review.", file=sys.stderr)
         return
 
-    for target_path, report_path in targets_to_process:
-        review_target(target_path, report_path)
+    # Phase 1: Copy JSONL to review/<book>/
+    print(f"📚 Copying OCR output to review/ (model: {args.model})")
+    review_dirs = []  # (book_name, review_dir)
+    for book in books:
+        review_dir = copy_to_review(book, args.model, yes=args.yes)
+        if review_dir is not None:
+            review_dirs.append((book, review_dir))
+
+    if not review_dirs:
+        print("ℹ️  No books to review after copy phase.", file=sys.stderr)
+        return
+
+    # Phase 2: Run QA on review/<book>/
+    print(f"\n🔍 Running quality assurance on {len(review_dirs)} book(s)")
+    for book, review_dir in review_dirs:
+        report_path = REPORTS_DIR / book / "review.md"
+        review_target(review_dir, report_path)
 
 
 if __name__ == "__main__":

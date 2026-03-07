@@ -7,11 +7,12 @@ Cet ouvrage est un **lexique anatomique et médical** français-breton de 1927. 
 ### Structure d'une entrée
 
 ```
-mot-vedette — traduction(s) bretonne(s), marque(s).
+mot-vedette français — traduction(s) bretonne(s), marque(s).
 ```
 
-- Le **mot-vedette français** est en gras, suivi d'un tiret `—`
-- Les traductions bretonnes suivent, séparées par des virgules quand il y a plusieurs synonymes
+- Le **mot-vedette français** est en **gras** à gauche
+- La **traduction bretonne** se trouve à droite
+- Les deux termes sont séparés par un **tiret cadratin** (`—`)
 - Des **abréviations grammaticales** suivent les mots : `g.` (genre), `gg.` (pluriel), `av.` (adverbe), `nd.` (nom duel), `l.` (locution/pluriel locatif)
 
 ### Sous-entrées
@@ -30,7 +31,11 @@ Ici `grand o.` = `grand oblique` et `petit o.` = `petit oblique`. Chaque sous-en
 
 ### Sens de la traduction
 
-> **ATTENTION** : le mot-vedette (en gras) est en **français**, la traduction est en **breton**. Veillez à bien affecter chaque langue au bon champ JSONL.
+> **ATTENTION** : le mot-vedette (en gras, à gauche) est en **français**, la traduction (à droite, après le tiret cadratin) est en **breton**. Veillez à bien affecter chaque langue au bon champ JSONL.
+
+### Abréviations à omettre
+
+Le début du livre contient une **liste d'abréviations** (par exemple : `ag = ano-gwan`, `as = ano-stroll`, `av = ano-verb`, `g = gourel`, `gg = gwregel`, `l. = lies`, `nd = niver-daou`, `S. = Sellout ouz`). **Ignorez entièrement ces entrées** : elles ne constituent pas des paires bilingues exploitables.
 
 ### Développement des abréviations de renvoi
 

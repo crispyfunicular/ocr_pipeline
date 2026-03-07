@@ -10,9 +10,11 @@ A multi-stage pipeline for extracting bilingual Breton-French parallel text from
 graph LR
     A[pdfs/] -->|extract.py| B["pages/ (300dpi PNGs)"]
     B -->|enhance.py| C[pages_enhanced/]
-    C -->|ocr.py| D["corpus/<book>/<model>/"]
-    D -->|review.py| E["reports/<book>/<model>/"]
-    D -->|corpus.py| F[Final corpus]
+    C -->|ocr.py| D["ocr/<book>/<model>/"]
+    D -->|review.py| E["review/<book>/"]
+    E -->|"human correction"| E
+    E -->|corpus.py| F["corpus/<book>.jsonl"]
+    D -.->|review.py| R["reports/<book>/review.md"]
     G["error_rates/<book>/"] -->|evaluate.py| H[WER / CER]
 ```
 
@@ -47,7 +49,7 @@ OCR_pipeline/
 ├── pdfs/                    ← Source PDFs
 ├── pages/                   ← Extracted PNGs (per book)
 ├── pages_enhanced/          ← DocRes-enhanced PNGs
-├── corpus/                  ← JSONL output (per book, per model)
+├── ocr/                     ← JSONL output (per book, per model)
 │   └── <book>/
 │       └── <model>/         ← e.g. gpt-5.2/
 ├── reports/                 ← Auto-generated quality reports
@@ -102,21 +104,21 @@ Comparison tool (`pipeline.py compare`):
 
 - Sends each page image to the configured model (default: `gpt-5.2`, override with `--model`)
 - Extracts breton/français pairs as JSONL
-- Default output: `corpus/<book>/<model>/` (override with `-o`/`--output`)
+- Default output: `ocr/<book>/<model>/` (override with `-o`/`--output`)
 - Auto-generates quality report in `reports/<book>/<model>/report.md`
 - Resumable (skips existing .jsonl files)
 
 ### 4. Review (`scripts/review.py`)
 
-Quality assurance on extracted JSONL. Checks for missing keys, empty values, invalid characters, length imbalance, truncated entries, and more. Outputs `reports/<book>/<model>/review.md`.
+Copies JSONL files from `ocr/<book>/<model>/` to `review/<book>/` (flat, no model subfolder), then runs quality assurance checks. Prompts for confirmation (`y/N`) before erasing existing content in `review/<book>/`. Use `--yes` to skip prompts. Reports go to `reports/<book>/review.md`.
 
 ### 5. Evaluate (`scripts/evaluate.py`)
 
 Computes WER and CER against manually corrected human references in `error_rates/<book>/human_reference/`. Reports metrics per page, per language (Breton and French).
 
-### 6. Corpus Build (`scripts/corpus.py`) — Stub
+### 6. Corpus Build (`scripts/corpus.py`)
 
-Merge per-page JSONL into final unified corpus. Not yet implemented.
+Reads per-page JSONL from `review/<book>/` (after human correction), deduplicates exact `{breton, français}` pairs, and writes a single `corpus/<book>.jsonl` per book.
 
 ## Quality Metrics (Baseline)
 

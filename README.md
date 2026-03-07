@@ -63,17 +63,17 @@ source .venv/bin/activate
 ## Pipeline Overview
 
 ```
-pdfs/ → extract → pages/ → enhance → pages_enhanced/ → ocr → corpus/<book>/<model>/ → review → reports/ → corpus
+pdfs/ → extract → pages/ → enhance → pages_enhanced/ → ocr → ocr/<book>/<model>/ → review → review/<book>/ → [human correction] → corpus → corpus/<book>.jsonl
 ```
 
 | # | Stage | Input | Output | Script | Description |
 |---|-------|-------|--------|--------|-------------|
 | 1 | **extract** | `pdfs/` | `pages/<book>/` | `scripts/extract.py` | Render PDF pages as 300 DPI PNGs |
 | 2 | **enhance** | `pages/<book>/` | `pages_enhanced/<book>/` | `scripts/enhance.py` | Copy pages (no-op by default) or apply opt-in enhancements |
-| 3 | **ocr** | `pages_enhanced/<book>/` | `corpus/<book>/<model>/` | `scripts/ocr.py` | VLM-based bilingual text extraction |
-| 4 | **review** | `corpus/<book>/<model>/` | `reports/<book>/<model>/` | `scripts/review.py` | Quality assurance on extracted JSONL |
+| 3 | **ocr** | `pages_enhanced/<book>/` | `ocr/<book>/<model>/` | `scripts/ocr.py` | VLM-based bilingual text extraction |
+| 4 | **review** | `ocr/<book>/<model>/` | `review/<book>/` + `reports/<book>/` | `scripts/review.py` | Copy JSONL to review folder + quality assurance |
 | 5 | **evaluate** | `error_rates/<book>/` | stdout | `scripts/evaluate.py` | Compute WER & CER against human reference |
-| 6 | **corpus** | `corpus/<book>/<model>/` | *(configurable)* | `scripts/corpus.py` | Merge per-page JSONL into final corpus *(stub)* |
+| 6 | **corpus** | `review/<book>/` | `corpus/<book>.jsonl` | `scripts/corpus.py` | Deduplicate and merge reviewed JSONL into one file per book |
 
 ## Pipeline Usage
 
@@ -248,24 +248,21 @@ Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to 
 
 ### Review Overview
 
-Scans all extracted JSONL files for common errors and quality issues. Checks include:
+Copies JSONL files from `ocr/<book>/<model>/` to `review/<book>/` (flat, no model subfolder), then scans them for common errors and quality issues. If `review/<book>/` already exists, a confirmation prompt is shown before erasing its content.
 
-- Missing or extra keys
-- Empty values
-- Invalid characters (outside expected Breton/French character sets)
-- Length imbalance between Breton and French sides (ratio ≥ 3×)
-- Single-character entries, extremely long entries (> 256 chars)
-- Digit-only entries, truncated entries, identical Breton/French pairs
+After the review step, humans can inspect and correct the JSONL files in `review/<book>/` before building the final corpus.
 
-Generates a Markdown report at `reports/<book>/<model>/review.md`.
+Checks include: missing/extra keys, empty values, invalid characters, length imbalance (≥ 3×), single-character entries, extremely long entries (> 256 chars), digit-only entries, truncated entries, identical pairs.
+
+Generates a Markdown report at `reports/<book>/review.md`.
 
 ### Review Usage
 
 ```bash
 python pipeline.py review                                 # All books
 python pipeline.py review my_book                        # One book
-python pipeline.py review --model gpt-5.2 my_book        # Specific model subfolder
-python pipeline.py review corpus/my_book/gpt-5.2/05.jsonl  # Single JSONL file
+python pipeline.py review --model gpt-5.2 my_book        # Copy from a specific model
+python pipeline.py review --yes                          # Skip confirmation prompts
 ```
 
 ---
@@ -291,11 +288,19 @@ python pipeline.py evaluate my_book            # One specific book
 
 ---
 
-## Corpus *(stub)*
+## Corpus
 
 ### Corpus Overview
 
-Merges per-page JSONL files into a final consolidated corpus. Not yet implemented.
+Reads per-page JSONL from `review/<book>/` (after human correction), removes exact `{breton, français}` duplicate pairs, and writes a single `corpus/<book>.jsonl` per book. Empty files are skipped.
+
+### Corpus Usage
+
+```bash
+python pipeline.py corpus                                    # All books
+python pipeline.py corpus geriadur_lexique_1927              # One book
+python pipeline.py corpus -o /tmp/my_corpus                  # Custom output directory
+```
 
 ---
 
@@ -313,7 +318,7 @@ Merges per-page JSONL files into a final consolidated corpus. Not yet implemente
 │   ├── ocr.py               # VLM-based OCR (OpenAI / Anthropic)
 │   ├── review.py            # JSONL quality assurance
 │   ├── evaluate.py          # WER/CER evaluation against human reference
-│   └── corpus.py            # Final corpus merge (stub)
+│   └── corpus.py            # Deduplicate and merge into corpus/<book>.jsonl
 ├── prompts/
 │   ├── extract_bilingual_corpus.md  # Base VLM extraction prompt
 │   └── <book_name>.md              # Book-specific prompts (×9)
@@ -329,12 +334,20 @@ Merges per-page JSONL files into a final consolidated corpus. Not yet implemente
 │       ├── 01.png
 │       ├── 02.png
 │       └── ...
-├── corpus/                  # Extracted JSONL pairs
+├── ocr/                     # Raw OCR output (per book, per model)
 │   └── <book>/
 │       └── <model>/
 │           ├── 01.jsonl
 │           ├── 02.jsonl
 │           └── ...
+├── review/                  # Staging area for human correction
+│   └── <book>/
+│       ├── 01.jsonl
+│       ├── 02.jsonl
+│       └── ...
+├── corpus/                  # Final deduplicated corpus
+│   ├── <book>.jsonl
+│   └── ...
 ├── error_rates/             # WER/CER evaluation data
 │   └── <book>/
 │       ├── human_reference/ # Gold-standard JSONL (manually corrected)

@@ -63,13 +63,16 @@ Certaines leçons contiennent un tableau de mots invariables en deux colonnes (b
 Si le texte présente une longue liste de noms ou d'éléments séparés par des virgules (très fréquent dans les "Exercices d'intuition" ou pour désigner des objets visuels), **divisez cette liste en segments individuels**. Si une phrase d'introduction précède l'énumération (comme "Setu... / Voilà..."), attachez-la au premier élément.
 Par exemple, pour : "Setu a hont an daolenn, an nor, ar prenestr" / "Voilà là-bas le tableau, la porte, la fenêtre":
 ```json
-{"breton": "Setu a hont an daolenn,", "français": "Voilà là-bas le tableau,"}
-{"breton": "an nor,", "français": "la porte,"}
-{"breton": "ar prenestr,", "français": "la fenêtre,"}
+{"breton": "Setu a hont an daolenn", "français": "Voilà là-bas le tableau"}
+{"breton": "an nor", "français": "la porte"}
+{"breton": "ar prenestr", "français": "la fenêtre"}
 ```
 
 ### Lennadennou / Lectures
 Les pages de lecture présentent des textes en vers ou en prose numérotés (1., 2., 3., …), avec le breton à gauche et le français à droite. Extrayez **strophe par strophe** — chaque strophe numérotée constitue un segment. Ne découpez pas ligne par ligne à l'intérieur d'une strophe :
+
+> **EXCEPTION UNIQUE** : c'est le seul et unique cas où la règle globale de découpage au niveau des phrases (points, `?`, `!`) peut être contournée. Les strophes numérotées de ce livre constituent des segments indivisibles.
+
 ```json
 {"breton": "Eun amzer a zo bet, ha ne veze klevet 'N hon touez nemet yez Breiz ; war ar maez, 'vel en kêr, Holl 'komzemp ar yez koz gant hon tadou komzet, En Gwened, en Kerne, Leon ha Landreger.", "français": "Il fut un temps, où l'on n'entendait, parmi nous, que la langue de Breiz : à la campagne comme en ville, nous parlions tous la vieille langue que parlaient nos pères, en Vannes, en Cornouaille, en Léon, en Trégor."}
 ```

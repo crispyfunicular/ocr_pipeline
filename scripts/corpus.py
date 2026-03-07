@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Build corpus — read per-page JSONL from ocr/<book>/<model>/, deduplicate,
+Build corpus — read per-page JSONL from review/<book>/, deduplicate,
 and write one corpus/<book>.jsonl per book.
 
-Selects a single model's output per book (default: antigravity), removes
-exact duplicate {breton, français} pairs, and writes the merged result.
+Reads from the human-reviewed staging folder, removes exact duplicate
+{breton, français} pairs, and writes the merged result.
 """
 
 import argparse
@@ -12,28 +12,26 @@ import json
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-OCR_DIR = PROJECT_ROOT / "ocr"
+REVIEW_DIR = PROJECT_ROOT / "review"
 DEFAULT_CORPUS_DIR = PROJECT_ROOT / "corpus"
-DEFAULT_MODEL = "antigravity"
 
 
 def build_book_corpus(
     book_name: str,
-    model: str,
     corpus_root: Path,
 ) -> tuple[int, int, int]:
     """Read, deduplicate, and merge JSONL for one book.
 
     Returns (total_raw, duplicates_removed, final_count).
     """
-    src_dir = OCR_DIR / book_name / model
+    src_dir = REVIEW_DIR / book_name
     if not src_dir.exists():
-        print(f"  ⚠️  Model folder not found: {src_dir.relative_to(PROJECT_ROOT)}")
+        print(f"  ⚠️  Review folder not found: review/{book_name}/")
         return 0, 0, 0
 
     jsonl_files = sorted(src_dir.glob("*.jsonl"))
     if not jsonl_files:
-        print(f"  ⚠️  No JSONL files in {src_dir.relative_to(PROJECT_ROOT)}")
+        print(f"  ⚠️  No JSONL files in review/{book_name}/")
         return 0, 0, 0
 
     seen: set[tuple[str, str]] = set()
@@ -43,7 +41,7 @@ def build_book_corpus(
     for f in jsonl_files:
         content = f.read_text(encoding="utf-8").strip()
         if not content:
-            continue  # Skip empty files (OCR error placeholders)
+            continue  # Skip empty files
 
         for line in content.splitlines():
             line = line.strip()
@@ -75,17 +73,12 @@ def build_book_corpus(
 def main(argv=None):
     """Entry point. Pass argv list for programmatic use, or None for CLI."""
     parser = argparse.ArgumentParser(
-        description="Build corpus: deduplicate and merge per-page JSONL from ocr/<book>/<model>/ into corpus/<book>.jsonl.",
+        description="Build corpus: deduplicate and merge per-page JSONL from review/<book>/ into corpus/<book>.jsonl.",
     )
     parser.add_argument(
         "--targets",
         nargs="*",
-        help="Book folder(s) to process. Default: all books in ocr/.",
-    )
-    parser.add_argument(
-        "--model",
-        default=DEFAULT_MODEL,
-        help=f"Model subfolder to use as source (default: {DEFAULT_MODEL}).",
+        help="Book folder(s) to process. Default: all books in review/.",
     )
     parser.add_argument(
         "-o",
@@ -102,19 +95,17 @@ def main(argv=None):
     if args.targets:
         books = args.targets
     else:
-        if not OCR_DIR.exists():
-            print(f"❌ OCR directory not found: {OCR_DIR}")
+        if not REVIEW_DIR.exists():
+            print(f"❌ Review directory not found: {REVIEW_DIR}")
             return
-        books = sorted(
-            d.name for d in OCR_DIR.iterdir()
-            if d.is_dir() and (d / args.model).is_dir()
-        )
+        books = sorted(d.name for d in REVIEW_DIR.iterdir() if d.is_dir())
 
     if not books:
         print("ℹ️  No books found to process.")
         return
 
-    print(f"📚 Building corpus from {len(books)} book(s) (model: {args.model})")
+    print(f"📚 Building corpus from {len(books)} book(s)")
+    print(f"📂 Source: review/")
     print(f"📂 Output: {corpus_root.resolve()}/")
 
     grand_raw = 0
@@ -123,9 +114,7 @@ def main(argv=None):
 
     for book in books:
         print(f"\n  📖 {book}")
-        total_raw, duplicates, final_count = build_book_corpus(
-            book, args.model, corpus_root
-        )
+        total_raw, duplicates, final_count = build_book_corpus(book, corpus_root)
         grand_raw += total_raw
         grand_dupes += duplicates
         grand_final += final_count

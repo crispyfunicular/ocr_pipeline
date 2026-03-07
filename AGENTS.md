@@ -12,7 +12,7 @@ Extract bilingual Breton-French parallel corpora from scanned old books. The pip
 PDFs (pdfs/)
   └── scripts/extract_pages.py ──→ Raw PNGs (pages/<book>/)
         └── scripts/enhance_pages.py ──→ Enhanced PNGs (pages_enhanced/<book>/)
-              └── scripts/ocr_openai.py ──→ JSONL (corpus/<book>/<model>/) + report.md
+              └── scripts/ocr_openai.py ──→ JSONL (ocr/<book>/<model>/) + report.md
                     └── scripts/review_corpus.py ──→ Quality-assured JSONL
                           └── scripts/build_corpus.py ──→ Final corpus (stub)
 ```
@@ -34,10 +34,10 @@ All scripts also work standalone: `python scripts/extract_pages.py --help`
 
 - **`main(argv=None)`** pattern: each script's `main()` accepts an optional argv list. When None, falls back to `sys.argv`. This allows both standalone and pipeline use.
 - **Consistent positional `targets`**: all subcommands accept targets as positional args (PDFs for extract, book folder names or image paths for others).
-- **Sanitized folder names** (`pdf_stem()`) are the thread between stages: the same name flows from `pages/` to `pages_enhanced/` to `corpus/<book>/<model>/`.
+- **Sanitized folder names** (`pdf_stem()`) are the thread between stages: the same name flows from `pages/` to `pages_enhanced/` to `ocr/<book>/<model>/`.
 - **Important**: when calling `main(argv)`, always pass `[]` (empty list) for "no args" — never `None` (which means "use sys.argv").
 - **`enhance_image()`** is the core enhancement function (CLAHE + optional DocRes). Accepts single images or batch via `process_book()`.
-- **Model subfolder**: OCR output is organized as `corpus/<book>/<model>/` (e.g. `corpus/my_book/gpt-5.2/`) so different models' outputs don't collide. Override with `-o`/`--output`.
+- **Model subfolder**: OCR output is organized as `ocr/<book>/<model>/` (e.g. `ocr/my_book/gpt-5.2/`) so different models' outputs don't collide. Override with `-o`/`--output`.
 - **Consistent `-o`/`--output`**: all stages accept `-o`/`--output` for overriding the output directory. For single-image OCR, `--output` can point to a `.jsonl` file path directly.
 - **`--debug` mode**: prints full system/user prompts and raw LLM responses to stdout for troubleshooting.
 - **Report metadata**: reports include per-image date, model, response time, and estimated cost (based on `MODEL_PRICING` dict). Synthèse shows total time and cost.
