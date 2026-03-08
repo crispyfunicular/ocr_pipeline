@@ -62,6 +62,15 @@ def build_book_corpus(
 
     duplicates = total_raw - len(unique_lines)
 
+    # Sort alphabetically by 'breton' field; malformed (non-JSON) lines sink to the end
+    def sort_key(raw_line: str) -> str:
+        try:
+            return json.loads(raw_line).get("breton", "").casefold()
+        except json.JSONDecodeError:
+            return "\xff" + raw_line  # push malformed lines to the end
+
+    unique_lines.sort(key=sort_key)
+
     # Write merged file
     corpus_root.mkdir(parents=True, exist_ok=True)
     out_path = corpus_root / f"{book_name}.jsonl"
