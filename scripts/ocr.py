@@ -872,15 +872,15 @@ def main(argv=None):
     print(f"\n{'═' * 60}")
     if is_single_book:
         book_name = book_dirs[0].name
-        print(f"✅ Terminé. {total_processed} images traitées ({book_name}).")
+        print(f"✅ Terminé. {total_processed} image(s) traitée(s) ({book_name}).")
         print(f"   OCR : {(ocr_root / book_name / args.model).resolve()}/")
         print(f"   Rapports : {(reports_root / book_name / args.model).resolve()}/")
     elif book_dirs:
-        print(f"✅ Terminé. {total_processed} images traitées.")
+        print(f"✅ Terminé. {total_processed} image(s) traitée(s).")
         print(f"   OCR : {ocr_root.resolve()}/")
         print(f"   Rapports : {reports_root.resolve()}/")
     else:
-        print(f"✅ Terminé. {total_processed} images traitées.")
+        print(f"✅ Terminé. {total_processed} image(s) traitée(s).")
     if single_images:
         for img_path in single_images:
             img_book = img_path.parent.name
