@@ -72,8 +72,9 @@ pdfs/ → extract → pages/ → enhance → pages_enhanced/ → ocr → ocr/<bo
 | 2 | **enhance** | `pages/<book>/` | `pages_enhanced/<book>/` | `scripts/enhance.py` | Copy pages (no-op by default) or apply opt-in enhancements |
 | 3 | **ocr** | `pages_enhanced/<book>/` | `ocr/<book>/<model>/` | `scripts/ocr.py` | VLM-based bilingual text extraction |
 | 4 | **review** | `ocr/<book>/<model>/` | `review/<book>/` + `reports/<book>/` | `scripts/review.py` | Copy JSONL to review folder + quality assurance |
-| 5 | **evaluate** | `error_rates/<book>/` | stdout | `scripts/evaluate.py` | Compute WER & CER against human reference |
-| 6 | **corpus** | `review/<book>/` | `corpus/<book>.jsonl` | `scripts/corpus.py` | Deduplicate and merge reviewed JSONL into one file per book |
+| 5 | **diff** | `ocr/`, `review/` | stdout | `scripts/diff.py` | Compare two JSONL directories/files to see human corrections |
+| 6 | **evaluate** | `error_rates/<book>/` | stdout | `scripts/evaluate.py` | Compute WER & CER against human reference |
+| 7 | **corpus** | `review/<book>/` | `corpus/<book>.jsonl` | `scripts/corpus.py` | Deduplicate and merge reviewed JSONL into one file per book |
 
 ## Pipeline Usage
 
@@ -263,6 +264,25 @@ python pipeline.py review                                 # All books
 python pipeline.py review my_book                        # One book
 python pipeline.py review --model gpt-5.2 my_book        # Copy from a specific model
 python pipeline.py review --yes                          # Skip confirmation prompts
+```
+
+---
+
+## Diff
+
+### Diff Overview
+
+Compares two directories (or files) of JSONL data and reports added, removed, and modified entries line-by-line. The primary use case is comparing the original `ocr/` output with the human-corrected `review/` folder to see what was changed during manual review.
+
+By default, it compares the `ocr` and `review` directories at the project root.
+
+### Diff Usage
+
+```bash
+python pipeline.py diff                                  # Default: compares ocr/ against review/
+python pipeline.py diff ocr/my_book review/my_book       # Compare specific book directories
+python pipeline.py diff -v                               # Verbose: show exactly which lines changed
+python pipeline.py diff ocr/my_book/01.jsonl review/my_book/01.jsonl # Compare specific files
 ```
 
 ---
