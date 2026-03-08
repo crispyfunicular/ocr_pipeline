@@ -17,27 +17,50 @@ Les pages sont en vis-à-vis (deux pages par scan). Le vocabulaire est en colonn
 
 ## Règles d'extraction
 
-### Listes de vocabulaire
+### Lexique (I. - GERIOU)
 
-Les listes de vocabulaire présentent des mots breton ↔ français en colonnes parallèles, souvent sous l'en-tête **GERIOU** (mots). Extrayez chaque paire :
+Pour chaque leçon (Kentel), extrayez le lexique situé sous l'en-tête **I. - GERIOU**.
+Le mot breton se trouve dans la colonne de gauche et sa traduction française dans la colonne de droite. Extrayez chaque paire :
 ```json
-{"breton": "Tad", "français": "Père"}
-{"breton": "Mamm", "français": "Mère"}
-{"breton": "Breur", "français": "Frère"}
-{"breton": "C'hoar", "français": "Sœur"}
+{"breton": "ar c'h-kelenner", "français": "le professeur"}
+{"breton": "an diskibl", "français": "l'élève"}
 ```
 
 > Les mots avec articles définis bretons (`an`, `ar`, `al`) ou indéfinis (`ur`, `ul`, `un`) doivent les conserver tels quels quand ils sont présents.
 
-### Dialogues (DIVIZ)
+> **TRÈS IMPORTANT — Mutations consonantiques :** Dans cet ouvrage, les mutations sont imprimées avec la nouvelle consonne mutée suivie d'un trait d'union puis du mot racine (ex : `d-taol`, `g-kador`, `n-dor`, `b-pluenn`, `v-boest`).
+> Vous devez écrire le mot muté correctement en **remplaçant la première lettre (ou le groupe comme gw, k) de la racine par la ou les lettres situées avant le trait d'union**. Le trait d'union disparaît.
+> Exemples :
+> - `d-taol` → `daol` (et non dtaol)
+> - `g-kador` → `gador` (et non gkador)
+> - `g-kambr` → `gambr`
+> - `v-boest` → `voest`
+> - `n-dor` → `nor` (et non ndor)
+> - `b-pluenn` → `bluenn`
+> - `c'h-kreion` → `c'hreion` (et non c'hkreion)
+> - `v-moger` → `voger`
+> - `c'h-krog` → `c'hrog`
+> - `w-gwerenn` → `werenn`
+> - `c'h-goumenn` → `c'houmenn` (et non c'hgoumenn)
+> - `c'h-korn-liou` → `c'horn-liou` (et non c'hkorn-liou)
+>
+> Ceci s'applique partout (GERIOU et DIVIZ).
 
-Certaines leçons contiennent des sections **DIVIZ** (Dialogue) structurées en questions-réponses bilingues. Extrayez chaque paire question/réponse :
+
+### Phrases traduites (II. - DIVIZ)
+
+Pour chaque leçon, extrayez les phrases traduites situées sous l'en-tête **II. - DIVIZ**. 
+Le breton se trouve à gauche **en gras**, et le français se trouve à la suite ou à droite, **entre parenthèses**.
+
+- **Les parenthèses ne doivent pas être conservées** dans les textes extraits.
+- **Les phrases tronquées doivent être ignorées** (par ex. si la phrase continue sur la page suivante).
+- **NE CONSERVEZ PAS les chiffres et/ou initiales dans les dialogues**. Supprimez systématiquement les préfixes comme "1.", "2.", "G.", "R.", etc., au début des phrases (aussi bien en breton qu'en français).
+
+Exemple d'extraction (sans les préfixes) :
 ```json
-{"breton": "Petra eo an dra-ze ?", "français": "Qu'est-ce que c'est ?"}
-{"breton": "Eun ti eo", "français": "C'est une maison"}
+{"breton": "Petra a ran ?", "français": "Qu'est-ce que je fais ?"}
+{"breton": "Skriva a rit", "français": "Vous écrivez."}
 ```
-
-> Les DIVIZ sont une source riche de paires bilingues, extrayez tout le contenu.
 
 ### Tableaux de mutations
 
