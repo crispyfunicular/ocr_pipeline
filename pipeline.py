@@ -9,6 +9,7 @@ Stages:
     review    — JSONL quality assurance
     evaluate  — Compute WER and CER against human reference
     corpus    — Deduplicate and merge review output into corpus/<book>.jsonl
+    diff      — Compare two JSONL directories or files
     ignore    — Add pages to the per-book droplist
     run       — Chain all stages end-to-end
 
@@ -143,6 +144,20 @@ def cmd_corpus(args):
     if args.output:
         argv.extend(["--output", str(args.output)])
     return corpus_main(argv)
+
+
+def cmd_diff(args):
+    """Compare two JSONL directories or files."""
+    from scripts.diff import main as diff_main
+
+    argv = []
+    if args.source_a:
+        argv.append(args.source_a)
+    if args.source_b:
+        argv.append(args.source_b)
+    if args.verbose:
+        argv.append("--verbose")
+    return diff_main(argv)
 
 
 def cmd_ignore(args):
@@ -471,6 +486,29 @@ Examples:
         help="Output root directory (default: corpus/).",
     )
     p_corpus.set_defaults(func=cmd_corpus)
+
+    # --- diff ---
+    p_diff = subparsers.add_parser(
+        "diff", help="Compare two JSONL directories or files"
+    )
+    p_diff.add_argument(
+        "source_a",
+        nargs="?",
+        default=None,
+        help="Left side: directory or .jsonl file (default: ocr/).",
+    )
+    p_diff.add_argument(
+        "source_b",
+        nargs="?",
+        default=None,
+        help="Right side: directory or .jsonl file (default: review/).",
+    )
+    p_diff.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Show individual changed lines.",
+    )
+    p_diff.set_defaults(func=cmd_diff)
 
     args = parser.parse_args()
     args.func(args)
