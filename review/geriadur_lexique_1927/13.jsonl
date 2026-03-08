@@ -7,7 +7,8 @@
 {"breton": "digor-kanol", "français": "méat"}
 {"breton": "nervenn-greiz", "français": "nerf médian"}
 {"breton": "kroc'henenn", "français": "membrane"}
-{"breton": "ezel, izili", "français": "membre"}
+{"breton": "ezel", "français": "membre"}
+{"breton": "izili", "français": "membre"}
 {"breton": "golo-empenn", "français": "méninge"}
 {"breton": "elgez", "français": "menton"}
 {"breton": "elgezel", "français": "mentonnier"}
@@ -16,28 +17,37 @@
 {"breton": "eskern-kreiz-troad", "français": "métatarse"}
 {"breton": "santout-kefluska", "français": "mixte (nerf)"}
 {"breton": "mel", "français": "moelle (des os)"}
-{"breton": "dant-mala, kildant", "français": "molaire"}
+{"breton": "dant-mala", "français": "molaire"}
+{"breton": "kildant", "français": "molaire"}
 {"breton": "kof-gar", "français": "mollet"}
 {"breton": "kefluska", "français": "moteur (nerf)"}
-{"breton": "mourrou, mourren-nou", "français": "moustache"}
+{"breton": "mourrou", "français": "moustache"}
+{"breton": "mourren-nou", "français": "moustache"}
 {"breton": "keflusk", "français": "mouvement"}
 {"breton": "stervenn", "français": "mucus"}
 {"breton": "stervegenn", "français": "muqueuse"}
 {"breton": "kigenn", "français": "muscle"}
 {"breton": "kigennel", "français": "musculaire"}
-{"breton": "fron, difron, fronell", "français": "narine"}
+{"breton": "fron", "français": "narine"}
+{"breton": "difron", "français": "narine"}
+{"breton": "fronell", "français": "narine"}
 {"breton": "friel", "français": "nasal"}
 {"breton": "askourn-fri", "français": "os nasal"}
 {"breton": "toull-fri", "français": "fosse nasale"}
-{"breton": "korzailhenn uhela, uhelgorzailhenn", "français": "naso-pharynx"}
+{"breton": "korzailhenn uhela", "français": "naso-pharynx"}
+{"breton": "uhelgorzailhenn", "français": "naso-pharynx"}
 {"breton": "nervenn", "français": "nerf"}
-{"breton": "nervennel, nervennek", "français": "nerveux"}
+{"breton": "nervennel", "français": "nerveux"}
+{"breton": "nervennek", "français": "nerveux"}
 {"breton": "kreizennou nervennek", "français": "centres nerveux"}
-{"breton": "koublad-nervennou, diounervenn", "français": "paire nerveuse"}
-{"breton": "nervenneg, nervennaoueg", "français": "système nerveux"}
+{"breton": "koublad-nervennou", "français": "paire nerveuse"}
+{"breton": "diounervenn", "français": "paire nerveuse"}
+{"breton": "nervenneg", "français": "système nerveux"}
+{"breton": "nervennaoueg", "français": "système nerveux"}
 {"breton": "kellig-nervenn", "français": "neurone"}
 {"breton": "ahel-nervenn", "français": "névraxe"}
 {"breton": "golo-nervenn", "français": "névrilène"}
 {"breton": "fri", "français": "nez"}
 {"breton": "begel", "français": "nombril"}
-{"breton": "mul-gouzoug, choug", "français": "nuque"}
+{"breton": "mul-gouzoug", "français": "nuque"}
+{"breton": "choug", "français": "nuque"}

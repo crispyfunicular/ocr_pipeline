@@ -1,9 +1,12 @@
-{"breton": "sac'hhenvel, stumm-sac'h", "français": "sacciforme"}
+{"breton": "sac'hhenvel", "français": "sacciforme"}
+{"breton": "stumm-sac'h", "français": "sacciforme"}
 {"breton": "an dric'hornenn", "français": "sacré"}
 {"breton": "tric'hornenn-halez", "français": "sacro-sciatique"}
 {"breton": "tric'hornenn ar gouriz", "français": "sacrum"}
-{"breton": "gwagrennou-glaourenni, gwagrennou-halo", "français": "glandes salivaires"}
-{"breton": "halo, glaourenn", "français": "salive"}
+{"breton": "gwagrennou-glaourenni", "français": "glandes salivaires"}
+{"breton": "gwagrennou-halo", "français": "glandes salivaires"}
+{"breton": "halo", "français": "salive"}
+{"breton": "glaourenn", "français": "salive"}
 {"breton": "gwad", "français": "sang"}
 {"breton": "gwadel", "français": "sanguin"}
 {"breton": "gwadzegaser gorre-gar", "français": "veine saphène"}
@@ -14,28 +17,34 @@
 {"breton": "dourennaoui", "français": "sécrétion"}
 {"breton": "bronn", "français": "sein"}
 {"breton": "dibrenn", "français": "selle turcique"}
-{"breton": "sper, had", "français": "semence"}
+{"breton": "sper", "français": "semence"}
+{"breton": "had", "français": "semence"}
 {"breton": "kreskhenvel", "français": "semi-lunaire"}
 {"breton": "hadel", "français": "séminal"}
-{"breton": "sac'h ar sper, godell ar sper", "français": "vésicule séminale"}
+{"breton": "sac'h ar sper", "français": "vésicule séminale"}
+{"breton": "godell ar sper", "français": "vésicule séminale"}
 {"breton": "skiant", "français": "sens"}
 {"breton": "benvegennou ar skiantou", "français": "organes des sens"}
 {"breton": "santadur", "français": "sensation"}
 {"breton": "santerez", "français": "sensibilité"}
 {"breton": "santus", "français": "sensible"}
 {"breton": "nervenn-santout", "français": "nerf sensitif"}
-{"breton": "santout, merzout", "français": "sentir"}
+{"breton": "santout", "français": "sentir"}
+{"breton": "merzout", "français": "sentir"}
 {"breton": "gleboregenn", "français": "séreuse"}
 {"breton": "gleboradur", "français": "sérosité"}
 {"breton": "seron", "français": "sérum (du sang)"}
-{"breton": "sigmahenvel, stumm-sigma", "français": "sigmoïde"}
+{"breton": "sigmahenvel", "français": "sigmoïde"}
+{"breton": "stumm-sigma", "français": "sigmoïde"}
 {"breton": "keo", "français": "sinus"}
 {"breton": "keo-karvan", "français": "sinus maxillaire"}
-{"breton": "gourwazied, gourwadzegaseriou", "français": "sinus veineux"}
+{"breton": "gourwazied", "français": "sinus veineux"}
+{"breton": "gourwadzegaseriou", "français": "sinus veineux"}
 {"breton": "abrant", "français": "sourcil"}
 {"breton": "gwadgaser isibilskoazel", "français": "artère sous-clavière"}
 {"breton": "iskroc'henel", "français": "sous-cutané"}
 {"breton": "iskarvanel", "français": "sous-maxillaire"}
-{"breton": "ispodlagadel, ispoul-lagadel", "français": "sous-orbitaire"}
+{"breton": "ispodlagadel", "français": "sous-orbitaire"}
+{"breton": "ispoul-lagadel", "français": "sous-orbitaire"}
 {"breton": "isplankenskoazel", "français": "sous-scapulaire"}
 {"breton": "kan-had", "français": "conduit spermatique"}

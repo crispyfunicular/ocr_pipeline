@@ -85,6 +85,15 @@ Certaines entrées contiennent un mot breton direct suivi d'une longue phrase de
 
 Exemple : `côlon — kolon, g, eil kevrenn ar vou-zellenn deo, gg` → garder uniquement `kolon` (le reste est une glose « deuxième section de l'intestin »).
 
+### Segments bretons de plus de 3 mots
+
+**Ignorez tout segment breton comptant plus de 3 mots** (en comptant les mots séparés par des espaces). Ces segments longs sont des définitions ou explications anatomiques, pas des traductions exploitables.
+
+Exemples à ignorer :
+- `kevrenn genta ar vouzellenn deo` (glose pour « caecum »)
+- `kenta kevrenn ar vouzellenn voan` (glose pour « duodénum »)
+- `eil kevrenn ar vouzellenn deo` (glose pour « côlon »)
+
 ### Renvois « S. » (synonyme)
 
 Certaines entrées renvoient à un autre mot via `S.` (synonyme). **Ignorez ces entrées** — elles ne contiennent pas de traduction bretonne propre.

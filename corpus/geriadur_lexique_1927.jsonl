@@ -1,654 +1,855 @@
-{"breton": "kof", "français": "abdomen"}
-{"breton": "kofel", "français": "abdominal"}
-{"breton": "kigenn-bellaat, pellaer", "français": "muscles abducteur"}
-{"breton": "pellaat", "français": "abduction"}
-{"breton": "euvri, lonka", "français": "absorption"}
-{"breton": "stumma", "français": "accomodation (de l'œil)"}
-{"breton": "gwagrennou rezinhenvel", "français": "acini"}
-{"breton": "nervenn ar c'hleved", "français": "nerf acoustique"}
-{"breton": "kern-skoaz", "français": "acromion"}
-{"breton": "kigenn-dostaat, tostaer", "français": "muscle adducteur"}
-{"breton": "tostaat", "français": "adduction"}
-{"breton": "behinek", "français": "adipeux"}
-{"breton": "degaser", "français": "vaisseau afférent"}
-{"breton": "pleg ar vorzed", "français": "aine"}
-{"breton": "kazel, diougazel", "français": "aisselle"}
-{"breton": "bouedou gwennvihenvel", "français": "aliments albuminoïde"}
-{"breton": "boued, bouedou, danveziou", "français": "aliments"}
-{"breton": "bouedel", "français": "alimentaire"}
-{"breton": "maga", "français": "alimentation"}
-{"breton": "logig", "français": "alvéole"}
-{"breton": "brasaat, diroufennadur", "français": "ampliation"}
-{"breton": "sac'hig, seierigou", "français": "ampoule"}
-{"breton": "mezenn ar gouzoug", "français": "amygdale"}
-{"breton": "korfadurez", "français": "anatomie"}
-{"breton": "korfadurel", "français": "anatomique"}
-{"breton": "korfadurour", "français": "anatomiste"}
-{"breton": "loenel", "français": "animal"}
-{"breton": "kelc'h, kelc'henn", "français": "anneau"}
-{"breton": "kelc'hiek", "français": "annulaire"}
-{"breton": "pevare biz, biz ar galon", "français": "annulaire (doigt)"}
-{"breton": "eneberez", "français": "antagonisme (musculaire)"}
-{"breton": "mellek, meller", "français": "articulé"}
-{"breton": "fraez", "français": "anus"}
-{"breton": "pennwadgaser ar galon", "français": "aorte"}
-{"breton": "lienenn-c'holei, golo-kigenn", "français": "aponévrose"}
-{"breton": "beg-askourn, draen-askourn, drein-askourn", "français": "apophyse"}
-{"breton": "benvegad", "français": "appareil"}
-{"breton": "prenvenn, lost-bouzellenn prenvhenvel", "français": "appendice vermiforme"}
-{"breton": "golo-empenn kreiz, gwiad-kefnid", "français": "arachnoïde"}
-{"breton": "gwareg", "français": "arc"}
-{"breton": "bolz", "français": "arcade"}
-{"breton": "gwareghenvel, stumm-gwareg", "français": "arciforme"}
-{"breton": "gwadgaser, gwazienn-gas, gwazied-kas", "français": "artère"}
-{"breton": "gwadgaserel, ar gwadgaseriou, ar gwazied-kas", "français": "artériel"}
-{"breton": "gwadgaserig", "français": "artériole"}
-{"breton": "koublel", "français": "articulaire"}
-{"breton": "stagell-goubl", "français": "ligament articulaire"}
-{"breton": "koubl, mell", "français": "articulation"}
-{"breton": "picherhenvel, stumm-picher", "français": "aryténoïde"}
-{"breton": "picherenn", "français": "cartilage aryténoïde"}
-{"breton": "war sav", "français": "ascendant"}
-{"breton": "lakaat da dalvezout", "français": "assimiler (des aliments)"}
-{"breton": "askourn-bilibann", "français": "astragale"}
-{"breton": "douger-penn, kenta lagadenn-askourn-gouzoug", "français": "atlas"}
-{"breton": "ar c'hleved", "français": "auditif"}
-{"breton": "toull ar skouarn", "français": "conduit auditif externe"}
-{"breton": "kan ar c'hleved", "français": "conduit auditif interne"}
-{"breton": "biz bihan, bizig", "français": "auriculaire (doigt)"}
-{"breton": "arvrec'h, diouarvrec'h", "français": "avant-bras"}
-{"breton": "kazelel", "français": "axillaire"}
-{"breton": "ahelel", "français": "axial"}
-{"breton": "kan ahelel", "français": "conduit axial (de la colonne vertébrale)"}
-{"breton": "ahelenn, eil lagadenn-askourn-gouzoug, mudurun ar gouzoug", "français": "axis"}
-{"breton": "pennwadzegaser-kostezennel bras", "français": "grande azygos"}
-{"breton": "pennwadzegaser-kostezennel bihan", "français": "petite azygos"}
-{"breton": "baro", "français": "barbe"}
-{"breton": "gouriz", "français": "bassin"}
-{"breton": "gouriz askournek", "français": "bassin osseux"}
-{"breton": "godell al lounez", "français": "bassinet"}
-{"breton": "kof-bihan", "français": "bas-ventre"}
-{"breton": "lamm", "français": "battement (du cœur)"}
-{"breton": "kigenn daoubennek", "français": "biceps"}
-{"breton": "gaol", "français": "bifurcation"}
-{"breton": "daouvrankek, daouvranket", "français": "bifurqué"}
-{"breton": "bestl", "français": "bile"}
-{"breton": "bestlel", "français": "biliaire"}
-{"breton": "sac'h-bestl, godell-vestl", "français": "vésicule biliaire"}
-{"breton": "genou, beg", "français": "bouche"}
-{"breton": "yilc'hier", "français": "bourses"}
-{"breton": "brec'hel", "français": "brachial"}
-{"breton": "penn-ha-brec'h", "français": "brachiocéphalique"}
-{"breton": "krennbennek", "français": "brachycéphale"}
-{"breton": "brec'h, divrec'h", "français": "bras"}
-{"breton": "korzenn-skevent", "français": "bronche"}
-{"breton": "ar c'horzennou-skevent", "français": "bronchique"}
-{"breton": "genaouel", "français": "buccal"}
-{"breton": "toull ar genou", "français": "cavité buccale"}
-{"breton": "poulloudenn-wad", "français": "caillot (de sang)"}
-{"breton": "askourn-seul", "français": "calcaneum"}
-{"breton": "kalir", "français": "calice (du rein)"}
-{"breton": "korf lerek", "français": "corps calleux"}
-{"breton": "kan", "français": "canal"}
-{"breton": "dant-al-lagad, dent-al-lagad", "français": "canine"}
-{"breton": "bleohenvel", "français": "capillaire"}
-{"breton": "gwazienn vleohenvel", "français": "vaisseau capillaire"}
-{"breton": "digor-krec'h ar sac'h-boued", "français": "cardia"}
-{"breton": "kalonel", "français": "cardiaque"}
-{"breton": "gwadgaser-gouzoug", "français": "carotide"}
-{"breton": "eskern-arzourn", "français": "carpe"}
-{"breton": "bourlas, grigons, migourn", "français": "cartilage"}
-{"breton": "eur vourlasenn, eur c'hrigonsenn, eur vigournenn", "français": "un cartilage"}
-{"breton": "bourlasek, grigonsek, migournek", "français": "cartilagineux"}
-{"breton": "pennwadzegaser ar galon", "français": "veine cave"}
-{"breton": "toull", "français": "cavité"}
-{"breton": "kellig", "français": "cellule"}
-{"breton": "kreizenn", "français": "centre"}
-{"breton": "pennel", "français": "céphalique"}
-{"breton": "dourenn-vel-hag-empenn", "français": "liquide céphalo-rachidien"}
-{"breton": "empennel", "français": "cérébral"}
-{"breton": "melen-skouarn", "français": "cérumen"}
-{"breton": "empenn", "français": "cerveau"}
-{"breton": "ilpenn", "français": "cervelet"}
-{"breton": "chougel", "français": "cervical"}
-{"breton": "lagadenn-askourn-gouzoug", "français": "vertèbre cervicale"}
-{"breton": "pennad-bleo, bleo", "français": "chevelure"}
-{"breton": "blevenn, bleo, blevenn-benn", "français": "cheveu"}
-{"breton": "ufern, daoufern, fer an troad", "français": "cheville"}
-{"breton": "kroaz", "français": "chiasma"}
-{"breton": "founil", "français": "choane"}
-{"breton": "kan-bestl", "français": "canal cholédoque"}
-{"breton": "chugon-boued", "français": "chyle"}
-{"breton": "gwazienn chugon-boued", "français": "vaisseau chylifère"}
-{"breton": "toaz-boued", "français": "chyme"}
-{"breton": "malvenn", "français": "cil"}
-{"breton": "malvennel, ar malvennou", "français": "ciliaire"}
-{"breton": "kaekon, kevrenn genta ar vouzellenn deo", "français": "caecum"}
-{"breton": "kildroenn", "français": "circonvolution (du cerveau)"}
-{"breton": "troella", "français": "circumduction"}
-{"breton": "ibil-skoaz, trebez", "français": "clavicule"}
-{"breton": "begou-eskern gwelehenvel, gweleou", "français": "clinoïdes"}
-{"breton": "sounna, kaouledi, poulloudenn", "français": "coagulation (du sang)"}
-{"breton": "sounna, kaouledi, poulloudenn", "français": "coaguler"}
-{"breton": "lost al livenn-gein", "français": "coccyx"}
-{"breton": "gwadgaser tribrankek ar c'hof", "français": "tronc coeliaque"}
-{"breton": "kalon", "français": "cœur"}
-{"breton": "gouzoug", "français": "col (d'un os, d'un organe)"}
-{"breton": "kenwadgaseriou", "français": "artères collatéral"}
-{"breton": "kolon, eil kevrenn ar vouzellenn deo", "français": "côlon"}
-{"breton": "bann-sevel ar c'holon", "français": "côlon ascendant"}
-{"breton": "treuzell ar c'holon", "français": "côlon transverse"}
-{"breton": "bann-diskenn ar c'holon", "français": "côlon descendant"}
-{"breton": "S ar c'holon", "français": "S du côlon"}
-{"breton": "korniou an diweuz", "français": "commissures (des lèvres)"}
-{"breton": "kan", "français": "conduit"}
-{"breton": "mell-askourn-hirgelc'hel", "français": "condyle"}
-{"breton": "beraat, stegna", "français": "contracter (un muscle)"}
-{"breton": "berraus, stegnus", "français": "contractile"}
-{"breton": "striza-distriza", "français": "contraction (du cœur)"}
-{"breton": "kenaoza", "français": "coordination (musculaire)"}
-{"breton": "nervenn daboulin ar skouarn", "français": "corde du tympan"}
-{"breton": "korden nervennek, kerdin nervennek", "français": "cordon nerveux"}
-{"breton": "raksae al lagad", "français": "cornée"}
-{"breton": "kornig", "français": "cornet (du nez)"}
-{"breton": "kurunennhenvel, stumm-kurunenn", "français": "coronaire"}
-{"breton": "kurunenn ar galon", "français": "coronaires du cœur"}
-{"breton": "kurunenn ar genou", "français": "coronaires de la bouche"}
-{"breton": "draen-araok ar werzid-vrec'h", "français": "apophyse coronoïde du cubitus"}
-{"breton": "draen ividigel ar garvan-draon", "français": "apophyse coronoïde du maxillaire inférieur"}
-{"breton": "korf", "français": "corps"}
-{"breton": "kostezenn", "français": "côte"}
-{"breton": "hanafenn an askourn-gouriz", "français": "cavité cotyloïde"}
-{"breton": "gouzoug", "français": "cou"}
-{"breton": "gwiskad, gwelead", "français": "couche (graisseuse)"}
-{"breton": "ilin, daoulin, kefelin", "français": "coude"}
-{"breton": "souk, choug an troad", "français": "cou-de-pied"}
-{"breton": "kigenn ar c'hemener", "français": "couturier"}
-{"breton": "askourn-gouriz", "français": "os coxal"}
-{"breton": "mell-lez, koubl-lez", "français": "articulation coxo-fémorale"}
-{"breton": "klopen", "français": "crâne"}
-{"breton": "boz, flac'h", "français": "creux (de la main)"}
-{"breton": "picherenn-ha-lagadenn", "français": "crico-aryténoïdien"}
-{"breton": "lagadennhenvel, stumm-lagadenn", "français": "cricoïde"}
-{"breton": "lagadenn", "français": "cartilage cricoïde"}
-{"breton": "lagadenn-ha-korzailhenn", "français": "crico-pharyngien"}
-{"breton": "skoedenn-ha-lagadenn", "français": "crico-thyroïdien"}
-{"breton": "ferenn al lagad", "français": "cristallin"}
-{"breton": "morzedel", "français": "crural"}
-{"breton": "ilinel", "français": "cubital"}
-{"breton": "gwerzid-arvrec'h", "français": "cubitus"}
-{"breton": "dinshenvel, stumm-dins", "français": "cuboïde"}
-{"breton": "dinsenn", "français": "os cuboïde"}
-{"breton": "morzed, diouvorzed", "français": "cuisse"}
-{"breton": "gennhenvel, stumm-genn", "français": "cunéiforme"}
-{"breton": "gennenn", "français": "os cunéiforme"}
-{"breton": "kroc'henel", "français": "cutané"}
-{"breton": "kroc'henig", "français": "cuticule"}
-{"breton": "gwezegell", "français": "cystique"}
-{"breton": "kansper", "français": "canal déférent"}
-{"breton": "kluka, lonka", "français": "déglutition"}
-{"breton": "tric'hognek", "français": "deltoïde"}
-{"breton": "tric'hogn", "français": "muscle deltoïde"}
-{"breton": "dant, dent", "français": "dent"}
-{"breton": "logig dant", "français": "alvéole dentaire"}
-{"breton": "denterez", "français": "dentition"}
-{"breton": "dantadur", "français": "denture"}
-{"breton": "enkroc'hen", "français": "derme"}
-{"breton": "diskantadur", "français": "desquamation"}
-{"breton": "war ziskenn", "français": "descendant"}
-{"breton": "strizenn", "français": "détroit (du bassin)"}
-{"breton": "treuzsiladur", "français": "diapédèse"}
-{"breton": "korfspeurenn", "français": "diaphragme"}
-{"breton": "korfspeurennel", "français": "diaphragmatique"}
-{"breton": "mell heloc'h, mell hefinv", "français": "diarthrose"}
-{"breton": "goell-goi", "français": "diastase"}
-{"breton": "distriza ar galon", "français": "diastole"}
-{"breton": "goi", "français": "digérer"}
-{"breton": "gousted", "français": "digestibilité"}
-{"breton": "goüs", "français": "digestible"}
-{"breton": "benvegad-goi", "français": "appareil digestif"}
-{"breton": "goi, goerez, goidi-gez", "français": "digestion"}
-{"breton": "spoue-eskern", "français": "diploé"}
-{"breton": "pizskejadur", "français": "dissection"}
-{"breton": "pizskeja", "français": "disséquer"}
-{"breton": "biz", "français": "doigt"}
-{"breton": "hirbennek", "français": "dolichocéphale"}
-{"breton": "keinel", "français": "dorsal"}
-{"breton": "lagadenn-askourn-kein", "français": "vertèbre dorsale"}
-{"breton": "kein", "français": "dos"}
-{"breton": "kil an dourn", "français": "dos de la main"}
-{"breton": "kigenn-sounn ar c'horf", "français": "grand droit"}
-{"breton": "duodenon, kenta kevrenn ar vouzellenn voan", "français": "duodénum"}
-{"breton": "golo-empenn-diavaez, golo-empenn lerek", "français": "dure-mère"}
-{"breton": "hirausted, gwevnded", "français": "élasticité"}
-{"breton": "hiraus, gwevn", "français": "élastique"}
-{"breton": "bos", "français": "éminence"}
-{"breton": "empenn", "français": "encéphale"}
-{"breton": "golo-diabarz ar galon, engoloenn-galon", "français": "endocarde"}
-{"breton": "skoaz, diouskoaz", "français": "épaule"}
-{"breton": "ezkroc'hen", "français": "épiderme"}
-{"breton": "korf-krec'h", "français": "épigastre"}
-{"breton": "stouf ar gorzenn-aer, stankerez ar gorzenn-aer", "français": "épiglotte"}
-{"breton": "spernenn-askourn", "français": "épine"}
-{"breton": "mel-kein", "français": "moelle épinière"}
-{"breton": "astennus, sounnus", "français": "érectile"}
-{"breton": "astenn, sounna", "français": "érection"}
-{"breton": "sac'h-boued, kreuz, stomok", "français": "estomac"}
-{"breton": "askourn kellaouek", "français": "ethmoïde"}
-{"breton": "distaoladuriou", "français": "excrétat"}
-{"breton": "distaolerez", "français": "excrétion"}
-{"breton": "kreskenn", "français": "excroissance"}
-{"breton": "kreskenn-askourn", "français": "exostose"}
-{"breton": "argaserez", "français": "expulsion"}
-{"breton": "astennadur, astennerez", "français": "extension"}
-{"breton": "dremm, eneb", "français": "face"}
-{"breton": "talbennig", "français": "facette"}
-{"breton": "dremmel, enebel", "français": "facial"}
-{"breton": "kornad an dremm", "français": "angle facial"}
-{"breton": "kaoc'h", "français": "matières fécales"}
-{"breton": "speria, speriadur, frouezusa, frouezusadur", "français": "fécondation"}
-{"breton": "morzedel", "français": "fémoral"}
-{"breton": "gwerzid-vorzed", "français": "fémur"}
-{"breton": "feskenn, klun", "français": "fesse"}
-{"breton": "feskennel", "français": "fessier"}
-{"breton": "kigenn feskenn vras", "français": "grand fessier"}
-{"breton": "kigenn-feskenn grenn", "français": "moyen fessier"}
-{"breton": "kigenn-feskenn vihan", "français": "petit fessier"}
-{"breton": "neudenn", "français": "fibre"}
-{"breton": "neudennek", "français": "fibreux"}
-{"breton": "neud-gwad, fibrina", "français": "fibrine"}
-{"breton": "migourn neudennek", "français": "fibro-cartilage"}
-{"breton": "bestl", "français": "fiel"}
-{"breton": "neudennig", "français": "filament"}
-{"breton": "kostez, kostou", "français": "flanc"}
-{"breton": "kigenn blega, pleger", "français": "muscle fléchisseur"}
-{"breton": "plega", "français": "flexion"}
-{"breton": "frouezenn", "français": "foetus"}
-{"breton": "avu", "français": "foie"}
-{"breton": "sac'hig, seierigou", "français": "follicule"}
-{"breton": "labour, ober", "français": "fonction"}
-{"breton": "toull", "français": "fosse"}
-{"breton": "stagell", "français": "frein"}
-{"breton": "stagell-deod", "français": "frein de la langue"}
-{"breton": "talel", "français": "frontal"}
-{"breton": "askourn-tal", "français": "os frontal"}
-{"breton": "gwerzidhenvel, stumm-gwerzid", "français": "fusiforme"}
-{"breton": "nozelenn", "français": "ganglion"}
-{"breton": "kreuzel", "français": "gastrique"}
-{"breton": "chugon ar sac'h-boued", "français": "suc gastrique"}
-{"breton": "kig-dent, munsun", "français": "gencive"}
-{"breton": "glin, daoulin", "français": "genou"}
-{"breton": "penn-kalc'h, mezenn", "français": "gland"}
-{"breton": "gwagrenn", "français": "glande"}
-{"breton": "boullig", "français": "globule"}
-{"breton": "bloueig", "français": "glomérule"}
-{"breton": "teod-ha-korzailhenn", "français": "glossopharyngien"}
-{"breton": "digor ar gorzenn-aer", "français": "glotte"}
-{"breton": "korzailhenn, toull-gouzoug", "français": "gorge"}
-{"breton": "tanva", "français": "goût"}
-{"breton": "behin", "français": "graisse"}
-{"breton": "greunennek", "français": "granuleux"}
-{"breton": "gwagrennou barr-rezin", "français": "glandes en grappe"}
-{"breton": "anal, alan", "français": "haleine"}
-{"breton": "lez, dioulez", "français": "hanche"}
-{"breton": "gwadgaser troellek", "français": "artère hélicine"}
-{"breton": "boullig-ruz", "français": "hématie"}
-{"breton": "danvez-houarnek ar gwad, hematina", "français": "hématine"}
-{"breton": "hanterenn", "français": "hémisphère (du cerveau)"}
-{"breton": "danvez-ruz ar gwad, hemoglobina", "français": "hémoglobine"}
-{"breton": "avuel", "français": "hépatique"}
-{"breton": "striza-distriza an ibil-lagad", "français": "hippus"}
-{"breton": "brec'hel", "français": "huméral"}
-{"breton": "gwerzid-vrec'h", "français": "humérus"}
-{"breton": "yec'hedouriez", "français": "hygiène"}
-{"breton": "U-henvel, stumm-U", "français": "hyoïde"}
-{"breton": "askourn U-henvel, U an teod, askourn-teod", "français": "os hyoïde"}
-{"breton": "iskostezenn", "français": "hypocondre"}
-{"breton": "kof-traon", "français": "hypogastre"}
-{"breton": "nervenn isteodel", "français": "hypoglosse"}
-{"breton": "gwagrenn-dibrenn", "français": "hypophyse"}
-{"breton": "ileon, trede kevrenn ar vouzellenn voan", "français": "iléon"}
-{"breton": "askourn-uhellez", "français": "ilion"}
-{"breton": "dant-trouc'ha, rakdant", "français": "incisive"}
-{"breton": "eil biz, biz-yod", "français": "index (doigt)"}
-{"breton": "glaourenni", "français": "insalivation"}
-{"breton": "etrekostezennel", "français": "intercostal"}
-{"breton": "etreaskournel", "français": "interosseux"}
-{"breton": "bouzellenn, bouzellou", "français": "intestin"}
-{"breton": "bouzellenn voan", "français": "intestin grêle"}
-{"breton": "bouzellenn deo", "français": "gros intestin"}
-{"breton": "kanevedenn-lagad", "français": "iris"}
-{"breton": "askourn-izellez", "français": "ischion"}
-{"breton": "izellez-ha-bouzellenndeo", "français": "ischio-rectal"}
-{"breton": "gar, diouhar, divesker", "français": "jambe"}
-{"breton": "arzell", "français": "jarret"}
-{"breton": "jejunon, eil kevrenn ar vouzellenn voan", "français": "jéjunum"}
-{"breton": "boc'h, divoc'h, jod, dioujod", "français": "joue"}
-{"breton": "gouzougel", "français": "jugulaire"}
-{"breton": "daeraouel", "français": "lacrymal"}
-{"breton": "teod", "français": "langue"}
-{"breton": "gourlanchenn, anchenn", "français": "larynx"}
-{"breton": "gweuz, diweuz, muzell", "français": "lèvre"}
-{"breton": "ere", "français": "ligament"}
-{"breton": "linenn wenn", "français": "ligne blanche"}
-{"breton": "teodel", "français": "lingual"}
-{"breton": "dourenn", "français": "liquide"}
-{"breton": "benvegad-dilec'hia", "français": "appareil locomoteur"}
-{"breton": "kroazlezel", "français": "lombaire"}
-{"breton": "kroazell", "français": "région lombaire"}
-{"breton": "lagadenn-askourn-kroazell", "français": "vertèbre lombaire"}
-{"breton": "kroazlez, diougroazell", "français": "lombes"}
-{"breton": "hugenn, ankoue", "français": "luette"}
-{"breton": "lumfel", "français": "lymphatique"}
-{"breton": "gwazied-lumfa, lumfgaseriou", "français": "vaisseaux lymphatiques"}
-{"breton": "lumfa", "français": "lymphe"}
-{"breton": "karvan, diougarvan, aven, diouaven", "français": "mâchoire"}
-{"breton": "karvan-draon", "français": "mâchoire inférieure"}
-{"breton": "karvan-grec'h", "français": "mâchoire supérieure"}
-{"breton": "dourn, daouarn", "français": "main"}
-{"breton": "biz kreiz, trede biz", "français": "majeur (doigt)"}
-{"breton": "boc'hel, jodel", "français": "malaire"}
-{"breton": "ufern, daouufern, fer", "français": "malléole"}
-{"breton": "bronn, divronn", "français": "mamelle"}
-{"breton": "chaokat", "français": "mastication"}
-{"breton": "bronnhenvel, stumm-bronn", "français": "mastoïde"}
-{"breton": "beg-askourn bronnhenvel, klopenvronnenn", "français": "apophyse mastoïde"}
-{"breton": "danveziou", "français": "matières"}
-{"breton": "mammou", "français": "matrice"}
-{"breton": "mamm-ivin", "français": "matrice de l'ongle"}
-{"breton": "karvanel", "français": "maxillaire"}
-{"breton": "karvan-draon", "français": "maxillaire inférieur"}
-{"breton": "karvan-grec'h", "français": "maxillaire supérieur"}
-{"breton": "digor-kanol", "français": "méat"}
-{"breton": "nervenn-greiz", "français": "nerf médian"}
-{"breton": "kroc'henenn", "français": "membrane"}
-{"breton": "ezel, izili", "français": "membre"}
-{"breton": "golo-empenn", "français": "méninge"}
-{"breton": "elgez", "français": "menton"}
-{"breton": "elgezel", "français": "mentonnier"}
-{"breton": "kandedenn", "français": "mésentère"}
-{"breton": "eskern-kreiz-dourn", "français": "métacarpe"}
-{"breton": "eskern-kreiz-troad", "français": "métatarse"}
-{"breton": "santout-kefluska", "français": "mixte (nerf)"}
-{"breton": "mel", "français": "moelle (des os)"}
-{"breton": "dant-mala, kildant", "français": "molaire"}
-{"breton": "kof-gar", "français": "mollet"}
-{"breton": "kefluska", "français": "moteur (nerf)"}
-{"breton": "mourrou, mourren-nou", "français": "moustache"}
-{"breton": "keflusk", "français": "mouvement"}
-{"breton": "stervenn", "français": "mucus"}
-{"breton": "stervegenn", "français": "muqueuse"}
-{"breton": "kigenn", "français": "muscle"}
-{"breton": "kigennel", "français": "musculaire"}
-{"breton": "fron, difron, fronell", "français": "narine"}
-{"breton": "friel", "français": "nasal"}
-{"breton": "askourn-fri", "français": "os nasal"}
-{"breton": "toull-fri", "français": "fosse nasale"}
-{"breton": "korzailhenn uhela, uhelgorzailhenn", "français": "naso-pharynx"}
-{"breton": "nervenn", "français": "nerf"}
-{"breton": "nervennel, nervennek", "français": "nerveux"}
-{"breton": "kreizennou nervennek", "français": "centres nerveux"}
-{"breton": "koublad-nervennou, diounervenn", "français": "paire nerveuse"}
-{"breton": "nervenneg, nervennaoueg", "français": "système nerveux"}
-{"breton": "kellig-nervenn", "français": "neurone"}
+{"breton": "abrant", "français": "sourcil"}
+{"breton": "advevidigez", "français": "revivification (du sang)"}
 {"breton": "ahel-nervenn", "français": "névraxe"}
-{"breton": "golo-nervenn", "français": "névrilène"}
-{"breton": "fri", "français": "nez"}
-{"breton": "begel", "français": "nombril"}
-{"breton": "mul-gouzoug, choug", "français": "nuque"}
-{"breton": "magus, bouedus", "français": "nutritif"}
-{"breton": "divag", "français": "non nutritif"}
-{"breton": "maga", "français": "nutrition"}
-{"breton": "beskellek", "français": "oblique"}
-{"breton": "kigenn veskellek bras", "français": "grand oblique"}
-{"breton": "kigenn veskellek bihan", "français": "petit oblique"}
-{"breton": "toull-gouriz", "français": "trou obturateur"}
-{"breton": "kilpennel", "français": "occipital"}
-{"breton": "askourn-kilpenn", "français": "os occipital"}
-{"breton": "kilpenn", "français": "occiput"}
-{"breton": "c'houesa", "français": "odorat"}
-{"breton": "danthenvel, stumm-dant", "français": "odontoïde"}
-{"breton": "lagad", "français": "œil"}
-{"breton": "kan-boued, korzenn-voued", "français": "œsophage"}
-{"breton": "penn-ilin, draen-krec'h ar werzid-arvrec'h", "français": "olécrâne"}
-{"breton": "nervenn ar c'houesa", "français": "nerf olfactif"}
-{"breton": "begelel", "français": "ombilical"}
-{"breton": "planken-skoaz", "français": "omoplate"}
-{"breton": "ivin", "français": "ongle"}
-{"breton": "nervenn d lagad, nervenn ar gweled", "français": "nerf optique"}
-{"breton": "poull-lagad, pud-lagad", "français": "orbite"}
-{"breton": "skouarn", "français": "oreille"}
-{"breton": "skouarn-galon", "français": "oreillette (du cœur)"}
-{"breton": "digor", "français": "orifice"}
-{"breton": "benveg, binviou, benvegenn", "français": "organe"}
-{"breton": "biz-troad, bizied-troad", "français": "orteil"}
-{"breton": "meud-troad", "français": "gros orteil"}
-{"breton": "askourn, eskern", "français": "os"}
-{"breton": "askournek, askournel", "français": "osseux"}
-{"breton": "eskernadur, eskernadurez, eskernidigez", "français": "ossification"}
-{"breton": "askourna", "français": "s'ossifier"}
-{"breton": "kleved", "français": "ouïe"}
-{"breton": "koublad", "français": "paire"}
-{"breton": "staon", "français": "palais"}
-{"breton": "palvel", "français": "palmaire"}
+{"breton": "ahelel", "français": "axial"}
+{"breton": "ahelenn", "français": "axis"}
+{"breton": "al lounez", "français": "les reins"}
+{"breton": "alan", "français": "haleine"}
+{"breton": "alanat", "français": "respirer"}
+{"breton": "an dric'hornenn", "français": "sacré"}
+{"breton": "an eilwerzid-arvrec'h", "français": "radial"}
+{"breton": "an eilwerzid-c'har", "français": "péronier"}
+{"breton": "anal", "français": "haleine"}
+{"breton": "analat", "français": "respirer"}
+{"breton": "anchenn", "français": "larynx"}
+{"breton": "ankoue", "français": "luette"}
+{"breton": "ar c'hleved", "français": "auditif"}
+{"breton": "ar c'horzennou-skevent", "français": "bronchique"}
 {"breton": "ar c'hroc'hen-lagad", "français": "palpébral"}
-{"breton": "gwagrenn-greiz-korf", "français": "pancréas"}
+{"breton": "ar gwadgaseriou", "français": "artériel"}
+{"breton": "ar gwadzegaseriou", "français": "veineux"}
+{"breton": "ar gwazied", "français": "vasculaire"}
+{"breton": "ar gwazied-degas", "français": "veineux"}
+{"breton": "ar gwazied-kas", "français": "artériel"}
+{"breton": "ar gweled", "français": "visuel"}
+{"breton": "ar malvennou", "français": "ciliaire"}
+{"breton": "argaserez", "français": "expulsion"}
+{"breton": "arvrec'h", "français": "avant-bras"}
+{"breton": "arzell", "français": "jarret"}
+{"breton": "arzourn", "français": "poignet"}
+{"breton": "askourn", "français": "os"}
+{"breton": "askourn isklopenel", "français": "os sphénoïde"}
+{"breton": "askourn ivinhenvel", "français": "unguis"}
+{"breton": "askourn kellaouek", "français": "ethmoïde"}
+{"breton": "askourn U-henvel", "français": "os hyoïde"}
+{"breton": "askourn-bilibann", "français": "astragale"}
+{"breton": "askourn-biz", "français": "phalange"}
+{"breton": "askourn-biz kreiz", "français": "phalangine"}
+{"breton": "askourn-biz pella", "français": "phalangette"}
+{"breton": "askourn-biz tosta", "français": "phalange"}
+{"breton": "askourn-boc'h", "français": "pommette"}
+{"breton": "askourn-fri", "français": "os nasal"}
+{"breton": "askourn-gouriz", "français": "os coxal"}
+{"breton": "askourn-ividig", "français": "os temporal"}
+{"breton": "askourn-izellez", "français": "ischion"}
+{"breton": "askourn-jod", "français": "pommette"}
+{"breton": "askourn-kilpenn", "français": "os occipital"}
+{"breton": "askourn-raklez", "français": "pubis"}
+{"breton": "askourn-seul", "français": "calcaneum"}
+{"breton": "askourn-tal", "français": "os frontal"}
+{"breton": "askourn-teod", "français": "os hyoïde"}
+{"breton": "askourn-tu-ar-penn", "français": "os pariétal"}
+{"breton": "askourn-uhellez", "français": "ilion"}
+{"breton": "askourna", "français": "s'ossifier"}
+{"breton": "askournek", "français": "osseux"}
+{"breton": "askournel", "français": "osseux"}
+{"breton": "askre", "français": "poitrine"}
+{"breton": "astenn", "français": "érection"}
+{"breton": "astennadur", "français": "extension"}
+{"breton": "astennerez", "français": "extension"}
+{"breton": "astennus", "français": "érectile"}
+{"breton": "aven", "français": "mâchoire"}
+{"breton": "avu", "français": "foie"}
+{"breton": "avuel", "français": "hépatique"}
+{"breton": "bann-diskenn ar c'holon", "français": "côlon descendant"}
+{"breton": "bann-sevel ar c'holon", "français": "côlon ascendant"}
+{"breton": "baro", "français": "barbe"}
+{"breton": "beg", "français": "bouche"}
+{"breton": "beg-askourn", "français": "apophyse"}
+{"breton": "beg-askourn bronnhenvel", "français": "apophyse mastoïde"}
+{"breton": "begel", "français": "nombril"}
+{"breton": "begelel", "français": "ombilical"}
 {"breton": "begennig", "français": "papille"}
 {"breton": "begennig-vlaza", "français": "papille du goût"}
-{"breton": "askourn-tu-ar-penn", "français": "os pariétal"}
-{"breton": "pevare koublad an nervennou-klopen", "français": "nerf pathétique"}
-{"breton": "palv", "français": "paume"}
-{"breton": "kroc'hen-lagad, krec'hin-lagad", "français": "paupière"}
-{"breton": "pleg ar skouarn", "français": "pavillon (de l'oreille)"}
-{"breton": "kroc'hen", "français": "peau"}
-{"breton": "kigenn-groc'hen", "français": "peaucier"}
-{"breton": "kigenn-vrennid vras", "français": "grand pectoral"}
-{"breton": "kigenn-vrennid vihan", "français": "petit pectoral"}
-{"breton": "gourizel", "français": "pelvien"}
-{"breton": "pepsina", "français": "pepsine"}
-{"breton": "goadur", "français": "peptone"}
-{"breton": "golo-kalon, ezkolôenn-galon", "français": "péricarde"}
-{"breton": "golo-migourn", "français": "périchondre"}
-{"breton": "garbedenn", "français": "périnée"}
-{"breton": "golo-askourn", "français": "périoste"}
-{"breton": "rouedenn", "français": "péritoine"}
-{"breton": "eilwerzid-c'har", "français": "péroné"}
-{"breton": "an eilwerzid-c'har", "français": "péronier"}
-{"breton": "askourn-biz, askourn-biz tosta", "français": "phalange"}
-{"breton": "askourn-biz pella", "français": "phalangette"}
-{"breton": "askourn-biz kreiz", "français": "phalangine"}
-{"breton": "korzailhenn, toull-gouzoug", "français": "pharynx"}
-{"breton": "korfspeurennel", "français": "phrénique"}
-{"breton": "korfoniez", "français": "physiologie"}
-{"breton": "korfoniel, korfoniezel", "français": "physiologique"}
-{"breton": "korfoniour", "français": "physiologiste"}
-{"breton": "troad", "français": "pied"}
-{"breton": "golo-empenn diabarz", "français": "pie-mère"}
-{"breton": "engolôenn-fri", "français": "membrane pituitaire"}
-{"breton": "leur ar gegenou", "français": "plancher (de la bouche)"}
-{"breton": "sol", "français": "plante (du pied)"}
-{"breton": "plasma", "français": "plasma"}
-{"breton": "golo-skevent", "français": "plèvre"}
-{"breton": "emweadenn", "français": "plexus"}
-{"breton": "skevent-ha-kreuz, skevent-ha-sac'h-boued", "français": "pneumo-gastrique"}
-{"breton": "sac'h, seier", "français": "poche"}
-{"breton": "arzourn", "français": "poignet"}
-{"breton": "blevenn-gorf, bleo-korf", "français": "poil (du corps)"}
-{"breton": "brennid, askre", "français": "poitrine"}
-{"breton": "askourn-jod, askourn-boc'h", "français": "pommette"}
-{"breton": "toullig-kroc'hen", "français": "pore de la peau"}
-{"breton": "meud", "français": "pouce"}
-{"breton": "kas ar gwad", "français": "pouls"}
-{"breton": "lamm-gwad", "français": "battement du pouls"}
-{"breton": "gwazienn ar meud, gwazienn-lamm", "français": "artère du pouls"}
-{"breton": "skevent", "français": "poumon"}
-{"breton": "pod-mezenn", "français": "prépuce"}
-{"breton": "rakkarvanek", "français": "prognate"}
-{"breton": "rakkarvarnegez", "français": "prognathisme"}
-{"breton": "troer ar palv en a-drenv", "français": "pronateur"}
-{"breton": "palv en a-drenv", "français": "pronation"}
-{"breton": "protoplasma", "français": "protoplasme"}
-{"breton": "ibil-lagad, mab-lagad, kreizig-lagad", "français": "prunelle"}
-{"breton": "askourn-raklez", "français": "pubis"}
-{"breton": "logig-skevent", "français": "alvéole pulmonaire"}
-{"breton": "lamm", "français": "pulsation"}
+{"breton": "begou-eskern gwelehenvel", "français": "clinoïdes"}
+{"breton": "behin", "français": "graisse"}
+{"breton": "behinek", "français": "adipeux"}
+{"breton": "benveg", "français": "organe"}
+{"breton": "benvegad", "français": "appareil"}
+{"breton": "benvegad-alanat", "français": "appareil respiratoire"}
+{"breton": "benvegad-analat", "français": "appareil respiratoire"}
+{"breton": "benvegad-dilec'hia", "français": "appareil locomoteur"}
+{"breton": "benvegad-goi", "français": "appareil digestif"}
+{"breton": "benvegad-troaza", "français": "appareil urinaire"}
+{"breton": "benvegenn", "français": "organe"}
+{"breton": "benvegennou ar skiantou", "français": "organes des sens"}
+{"breton": "beraat", "français": "contracter (un muscle)"}
+{"breton": "berraus", "français": "contractile"}
+{"breton": "beskellek", "français": "oblique"}
+{"breton": "bestl", "français": "bile"}
+{"breton": "bestl", "français": "fiel"}
+{"breton": "bestlel", "français": "biliaire"}
+{"breton": "binviou", "français": "organe"}
+{"breton": "biz", "français": "doigt"}
+{"breton": "biz ar galon", "français": "annulaire (doigt)"}
+{"breton": "biz bihan", "français": "auriculaire (doigt)"}
+{"breton": "biz kreiz", "français": "majeur (doigt)"}
+{"breton": "biz-troad", "français": "orteil"}
+{"breton": "biz-yod", "français": "index (doigt)"}
+{"breton": "bizied-troad", "français": "orteil"}
+{"breton": "bizig", "français": "auriculaire (doigt)"}
+{"breton": "bleo", "français": "chevelure"}
+{"breton": "bleo", "français": "cheveu"}
+{"breton": "bleo-korf", "français": "poil (du corps)"}
+{"breton": "bleohenvel", "français": "capillaire"}
+{"breton": "blevenn", "français": "cheveu"}
+{"breton": "blevenn-benn", "français": "cheveu"}
+{"breton": "blevenn-gorf", "français": "poil (du corps)"}
+{"breton": "bloueig", "français": "glomérule"}
+{"breton": "boc'h", "français": "joue"}
+{"breton": "boc'hel", "français": "malaire"}
+{"breton": "bolz", "français": "arcade"}
+{"breton": "bos", "français": "éminence"}
+{"breton": "boued", "français": "aliments"}
+{"breton": "bouedel", "français": "alimentaire"}
+{"breton": "bouedou", "français": "aliments"}
+{"breton": "bouedou gwennvihenvel", "français": "aliments albuminoïde"}
+{"breton": "bouedus", "français": "nutritif"}
+{"breton": "boullig", "français": "globule"}
+{"breton": "boullig-ruz", "français": "hématie"}
+{"breton": "bourlas", "français": "cartilage"}
+{"breton": "bourlasek", "français": "cartilagineux"}
+{"breton": "bouzellenn", "français": "intestin"}
+{"breton": "bouzellenn deo", "français": "gros intestin"}
+{"breton": "bouzellenn voan", "français": "intestin grêle"}
+{"breton": "bouzellou", "français": "intestin"}
+{"breton": "boz", "français": "creux (de la main)"}
+{"breton": "brasaat", "français": "ampliation"}
+{"breton": "brec'h", "français": "bras"}
+{"breton": "brec'hel", "français": "brachial"}
+{"breton": "brec'hel", "français": "huméral"}
+{"breton": "brennid", "français": "poitrine"}
+{"breton": "bronn", "français": "mamelle"}
+{"breton": "bronn", "français": "sein"}
+{"breton": "bronnhenvel", "français": "mastoïde"}
+{"breton": "c'houesa", "français": "odorat"}
+{"breton": "c'houez", "français": "sueur"}
+{"breton": "c'houezigell", "français": "vessie"}
+{"breton": "chaokat", "français": "mastication"}
+{"breton": "choug", "français": "nuque"}
+{"breton": "choug an troad", "français": "cou-de-pied"}
+{"breton": "chougel", "français": "cervical"}
+{"breton": "chugon", "français": "suc"}
+{"breton": "chugon ar sac'h-boued", "français": "suc gastrique"}
+{"breton": "chugon-boued", "français": "chyle"}
+{"breton": "daeraouel", "français": "lacrymal"}
+{"breton": "dant", "français": "dent"}
+{"breton": "dant-al-lagad", "français": "canine"}
+{"breton": "dant-mala", "français": "molaire"}
+{"breton": "dant-trouc'ha", "français": "incisive"}
+{"breton": "dantadur", "français": "denture"}
+{"breton": "danthenvel", "français": "odontoïde"}
+{"breton": "danvez-houarnek ar gwad", "français": "hématine"}
+{"breton": "danvez-ruz ar gwad", "français": "hémoglobine"}
+{"breton": "danveziou", "français": "aliments"}
+{"breton": "danveziou", "français": "matières"}
+{"breton": "daouarn", "français": "main"}
+{"breton": "daoufern", "français": "cheville"}
+{"breton": "daoulin", "français": "coude"}
+{"breton": "daoulin", "français": "genou"}
+{"breton": "daouufern", "français": "malléole"}
+{"breton": "daouvrankek", "français": "bifurqué"}
+{"breton": "daouvranket", "français": "bifurqué"}
+{"breton": "degaser", "français": "vaisseau afférent"}
+{"breton": "dent", "français": "dent"}
+{"breton": "dent-al-lagad", "français": "canine"}
+{"breton": "denterez", "français": "dentition"}
+{"breton": "dibrenn", "français": "selle turcique"}
+{"breton": "difron", "français": "narine"}
+{"breton": "digor", "français": "orifice"}
+{"breton": "digor ar gorzenn-aer", "français": "glotte"}
+{"breton": "digor-kanol", "français": "méat"}
+{"breton": "digor-krec'h ar sac'h-boued", "français": "cardia"}
 {"breton": "digor-traon ar sac'h-boued", "français": "pylore"}
-{"breton": "pikernhenvel, stumm-pikern", "français": "pyramidal"}
-{"breton": "pikernenn", "français": "muscle pyramidal"}
-{"breton": "pevarennet", "français": "quadrijumeau"}
-{"breton": "mel penn", "français": "bulbe rachidien"}
-{"breton": "an eilwerzid-arvrec'h", "français": "radial"}
-{"breton": "eilwerzid-arvrec'h", "français": "radius"}
-{"breton": "felc'h", "français": "rate"}
-{"breton": "rekton", "français": "rectum"}
 {"breton": "dilamm", "français": "réflexe (nerveux)"}
-{"breton": "ranngorf", "français": "région"}
-{"breton": "lounezenn", "français": "rein"}
-{"breton": "al lounez", "français": "les reins"}
-{"breton": "lounezel", "français": "rénal"}
-{"breton": "gouenna", "français": "reproduction"}
 {"breton": "dilerc'hiadou", "français": "résidus (des aliments)"}
-{"breton": "benvegad-alanat, benvegad-analat", "français": "appareil respiratoire"}
-{"breton": "alanat, analat", "français": "respirer"}
-{"breton": "skramm-lagad", "français": "rétine"}
-{"breton": "advevidigez", "français": "revivification (du sang)"}
-{"breton": "trei", "français": "rotation"}
-{"breton": "krogen ar glin, penn-glin", "français": "rotule"}
-{"breton": "sac'hhenvel, stumm-sac'h", "français": "sacciforme"}
-{"breton": "an dric'hornenn", "français": "sacré"}
-{"breton": "tric'hornenn-halez", "français": "sacro-sciatique"}
-{"breton": "tric'hornenn ar gouriz", "français": "sacrum"}
-{"breton": "gwagrennou-glaourenni, gwagrennou-halo", "français": "glandes salivaires"}
-{"breton": "halo, glaourenn", "français": "salive"}
-{"breton": "gwad", "français": "sang"}
-{"breton": "gwadel", "français": "sanguin"}
-{"breton": "gwadzegaser gorre-gar", "français": "veine saphène"}
-{"breton": "kamm", "français": "scalène"}
-{"breton": "kigenn-gamm", "français": "muscle scalène"}
-{"breton": "gwenn al lagad", "français": "sclérotique"}
+{"breton": "dinsenn", "français": "os cuboïde"}
+{"breton": "dinshenvel", "français": "cuboïde"}
+{"breton": "diouarvrec'h", "français": "avant-bras"}
+{"breton": "diouaven", "français": "mâchoire"}
+{"breton": "diougarvan", "français": "mâchoire"}
+{"breton": "diougazel", "français": "aisselle"}
+{"breton": "diougroazell", "français": "lombes"}
+{"breton": "diouhar", "français": "jambe"}
+{"breton": "dioujod", "français": "joue"}
+{"breton": "dioulez", "français": "hanche"}
+{"breton": "diounervenn", "français": "paire nerveuse"}
+{"breton": "diouskoaz", "français": "épaule"}
+{"breton": "diouvorzed", "français": "cuisse"}
+{"breton": "diroufennadur", "français": "ampliation"}
+{"breton": "diskantadur", "français": "desquamation"}
+{"breton": "distaoladuriou", "français": "excrétat"}
+{"breton": "distaolerez", "français": "excrétion"}
+{"breton": "distriza ar galon", "français": "diastole"}
+{"breton": "divag", "français": "non nutritif"}
+{"breton": "divesker", "français": "jambe"}
+{"breton": "divoc'h", "français": "joue"}
+{"breton": "divrec'h", "français": "bras"}
+{"breton": "divronn", "français": "mamelle"}
+{"breton": "diweuz", "français": "lèvre"}
+{"breton": "douger-penn", "français": "atlas"}
+{"breton": "dourenn", "français": "liquide"}
+{"breton": "dourenn-vel-hag-empenn", "français": "liquide céphalo-rachidien"}
 {"breton": "dourennaoui", "français": "sécréter"}
 {"breton": "dourennaoui", "français": "sécrétion"}
-{"breton": "bronn", "français": "sein"}
-{"breton": "dibrenn", "français": "selle turcique"}
-{"breton": "sper, had", "français": "semence"}
-{"breton": "kreskhenvel", "français": "semi-lunaire"}
-{"breton": "hadel", "français": "séminal"}
-{"breton": "sac'h ar sper, godell ar sper", "français": "vésicule séminale"}
-{"breton": "skiant", "français": "sens"}
-{"breton": "benvegennou ar skiantou", "français": "organes des sens"}
-{"breton": "santadur", "français": "sensation"}
-{"breton": "santerez", "français": "sensibilité"}
-{"breton": "santus", "français": "sensible"}
-{"breton": "nervenn-santout", "français": "nerf sensitif"}
-{"breton": "santout, merzout", "français": "sentir"}
-{"breton": "gleboregenn", "français": "séreuse"}
-{"breton": "gleboradur", "français": "sérosité"}
-{"breton": "seron", "français": "sérum (du sang)"}
-{"breton": "sigmahenvel, stumm-sigma", "français": "sigmoïde"}
-{"breton": "keo", "français": "sinus"}
-{"breton": "keo-karvan", "français": "sinus maxillaire"}
-{"breton": "gourwazied, gourwadzegaseriou", "français": "sinus veineux"}
-{"breton": "abrant", "français": "sourcil"}
-{"breton": "gwadgaser isibilskoazel", "français": "artère sous-clavière"}
-{"breton": "iskroc'henel", "français": "sous-cutané"}
-{"breton": "iskarvanel", "français": "sous-maxillaire"}
-{"breton": "ispodlagadel, ispoul-lagadel", "français": "sous-orbitaire"}
-{"breton": "isplankenskoazel", "français": "sous-scapulaire"}
-{"breton": "kan-had", "français": "conduit spermatique"}
-{"breton": "gennhenvel, stumm-genn", "français": "sphénoïde"}
-{"breton": "genenn-glopen, askourn isklopenel", "français": "os sphénoïde"}
-{"breton": "kigenn-starda", "français": "sphincter"}
-{"breton": "felc'hel", "français": "splénique"}
-{"breton": "spoueek", "français": "spongieux"}
-{"breton": "relegenn, korf-eskern", "français": "squelette"}
-{"breton": "penn-eskern", "français": "squelette de la tête"}
-{"breton": "klerenn-hag-ibil-skoaz", "français": "sterno-claviculaire"}
-{"breton": "klerenn-ibil-skoaz-ha-klopenvronenn", "français": "sterno-cléido-mastoïdien"}
-{"breton": "klerenn-hag-U, klerenn-hag-askourn-teod", "français": "sterno-hyoïdien"}
-{"breton": "klerenn", "français": "sternum"}
-{"breton": "goustilhenn-hag-U, goustilhenn-hag-askourn-teod", "français": "stylo-hyoïdien"}
-{"breton": "goustilhhenvel, stumm-goustilh", "français": "styloïde"}
-{"breton": "goustilhenn", "français": "apophyse styloïde"}
-{"breton": "toull-goustilhenn", "français": "trou stylo-mastoïdien"}
-{"breton": "isteodel", "français": "sublingual"}
-{"breton": "chugon", "français": "suc"}
-{"breton": "c'houez", "français": "sueur"}
-{"breton": "troer ar palv en a-raok", "français": "supinateur"}
-{"breton": "palv en a-raok", "français": "supination"}
-{"breton": "uslounezenn", "français": "capsule surrénale"}
-{"breton": "juntatur-eskern, mell diloc'h, mell difinv", "français": "suture"}
-{"breton": "nervenn an isvuhez", "français": "nerf sympathique"}
-{"breton": "nervenneg an isvuhez", "français": "système sympathique"}
-{"breton": "mell damzifinv, mell damziloc'h", "français": "symphyse"}
-{"breton": "sunovia", "français": "synovie"}
-{"breton": "seul", "français": "talon"}
-{"breton": "migourn ar c'hrec'hin-lagad", "français": "tarse des paupières"}
+{"breton": "dourn", "français": "main"}
+{"breton": "draen-araok ar werzid-vrec'h", "français": "apophyse coronoïde du cubitus"}
+{"breton": "draen-askourn", "français": "apophyse"}
+{"breton": "draen-krec'h ar werzid-arvrec'h", "français": "olécrâne"}
+{"breton": "drein-askourn", "français": "apophyse"}
+{"breton": "dremm", "français": "face"}
+{"breton": "dremmel", "français": "facial"}
+{"breton": "duodenon", "français": "duodénum"}
+{"breton": "eil biz", "français": "index (doigt)"}
+{"breton": "eil lagadenn-askourn-gouzoug", "français": "axis"}
+{"breton": "eilwerzid-arvrec'h", "français": "radius"}
+{"breton": "eilwerzid-c'har", "français": "péroné"}
+{"breton": "elgez", "français": "menton"}
+{"breton": "elgezel", "français": "mentonnier"}
+{"breton": "empenn", "français": "cerveau"}
+{"breton": "empenn", "français": "encéphale"}
+{"breton": "empennel", "français": "cérébral"}
+{"breton": "emweadenn", "français": "plexus"}
+{"breton": "eneb", "français": "face"}
+{"breton": "enebel", "français": "facial"}
+{"breton": "eneberez", "français": "antagonisme (musculaire)"}
+{"breton": "engoloenn-galon", "français": "endocarde"}
+{"breton": "engolôenn-fri", "français": "membrane pituitaire"}
+{"breton": "enkroc'hen", "français": "derme"}
+{"breton": "ere", "français": "ligament"}
+{"breton": "eskern", "français": "os"}
 {"breton": "eskern choug-an-troad", "français": "tarse du pied"}
+{"breton": "eskern-arzourn", "français": "carpe"}
+{"breton": "eskern-kreiz-dourn", "français": "métacarpe"}
+{"breton": "eskern-kreiz-troad", "français": "métatarse"}
+{"breton": "eskernadur", "français": "ossification"}
+{"breton": "eskernadurez", "français": "ossification"}
+{"breton": "eskernidigez", "français": "ossification"}
+{"breton": "etreaskournel", "français": "interosseux"}
+{"breton": "etrekostezennel", "français": "intercostal"}
+{"breton": "eur c'hrigonsenn", "français": "un cartilage"}
+{"breton": "eur vigournenn", "français": "un cartilage"}
+{"breton": "eur vourlasenn", "français": "un cartilage"}
+{"breton": "euvri", "français": "absorption"}
+{"breton": "ezel", "français": "membre"}
+{"breton": "ezkolôenn-galon", "français": "péricarde"}
+{"breton": "ezkroc'hen", "français": "épiderme"}
+{"breton": "felc'h", "français": "rate"}
+{"breton": "felc'hel", "français": "splénique"}
+{"breton": "fer", "français": "malléole"}
+{"breton": "fer an troad", "français": "cheville"}
+{"breton": "ferenn al lagad", "français": "cristallin"}
+{"breton": "feskenn", "français": "fesse"}
+{"breton": "feskennel", "français": "fessier"}
+{"breton": "feur", "français": "vagin"}
+{"breton": "fibrina", "français": "fibrine"}
+{"breton": "flac'h", "français": "creux (de la main)"}
+{"breton": "flugez", "français": "viscère"}
+{"breton": "flugezenn", "français": "viscère"}
+{"breton": "founil", "français": "choane"}
+{"breton": "fraez", "français": "anus"}
+{"breton": "fri", "français": "nez"}
+{"breton": "friel", "français": "nasal"}
+{"breton": "fron", "français": "narine"}
+{"breton": "fronell", "français": "narine"}
+{"breton": "frouezenn", "français": "foetus"}
+{"breton": "frouezusa", "français": "fécondation"}
+{"breton": "frouezusadur", "français": "fécondation"}
+{"breton": "gaol", "français": "bifurcation"}
+{"breton": "gar", "français": "jambe"}
+{"breton": "gar-ha-choug-an-troad", "français": "tibio-tarsien"}
+{"breton": "garbedenn", "français": "périnée"}
+{"breton": "genaouel", "français": "buccal"}
+{"breton": "genenn-glopen", "français": "os sphénoïde"}
+{"breton": "gennenn", "français": "os cunéiforme"}
+{"breton": "gennhenvel", "français": "cunéiforme"}
+{"breton": "gennhenvel", "français": "sphénoïde"}
+{"breton": "genou", "français": "bouche"}
+{"breton": "glaourenn", "français": "salive"}
+{"breton": "glaourenni", "français": "insalivation"}
+{"breton": "gleboradur", "français": "sérosité"}
+{"breton": "gleboregenn", "français": "séreuse"}
+{"breton": "glin", "français": "genou"}
+{"breton": "goadur", "français": "peptone"}
+{"breton": "godell", "français": "vésicule"}
+{"breton": "godell al lounez", "français": "bassinet"}
+{"breton": "godell ar sper", "français": "vésicule séminale"}
+{"breton": "godell-vestl", "français": "vésicule biliaire"}
+{"breton": "goell-goi", "français": "diastase"}
+{"breton": "goerez", "français": "digestion"}
+{"breton": "goi", "français": "digérer"}
+{"breton": "goi", "français": "digestion"}
+{"breton": "goidi-gez", "français": "digestion"}
+{"breton": "golo-askourn", "français": "périoste"}
+{"breton": "golo-diabarz ar galon", "français": "endocarde"}
+{"breton": "golo-empenn", "français": "méninge"}
+{"breton": "golo-empenn diabarz", "français": "pie-mère"}
+{"breton": "golo-empenn kreiz", "français": "arachnoïde"}
+{"breton": "golo-empenn lerek", "français": "dure-mère"}
+{"breton": "golo-empenn-diavaez", "français": "dure-mère"}
+{"breton": "golo-kalon", "français": "péricarde"}
+{"breton": "golo-kigenn", "français": "aponévrose"}
+{"breton": "golo-migourn", "français": "périchondre"}
+{"breton": "golo-nervenn", "français": "névrilène"}
+{"breton": "golo-skevent", "français": "plèvre"}
+{"breton": "gouel ar staon", "français": "voile du palais"}
+{"breton": "gouenna", "français": "reproduction"}
+{"breton": "gouin", "français": "vagin"}
+{"breton": "gouriz", "français": "bassin"}
+{"breton": "gouriz askournek", "français": "bassin osseux"}
+{"breton": "gourizel", "français": "pelvien"}
+{"breton": "gourlanchenn", "français": "larynx"}
+{"breton": "gourwadzegaseriou", "français": "sinus veineux"}
+{"breton": "gourwazied", "français": "sinus veineux"}
+{"breton": "gousted", "français": "digestibilité"}
+{"breton": "goustilhenn", "français": "apophyse styloïde"}
+{"breton": "goustilhenn-hag-askourn-teod", "français": "stylo-hyoïdien"}
+{"breton": "goustilhenn-hag-U", "français": "stylo-hyoïdien"}
+{"breton": "goustilhhenvel", "français": "styloïde"}
+{"breton": "gouzoug", "français": "col (d'un os, d'un organe)"}
+{"breton": "gouzoug", "français": "cou"}
+{"breton": "gouzougel", "français": "jugulaire"}
+{"breton": "goüs", "français": "digestible"}
+{"breton": "greunennek", "français": "granuleux"}
+{"breton": "grigons", "français": "cartilage"}
+{"breton": "grigonsek", "français": "cartilagineux"}
+{"breton": "gwad", "français": "sang"}
+{"breton": "gwadel", "français": "sanguin"}
+{"breton": "gwadgaser", "français": "artère"}
+{"breton": "gwadgaser isibilskoazel", "français": "artère sous-clavière"}
+{"breton": "gwadgaser troellek", "français": "artère hélicine"}
+{"breton": "gwadgaser-gouzoug", "français": "carotide"}
+{"breton": "gwadgaserel", "français": "artériel"}
+{"breton": "gwadgaserig", "français": "artériole"}
+{"breton": "gwadzegaser", "français": "veine"}
+{"breton": "gwadzegaser gorre-gar", "français": "veine saphène"}
+{"breton": "gwadzegaserel", "français": "veineux"}
+{"breton": "gwadzegaserig", "français": "veinule"}
+{"breton": "gwagrenn", "français": "glande"}
+{"breton": "gwagrenn-dibrenn", "français": "hypophyse"}
+{"breton": "gwagrenn-greiz-korf", "français": "pancréas"}
+{"breton": "gwagrenn-skoed", "français": "corps thyroïde"}
+{"breton": "gwagrennou barr-rezin", "français": "glandes en grappe"}
+{"breton": "gwagrennou rezinhenvel", "français": "acini"}
+{"breton": "gwagrennou-glaourenni", "français": "glandes salivaires"}
+{"breton": "gwagrennou-halo", "français": "glandes salivaires"}
+{"breton": "gwareg", "français": "arc"}
+{"breton": "gwareghenvel", "français": "arciforme"}
+{"breton": "gwazied", "français": "vaisseau"}
+{"breton": "gwazied-degas", "français": "veine"}
+{"breton": "gwazied-kas", "français": "artère"}
+{"breton": "gwazied-lumfa", "français": "vaisseaux lymphatiques"}
+{"breton": "gwaziedeg", "français": "système vasculaire"}
+{"breton": "gwazienn", "français": "vaisseau"}
+{"breton": "gwazienn ar meud", "français": "artère du pouls"}
+{"breton": "gwazienn chugon-boued", "français": "vaisseau chylifère"}
+{"breton": "gwazienn vleohenvel", "français": "vaisseau capillaire"}
+{"breton": "gwazienn-gas", "français": "artère"}
+{"breton": "gwazienn-lamm", "français": "artère du pouls"}
+{"breton": "gwazienn-zegas", "français": "veine"}
+{"breton": "gweadenn", "français": "tissu"}
+{"breton": "gwelead", "français": "couche (graisseuse)"}
+{"breton": "gweled", "français": "vue"}
+{"breton": "gweleou", "français": "clinoïdes"}
+{"breton": "gwenn al lagad", "français": "sclérotique"}
+{"breton": "gwerzid-arvrec'h", "français": "cubitus"}
+{"breton": "gwerzid-c'har", "français": "tibia"}
+{"breton": "gwerzid-vorzed", "français": "fémur"}
+{"breton": "gwerzid-vrec'h", "français": "humérus"}
+{"breton": "gwerzidhenvel", "français": "fusiforme"}
+{"breton": "gweuz", "français": "lèvre"}
+{"breton": "gwevn", "français": "élastique"}
+{"breton": "gwevnded", "français": "élasticité"}
+{"breton": "gwezegell", "français": "cystique"}
+{"breton": "gwezegell", "français": "vessie"}
+{"breton": "gwiad-kefnid", "français": "arachnoïde"}
+{"breton": "gwiskad", "français": "couche (graisseuse)"}
+{"breton": "had", "français": "semence"}
+{"breton": "hadel", "français": "séminal"}
+{"breton": "halo", "français": "salive"}
+{"breton": "hanafenn an askourn-gouriz", "français": "cavité cotyloïde"}
+{"breton": "hanterenn", "français": "hémisphère (du cerveau)"}
+{"breton": "hematina", "français": "hématine"}
+{"breton": "hemoglobina", "français": "hémoglobine"}
+{"breton": "henchou", "français": "vagin"}
+{"breton": "hiraus", "français": "élastique"}
+{"breton": "hirausted", "français": "élasticité"}
+{"breton": "hirbennek", "français": "dolichocéphale"}
+{"breton": "hugenn", "français": "luette"}
+{"breton": "ibil-lagad", "français": "prunelle"}
+{"breton": "ibil-skoaz", "français": "clavicule"}
+{"breton": "ileon", "français": "iléon"}
+{"breton": "ilin", "français": "coude"}
+{"breton": "ilinel", "français": "cubital"}
+{"breton": "ilpenn", "français": "cervelet"}
+{"breton": "iskarvanel", "français": "sous-maxillaire"}
+{"breton": "iskostezenn", "français": "hypocondre"}
+{"breton": "iskroc'henel", "français": "sous-cutané"}
+{"breton": "isplankenskoazel", "français": "sous-scapulaire"}
+{"breton": "ispodlagadel", "français": "sous-orbitaire"}
+{"breton": "ispoul-lagadel", "français": "sous-orbitaire"}
+{"breton": "isteodel", "français": "sublingual"}
 {"breton": "ividig", "français": "tempe"}
 {"breton": "ividigel", "français": "temporal"}
-{"breton": "askourn-ividig", "français": "os temporal"}
-{"breton": "stagell", "français": "tendon"}
-{"breton": "kigenn-stenna, stenner", "français": "muscle tenseur"}
-{"breton": "kell", "français": "testicule"}
-{"breton": "penn", "français": "tête"}
+{"breton": "ivin", "français": "ongle"}
+{"breton": "izellez-ha-bouzellenndeo", "français": "ischio-rectal"}
+{"breton": "izili", "français": "membre"}
+{"breton": "jejunon", "français": "jéjunum"}
+{"breton": "jod", "français": "joue"}
+{"breton": "jodel", "français": "malaire"}
+{"breton": "juntatur-eskern", "français": "suture"}
+{"breton": "kaekon", "français": "caecum"}
+{"breton": "kalc'h", "français": "verge"}
+{"breton": "kalir", "français": "calice (du rein)"}
+{"breton": "kalon", "français": "cœur"}
+{"breton": "kalonel", "français": "cardiaque"}
 {"breton": "kambr-poull-kalon", "français": "cage thoracique"}
-{"breton": "poull-kalon", "français": "cavité thoracique"}
-{"breton": "kan-poull-kalon", "français": "canal thoracique"}
-{"breton": "toazon", "français": "thymus"}
-{"breton": "skoedhenvel, stumm-skoed", "français": "thyroïde"}
-{"breton": "gwagrenn-skoed", "français": "corps thyroïde"}
-{"breton": "skoedenn", "français": "cartilage thyroïde"}
-{"breton": "gwerzid-c'har", "français": "tibia"}
-{"breton": "gar-ha-choug-an-troad", "français": "tibio-tarsien"}
-{"breton": "gweadenn", "français": "tissu"}
-{"breton": "treuz-gouzoug", "français": "trachée-artère"}
-{"breton": "kigenn-dreiz", "français": "muscle transverse"}
-{"breton": "trapezenn", "français": "trapèze"}
-{"breton": "trapezhenvel, stumm-trapezenn", "français": "trapézoïde"}
-{"breton": "kigenn drifennek", "français": "triceps"}
-{"breton": "tric'horn", "français": "trigone"}
-{"breton": "trederennet", "français": "trijumeau"}
-{"breton": "trompilh Eustachi, trompilh-skouarn", "français": "trompe d'Eustache"}
-{"breton": "kof, korf bras", "français": "tronc"}
-{"breton": "pennwadgaser", "français": "tronc artériel"}
-{"breton": "pennwadzegaser", "français": "tronc veineux"}
-{"breton": "ulmenn", "français": "tubercule"}
-{"breton": "sae", "français": "tunique"}
-{"breton": "taboulin-skouarn, lienenn-seni", "français": "tympan"}
-{"breton": "askourn ivinhenvel", "français": "unguis"}
-{"breton": "urea", "français": "urée"}
-{"breton": "kan-troaz", "français": "uretère"}
+{"breton": "kamm", "français": "scalène"}
+{"breton": "kan", "français": "canal"}
+{"breton": "kan", "français": "conduit"}
+{"breton": "kan ahelel", "français": "conduit axial (de la colonne vertébrale)"}
+{"breton": "kan ar c'hleved", "français": "conduit auditif interne"}
+{"breton": "kan-bestl", "français": "canal cholédoque"}
+{"breton": "kan-boued", "français": "œsophage"}
 {"breton": "kan-didroaza", "français": "urètre"}
-{"breton": "benvegad-troaza", "français": "appareil urinaire"}
-{"breton": "mammou", "français": "utérus"}
-{"breton": "feur, gouin, henchou", "français": "vagin"}
-{"breton": "gwazienn, gwazied", "français": "vaisseau"}
-{"breton": "stankerezig", "français": "valvule"}
-{"breton": "ar gwazied", "français": "vasculaire"}
-{"breton": "gwaziedeg", "français": "système vasculaire"}
+{"breton": "kan-had", "français": "conduit spermatique"}
+{"breton": "kan-poull-kalon", "français": "canal thoracique"}
+{"breton": "kan-troaz", "français": "uretère"}
+{"breton": "kandedenn", "français": "mésentère"}
+{"breton": "kanevedenn-lagad", "français": "iris"}
+{"breton": "kansper", "français": "canal déférent"}
+{"breton": "kaoc'h", "français": "matières fécales"}
+{"breton": "kaouledi", "français": "coagulation (du sang)"}
+{"breton": "kaouledi", "français": "coaguler"}
+{"breton": "karvan", "français": "mâchoire"}
+{"breton": "karvan-draon", "français": "mâchoire inférieure"}
+{"breton": "karvan-draon", "français": "maxillaire inférieur"}
+{"breton": "karvan-grec'h", "français": "mâchoire supérieure"}
+{"breton": "karvan-grec'h", "français": "maxillaire supérieur"}
+{"breton": "karvanel", "français": "maxillaire"}
+{"breton": "kas ar gwad", "français": "pouls"}
+{"breton": "kastr", "français": "verge"}
+{"breton": "kazel", "français": "aisselle"}
+{"breton": "kazelel", "français": "axillaire"}
+{"breton": "kefelin", "français": "coude"}
+{"breton": "keflusk", "français": "mouvement"}
+{"breton": "kefluska", "français": "moteur (nerf)"}
 {"breton": "kefluska ar gwazied", "français": "vaso-moteur"}
-{"breton": "oberiou ar vuhez plantel", "français": "fonctions végétatives"}
-{"breton": "gwazienn-zegas, gwazied-degas, gwadzegaser", "français": "veine"}
-{"breton": "gwadzegaserel, ar gwadzegaseriou, ar gwazied-degas", "français": "veineux"}
-{"breton": "gwadzegaserig", "français": "veinule"}
+{"breton": "kein", "français": "dos"}
+{"breton": "keinel", "français": "dorsal"}
+{"breton": "kelc'h", "français": "anneau"}
+{"breton": "kelc'henn", "français": "anneau"}
+{"breton": "kelc'hiek", "français": "annulaire"}
+{"breton": "kell", "français": "testicule"}
+{"breton": "kellig", "français": "cellule"}
+{"breton": "kellig-nervenn", "français": "neurone"}
+{"breton": "kenaoza", "français": "coordination (musculaire)"}
+{"breton": "kenta lagadenn-askourn-gouzoug", "français": "atlas"}
+{"breton": "kenwadgaseriou", "français": "artères collatéral"}
+{"breton": "keo", "français": "sinus"}
+{"breton": "keo-karvan", "français": "sinus maxillaire"}
+{"breton": "kerdin nervennek", "français": "cordon nerveux"}
+{"breton": "kerdin-mouez", "français": "corde vocale"}
+{"breton": "kern-skoaz", "français": "acromion"}
+{"breton": "kig-dent", "français": "gencive"}
+{"breton": "kigenn", "français": "muscle"}
+{"breton": "kigenn ar c'hemener", "français": "couturier"}
+{"breton": "kigenn blega", "français": "muscle fléchisseur"}
+{"breton": "kigenn daoubennek", "français": "biceps"}
+{"breton": "kigenn drifennek", "français": "triceps"}
+{"breton": "kigenn feskenn vras", "français": "grand fessier"}
+{"breton": "kigenn veskellek bihan", "français": "petit oblique"}
+{"breton": "kigenn veskellek bras", "français": "grand oblique"}
+{"breton": "kigenn-bellaat", "français": "muscles abducteur"}
+{"breton": "kigenn-dostaat", "français": "muscle adducteur"}
+{"breton": "kigenn-dreiz", "français": "muscle transverse"}
+{"breton": "kigenn-feskenn grenn", "français": "moyen fessier"}
+{"breton": "kigenn-feskenn vihan", "français": "petit fessier"}
+{"breton": "kigenn-gamm", "français": "muscle scalène"}
+{"breton": "kigenn-groc'hen", "français": "peaucier"}
+{"breton": "kigenn-sounn ar c'horf", "français": "grand droit"}
+{"breton": "kigenn-starda", "français": "sphincter"}
+{"breton": "kigenn-stenna", "français": "muscle tenseur"}
+{"breton": "kigenn-vrennid vihan", "français": "petit pectoral"}
+{"breton": "kigenn-vrennid vras", "français": "grand pectoral"}
+{"breton": "kigennel", "français": "musculaire"}
+{"breton": "kil an dourn", "français": "dos de la main"}
+{"breton": "kildant", "français": "molaire"}
+{"breton": "kildroenn", "français": "circonvolution (du cerveau)"}
+{"breton": "kilpenn", "français": "occiput"}
+{"breton": "kilpennel", "français": "occipital"}
+{"breton": "klerenn", "français": "sternum"}
+{"breton": "klerenn-hag-askourn-teod", "français": "sterno-hyoïdien"}
+{"breton": "klerenn-hag-ibil-skoaz", "français": "sterno-claviculaire"}
+{"breton": "klerenn-hag-U", "français": "sterno-hyoïdien"}
+{"breton": "klerenn-ibil-skoaz-ha-klopenvronenn", "français": "sterno-cléido-mastoïdien"}
+{"breton": "kleved", "français": "ouïe"}
+{"breton": "klezehenvel", "français": "xiphoïde"}
+{"breton": "klopen", "français": "crâne"}
+{"breton": "klopenvronnenn", "français": "apophyse mastoïde"}
+{"breton": "kluka", "français": "déglutition"}
+{"breton": "klun", "français": "fesse"}
+{"breton": "kof", "français": "abdomen"}
+{"breton": "kof", "français": "tronc"}
 {"breton": "kof", "français": "ventre"}
+{"breton": "kof-bihan", "français": "bas-ventre"}
+{"breton": "kof-gar", "français": "mollet"}
 {"breton": "kof-kalon", "français": "ventricule (du cœur)"}
-{"breton": "kalc'h, kastr, pidenn", "français": "verge"}
-{"breton": "prenvhenvel, stumm-prenv", "français": "vermiforme"}
-{"breton": "livenn-gein", "français": "colonne vertébrale"}
-{"breton": "lagadenn-askourn", "français": "vertèbre"}
-{"breton": "sac'h, godell", "français": "vésicule"}
-{"breton": "c'houezigell, gwezegell", "français": "vessie"}
-{"breton": "rakkambr", "français": "vestibule"}
-{"breton": "flugezenn, flugez", "français": "viscère"}
-{"breton": "ar gweled", "français": "visuel"}
-{"breton": "lemm-der-gweled", "français": "acuité visuelle"}
+{"breton": "kof-traon", "français": "hypogastre"}
+{"breton": "kofel", "français": "abdominal"}
+{"breton": "kolon", "français": "côlon"}
+{"breton": "korden nervennek", "français": "cordon nerveux"}
+{"breton": "korden-vouez", "français": "corde vocale"}
+{"breton": "korf", "français": "corps"}
+{"breton": "korf bras", "français": "tronc"}
+{"breton": "korf lerek", "français": "corps calleux"}
+{"breton": "korf-eskern", "français": "squelette"}
+{"breton": "korf-krec'h", "français": "épigastre"}
+{"breton": "korfadurel", "français": "anatomique"}
+{"breton": "korfadurez", "français": "anatomie"}
+{"breton": "korfadurour", "français": "anatomiste"}
+{"breton": "korfoniel", "français": "physiologique"}
+{"breton": "korfoniez", "français": "physiologie"}
+{"breton": "korfoniezel", "français": "physiologique"}
+{"breton": "korfoniour", "français": "physiologiste"}
+{"breton": "korfspeurenn", "français": "diaphragme"}
+{"breton": "korfspeurennel", "français": "diaphragmatique"}
+{"breton": "korfspeurennel", "français": "phrénique"}
+{"breton": "kornad an dremm", "français": "angle facial"}
 {"breton": "kornad-gweled", "français": "angle visuel"}
-{"breton": "mouezel", "français": "vocal"}
-{"breton": "korden-vouez, kerdin-mouez", "français": "corde vocale"}
-{"breton": "gouel ar staon", "français": "voile du palais"}
-{"breton": "mouez", "français": "voix"}
-{"breton": "gweled", "français": "vue"}
+{"breton": "kornig", "français": "cornet (du nez)"}
+{"breton": "korniou an diweuz", "français": "commissures (des lèvres)"}
+{"breton": "korzailhenn", "français": "gorge"}
+{"breton": "korzailhenn", "français": "pharynx"}
+{"breton": "korzailhenn uhela", "français": "naso-pharynx"}
+{"breton": "korzenn-skevent", "français": "bronche"}
+{"breton": "korzenn-voued", "français": "œsophage"}
+{"breton": "kostez", "français": "flanc"}
+{"breton": "kostezenn", "français": "côte"}
+{"breton": "kostou", "français": "flanc"}
+{"breton": "koubl", "français": "articulation"}
+{"breton": "koubl-lez", "français": "articulation coxo-fémorale"}
+{"breton": "koublad", "français": "paire"}
+{"breton": "koublad-nervennou", "français": "paire nerveuse"}
+{"breton": "koublel", "français": "articulaire"}
 {"breton": "kourz", "français": "vulve"}
-{"breton": "klezehenvel, stumm-kleze", "français": "xiphoïde"}
+{"breton": "krec'hin-lagad", "français": "paupière"}
+{"breton": "kreizenn", "français": "centre"}
+{"breton": "kreizennou nervennek", "français": "centres nerveux"}
+{"breton": "kreizig-lagad", "français": "prunelle"}
+{"breton": "krennbennek", "français": "brachycéphale"}
+{"breton": "kreskenn", "français": "excroissance"}
+{"breton": "kreskenn-askourn", "français": "exostose"}
+{"breton": "kreskhenvel", "français": "semi-lunaire"}
+{"breton": "kreuz", "français": "estomac"}
+{"breton": "kreuzel", "français": "gastrique"}
+{"breton": "kroaz", "français": "chiasma"}
+{"breton": "kroazell", "français": "région lombaire"}
+{"breton": "kroazlez", "français": "lombes"}
+{"breton": "kroazlezel", "français": "lombaire"}
+{"breton": "kroc'hen", "français": "peau"}
+{"breton": "kroc'hen-lagad", "français": "paupière"}
+{"breton": "kroc'henel", "français": "cutané"}
+{"breton": "kroc'henenn", "français": "membrane"}
+{"breton": "kroc'henig", "français": "cuticule"}
+{"breton": "krogen ar glin", "français": "rotule"}
+{"breton": "kurunenn ar galon", "français": "coronaires du cœur"}
+{"breton": "kurunenn ar genou", "français": "coronaires de la bouche"}
+{"breton": "kurunennhenvel", "français": "coronaire"}
+{"breton": "labour", "français": "fonction"}
+{"breton": "lagad", "français": "œil"}
+{"breton": "lagadenn", "français": "cartilage cricoïde"}
+{"breton": "lagadenn-askourn", "français": "vertèbre"}
+{"breton": "lagadenn-askourn-gouzoug", "français": "vertèbre cervicale"}
+{"breton": "lagadenn-askourn-kein", "français": "vertèbre dorsale"}
+{"breton": "lagadenn-askourn-kroazell", "français": "vertèbre lombaire"}
+{"breton": "lagadenn-ha-korzailhenn", "français": "crico-pharyngien"}
+{"breton": "lagadennhenvel", "français": "cricoïde"}
+{"breton": "lakaat da dalvezout", "français": "assimiler (des aliments)"}
+{"breton": "lamm", "français": "battement (du cœur)"}
+{"breton": "lamm", "français": "pulsation"}
+{"breton": "lamm-gwad", "français": "battement du pouls"}
+{"breton": "lemm-der-gweled", "français": "acuité visuelle"}
+{"breton": "leur ar gegenou", "français": "plancher (de la bouche)"}
+{"breton": "lez", "français": "hanche"}
+{"breton": "lienenn-c'holei", "français": "aponévrose"}
+{"breton": "lienenn-seni", "français": "tympan"}
+{"breton": "linenn wenn", "français": "ligne blanche"}
+{"breton": "livenn-gein", "français": "colonne vertébrale"}
+{"breton": "loenel", "français": "animal"}
+{"breton": "logig", "français": "alvéole"}
+{"breton": "logig dant", "français": "alvéole dentaire"}
+{"breton": "logig-skevent", "français": "alvéole pulmonaire"}
+{"breton": "lonka", "français": "absorption"}
+{"breton": "lonka", "français": "déglutition"}
+{"breton": "lost al livenn-gein", "français": "coccyx"}
+{"breton": "lost-bouzellenn prenvhenvel", "français": "appendice vermiforme"}
+{"breton": "lounezel", "français": "rénal"}
+{"breton": "lounezenn", "français": "rein"}
+{"breton": "lumfa", "français": "lymphe"}
+{"breton": "lumfel", "français": "lymphatique"}
+{"breton": "lumfgaseriou", "français": "vaisseaux lymphatiques"}
+{"breton": "mab-lagad", "français": "prunelle"}
+{"breton": "maga", "français": "alimentation"}
+{"breton": "maga", "français": "nutrition"}
+{"breton": "magus", "français": "nutritif"}
+{"breton": "malvenn", "français": "cil"}
+{"breton": "malvennel", "français": "ciliaire"}
+{"breton": "mamm-ivin", "français": "matrice de l'ongle"}
+{"breton": "mammou", "français": "matrice"}
+{"breton": "mammou", "français": "utérus"}
+{"breton": "mel", "français": "moelle (des os)"}
+{"breton": "mel penn", "français": "bulbe rachidien"}
+{"breton": "mel-kein", "français": "moelle épinière"}
+{"breton": "melen-skouarn", "français": "cérumen"}
+{"breton": "mell", "français": "articulation"}
+{"breton": "mell damzifinv", "français": "symphyse"}
+{"breton": "mell damziloc'h", "français": "symphyse"}
+{"breton": "mell difinv", "français": "suture"}
+{"breton": "mell diloc'h", "français": "suture"}
+{"breton": "mell hefinv", "français": "diarthrose"}
+{"breton": "mell heloc'h", "français": "diarthrose"}
+{"breton": "mell-askourn-hirgelc'hel", "français": "condyle"}
+{"breton": "mell-lez", "français": "articulation coxo-fémorale"}
+{"breton": "mellek", "français": "articulé"}
+{"breton": "meller", "français": "articulé"}
+{"breton": "merzout", "français": "sentir"}
+{"breton": "meud", "français": "pouce"}
+{"breton": "meud-troad", "français": "gros orteil"}
+{"breton": "mezenn", "français": "gland"}
+{"breton": "mezenn ar gouzoug", "français": "amygdale"}
+{"breton": "migourn", "français": "cartilage"}
+{"breton": "migourn ar c'hrec'hin-lagad", "français": "tarse des paupières"}
+{"breton": "migourn neudennek", "français": "fibro-cartilage"}
+{"breton": "migournek", "français": "cartilagineux"}
+{"breton": "morzed", "français": "cuisse"}
+{"breton": "morzedel", "français": "crural"}
+{"breton": "morzedel", "français": "fémoral"}
+{"breton": "mouez", "français": "voix"}
+{"breton": "mouezel", "français": "vocal"}
+{"breton": "mourren-nou", "français": "moustache"}
+{"breton": "mourrou", "français": "moustache"}
+{"breton": "mudurun ar gouzoug", "français": "axis"}
+{"breton": "mul-gouzoug", "français": "nuque"}
+{"breton": "munsun", "français": "gencive"}
+{"breton": "muzell", "français": "lèvre"}
+{"breton": "nervenn", "français": "nerf"}
+{"breton": "nervenn an isvuhez", "français": "nerf sympathique"}
+{"breton": "nervenn ar c'hleved", "français": "nerf acoustique"}
+{"breton": "nervenn ar c'houesa", "français": "nerf olfactif"}
+{"breton": "nervenn ar gweled", "français": "nerf optique"}
+{"breton": "nervenn d lagad", "français": "nerf optique"}
+{"breton": "nervenn isteodel", "français": "hypoglosse"}
+{"breton": "nervenn-greiz", "français": "nerf médian"}
+{"breton": "nervenn-santout", "français": "nerf sensitif"}
+{"breton": "nervennaoueg", "français": "système nerveux"}
+{"breton": "nervenneg", "français": "système nerveux"}
+{"breton": "nervenneg an isvuhez", "français": "système sympathique"}
+{"breton": "nervennek", "français": "nerveux"}
+{"breton": "nervennel", "français": "nerveux"}
+{"breton": "neud-gwad", "français": "fibrine"}
+{"breton": "neudenn", "français": "fibre"}
+{"breton": "neudennek", "français": "fibreux"}
+{"breton": "neudennig", "français": "filament"}
+{"breton": "nozelenn", "français": "ganglion"}
+{"breton": "ober", "français": "fonction"}
+{"breton": "palv", "français": "paume"}
+{"breton": "palv en a-drenv", "français": "pronation"}
+{"breton": "palv en a-raok", "français": "supination"}
+{"breton": "palvel", "français": "palmaire"}
+{"breton": "pellaat", "français": "abduction"}
+{"breton": "pellaer", "français": "muscles abducteur"}
+{"breton": "penn", "français": "tête"}
+{"breton": "penn-eskern", "français": "squelette de la tête"}
+{"breton": "penn-glin", "français": "rotule"}
+{"breton": "penn-ha-brec'h", "français": "brachiocéphalique"}
+{"breton": "penn-ilin", "français": "olécrâne"}
+{"breton": "penn-kalc'h", "français": "gland"}
+{"breton": "pennad-bleo", "français": "chevelure"}
+{"breton": "pennel", "français": "céphalique"}
+{"breton": "pennwadgaser", "français": "tronc artériel"}
+{"breton": "pennwadgaser ar galon", "français": "aorte"}
+{"breton": "pennwadzegaser", "français": "tronc veineux"}
+{"breton": "pennwadzegaser ar galon", "français": "veine cave"}
+{"breton": "pennwadzegaser-kostezennel bihan", "français": "petite azygos"}
+{"breton": "pennwadzegaser-kostezennel bras", "français": "grande azygos"}
+{"breton": "pepsina", "français": "pepsine"}
+{"breton": "pevare biz", "français": "annulaire (doigt)"}
+{"breton": "pevarennet", "français": "quadrijumeau"}
+{"breton": "picherenn", "français": "cartilage aryténoïde"}
+{"breton": "picherenn-ha-lagadenn", "français": "crico-aryténoïdien"}
+{"breton": "picherhenvel", "français": "aryténoïde"}
+{"breton": "pidenn", "français": "verge"}
+{"breton": "pikernenn", "français": "muscle pyramidal"}
+{"breton": "pikernhenvel", "français": "pyramidal"}
+{"breton": "pizskeja", "français": "disséquer"}
+{"breton": "pizskejadur", "français": "dissection"}
+{"breton": "planken-skoaz", "français": "omoplate"}
+{"breton": "plasma", "français": "plasma"}
+{"breton": "pleg ar skouarn", "français": "pavillon (de l'oreille)"}
+{"breton": "pleg ar vorzed", "français": "aine"}
+{"breton": "plega", "français": "flexion"}
+{"breton": "pleger", "français": "muscle fléchisseur"}
+{"breton": "pod-mezenn", "français": "prépuce"}
+{"breton": "poull-kalon", "français": "cavité thoracique"}
+{"breton": "poull-lagad", "français": "orbite"}
+{"breton": "poulloudenn", "français": "coagulation (du sang)"}
+{"breton": "poulloudenn", "français": "coaguler"}
+{"breton": "poulloudenn-wad", "français": "caillot (de sang)"}
+{"breton": "prenvenn", "français": "appendice vermiforme"}
+{"breton": "prenvhenvel", "français": "vermiforme"}
+{"breton": "protoplasma", "français": "protoplasme"}
+{"breton": "pud-lagad", "français": "orbite"}
+{"breton": "rakdant", "français": "incisive"}
+{"breton": "rakkambr", "français": "vestibule"}
+{"breton": "rakkarvanek", "français": "prognate"}
+{"breton": "rakkarvarnegez", "français": "prognathisme"}
+{"breton": "raksae al lagad", "français": "cornée"}
+{"breton": "ranngorf", "français": "région"}
+{"breton": "rekton", "français": "rectum"}
+{"breton": "relegenn", "français": "squelette"}
+{"breton": "rouedenn", "français": "péritoine"}
+{"breton": "S ar c'holon", "français": "S du côlon"}
+{"breton": "sac'h", "français": "poche"}
+{"breton": "sac'h", "français": "vésicule"}
+{"breton": "sac'h ar sper", "français": "vésicule séminale"}
+{"breton": "sac'h-bestl", "français": "vésicule biliaire"}
+{"breton": "sac'h-boued", "français": "estomac"}
+{"breton": "sac'hhenvel", "français": "sacciforme"}
+{"breton": "sac'hig", "français": "ampoule"}
+{"breton": "sac'hig", "français": "follicule"}
+{"breton": "sae", "français": "tunique"}
+{"breton": "santadur", "français": "sensation"}
+{"breton": "santerez", "français": "sensibilité"}
+{"breton": "santout", "français": "sentir"}
+{"breton": "santout-kefluska", "français": "mixte (nerf)"}
+{"breton": "santus", "français": "sensible"}
+{"breton": "seier", "français": "poche"}
+{"breton": "seierigou", "français": "ampoule"}
+{"breton": "seierigou", "français": "follicule"}
+{"breton": "seron", "français": "sérum (du sang)"}
+{"breton": "seul", "français": "talon"}
+{"breton": "sigmahenvel", "français": "sigmoïde"}
+{"breton": "skevent", "français": "poumon"}
+{"breton": "skevent-ha-kreuz", "français": "pneumo-gastrique"}
+{"breton": "skevent-ha-sac'h-boued", "français": "pneumo-gastrique"}
+{"breton": "skiant", "français": "sens"}
+{"breton": "skoaz", "français": "épaule"}
+{"breton": "skoedenn", "français": "cartilage thyroïde"}
+{"breton": "skoedenn-ha-lagadenn", "français": "crico-thyroïdien"}
+{"breton": "skoedhenvel", "français": "thyroïde"}
+{"breton": "skouarn", "français": "oreille"}
+{"breton": "skouarn-galon", "français": "oreillette (du cœur)"}
+{"breton": "skramm-lagad", "français": "rétine"}
+{"breton": "sol", "français": "plante (du pied)"}
+{"breton": "souk", "français": "cou-de-pied"}
+{"breton": "sounna", "français": "coagulation (du sang)"}
+{"breton": "sounna", "français": "coaguler"}
+{"breton": "sounna", "français": "érection"}
+{"breton": "sounnus", "français": "érectile"}
+{"breton": "sper", "français": "semence"}
+{"breton": "speria", "français": "fécondation"}
+{"breton": "speriadur", "français": "fécondation"}
+{"breton": "spernenn-askourn", "français": "épine"}
+{"breton": "spoue-eskern", "français": "diploé"}
+{"breton": "spoueek", "français": "spongieux"}
+{"breton": "stagell", "français": "frein"}
+{"breton": "stagell", "français": "tendon"}
+{"breton": "stagell-deod", "français": "frein de la langue"}
+{"breton": "stagell-goubl", "français": "ligament articulaire"}
+{"breton": "stankerez ar gorzenn-aer", "français": "épiglotte"}
+{"breton": "stankerezig", "français": "valvule"}
+{"breton": "staon", "français": "palais"}
+{"breton": "stegna", "français": "contracter (un muscle)"}
+{"breton": "stegnus", "français": "contractile"}
+{"breton": "stenner", "français": "muscle tenseur"}
+{"breton": "stervegenn", "français": "muqueuse"}
+{"breton": "stervenn", "français": "mucus"}
+{"breton": "stomok", "français": "estomac"}
+{"breton": "stouf ar gorzenn-aer", "français": "épiglotte"}
+{"breton": "striza-distriza", "français": "contraction (du cœur)"}
+{"breton": "striza-distriza an ibil-lagad", "français": "hippus"}
+{"breton": "strizenn", "français": "détroit (du bassin)"}
+{"breton": "stumm-bronn", "français": "mastoïde"}
+{"breton": "stumm-dant", "français": "odontoïde"}
+{"breton": "stumm-dins", "français": "cuboïde"}
+{"breton": "stumm-genn", "français": "cunéiforme"}
+{"breton": "stumm-genn", "français": "sphénoïde"}
+{"breton": "stumm-goustilh", "français": "styloïde"}
+{"breton": "stumm-gwareg", "français": "arciforme"}
+{"breton": "stumm-gwerzid", "français": "fusiforme"}
+{"breton": "stumm-kleze", "français": "xiphoïde"}
+{"breton": "stumm-kurunenn", "français": "coronaire"}
+{"breton": "stumm-lagadenn", "français": "cricoïde"}
+{"breton": "stumm-picher", "français": "aryténoïde"}
+{"breton": "stumm-pikern", "français": "pyramidal"}
+{"breton": "stumm-prenv", "français": "vermiforme"}
+{"breton": "stumm-sac'h", "français": "sacciforme"}
+{"breton": "stumm-sigma", "français": "sigmoïde"}
+{"breton": "stumm-skoed", "français": "thyroïde"}
+{"breton": "stumm-trapezenn", "français": "trapézoïde"}
+{"breton": "stumm-U", "français": "hyoïde"}
+{"breton": "stumma", "français": "accomodation (de l'œil)"}
+{"breton": "sunovia", "français": "synovie"}
+{"breton": "taboulin-skouarn", "français": "tympan"}
+{"breton": "talbennig", "français": "facette"}
+{"breton": "talel", "français": "frontal"}
+{"breton": "tanva", "français": "goût"}
+{"breton": "teod", "français": "langue"}
+{"breton": "teod-ha-korzailhenn", "français": "glossopharyngien"}
+{"breton": "teodel", "français": "lingual"}
+{"breton": "toaz-boued", "français": "chyme"}
+{"breton": "toazon", "français": "thymus"}
+{"breton": "tostaat", "français": "adduction"}
+{"breton": "tostaer", "français": "muscle adducteur"}
+{"breton": "toull", "français": "cavité"}
+{"breton": "toull", "français": "fosse"}
+{"breton": "toull ar genou", "français": "cavité buccale"}
+{"breton": "toull ar skouarn", "français": "conduit auditif externe"}
+{"breton": "toull-fri", "français": "fosse nasale"}
+{"breton": "toull-gouriz", "français": "trou obturateur"}
+{"breton": "toull-goustilhenn", "français": "trou stylo-mastoïdien"}
+{"breton": "toull-gouzoug", "français": "gorge"}
+{"breton": "toull-gouzoug", "français": "pharynx"}
+{"breton": "toullig-kroc'hen", "français": "pore de la peau"}
+{"breton": "trapezenn", "français": "trapèze"}
+{"breton": "trapezhenvel", "français": "trapézoïde"}
+{"breton": "trebez", "français": "clavicule"}
+{"breton": "trede biz", "français": "majeur (doigt)"}
+{"breton": "trederennet", "français": "trijumeau"}
+{"breton": "trei", "français": "rotation"}
+{"breton": "treuz-gouzoug", "français": "trachée-artère"}
+{"breton": "treuzell ar c'holon", "français": "côlon transverse"}
+{"breton": "treuzsiladur", "français": "diapédèse"}
+{"breton": "tric'hogn", "français": "muscle deltoïde"}
+{"breton": "tric'hognek", "français": "deltoïde"}
+{"breton": "tric'horn", "français": "trigone"}
+{"breton": "tric'hornenn ar gouriz", "français": "sacrum"}
+{"breton": "tric'hornenn-halez", "français": "sacro-sciatique"}
+{"breton": "troad", "français": "pied"}
+{"breton": "troella", "français": "circumduction"}
+{"breton": "trompilh Eustachi", "français": "trompe d'Eustache"}
+{"breton": "trompilh-skouarn", "français": "trompe d'Eustache"}
+{"breton": "U an teod", "français": "os hyoïde"}
+{"breton": "U-henvel", "français": "hyoïde"}
+{"breton": "ufern", "français": "cheville"}
+{"breton": "ufern", "français": "malléole"}
+{"breton": "uhelgorzailhenn", "français": "naso-pharynx"}
+{"breton": "ulmenn", "français": "tubercule"}
+{"breton": "urea", "français": "urée"}
+{"breton": "uslounezenn", "français": "capsule surrénale"}
+{"breton": "war sav", "français": "ascendant"}
+{"breton": "war ziskenn", "français": "descendant"}
+{"breton": "yec'hedouriez", "français": "hygiène"}
+{"breton": "yilc'hier", "français": "bourses"}
 {"breton": "zugoma", "français": "arcade zygomatique"}

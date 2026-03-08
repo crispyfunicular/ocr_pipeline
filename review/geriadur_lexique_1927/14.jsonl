@@ -1,4 +1,5 @@
-{"breton": "magus, bouedus", "français": "nutritif"}
+{"breton": "magus", "français": "nutritif"}
+{"breton": "bouedus", "français": "nutritif"}
 {"breton": "divag", "français": "non nutritif"}
 {"breton": "maga", "français": "nutrition"}
 {"breton": "beskellek", "français": "oblique"}
@@ -9,25 +10,37 @@
 {"breton": "askourn-kilpenn", "français": "os occipital"}
 {"breton": "kilpenn", "français": "occiput"}
 {"breton": "c'houesa", "français": "odorat"}
-{"breton": "danthenvel, stumm-dant", "français": "odontoïde"}
+{"breton": "danthenvel", "français": "odontoïde"}
+{"breton": "stumm-dant", "français": "odontoïde"}
 {"breton": "lagad", "français": "œil"}
-{"breton": "kan-boued, korzenn-voued", "français": "œsophage"}
-{"breton": "penn-ilin, draen-krec'h ar werzid-arvrec'h", "français": "olécrâne"}
+{"breton": "kan-boued", "français": "œsophage"}
+{"breton": "korzenn-voued", "français": "œsophage"}
+{"breton": "penn-ilin", "français": "olécrâne"}
+{"breton": "draen-krec'h ar werzid-arvrec'h", "français": "olécrâne"}
 {"breton": "nervenn ar c'houesa", "français": "nerf olfactif"}
 {"breton": "begelel", "français": "ombilical"}
 {"breton": "planken-skoaz", "français": "omoplate"}
 {"breton": "ivin", "français": "ongle"}
-{"breton": "nervenn d lagad, nervenn ar gweled", "français": "nerf optique"}
-{"breton": "poull-lagad, pud-lagad", "français": "orbite"}
+{"breton": "nervenn d lagad", "français": "nerf optique"}
+{"breton": "nervenn ar gweled", "français": "nerf optique"}
+{"breton": "poull-lagad", "français": "orbite"}
+{"breton": "pud-lagad", "français": "orbite"}
 {"breton": "skouarn", "français": "oreille"}
 {"breton": "skouarn-galon", "français": "oreillette (du cœur)"}
 {"breton": "digor", "français": "orifice"}
-{"breton": "benveg, binviou, benvegenn", "français": "organe"}
-{"breton": "biz-troad, bizied-troad", "français": "orteil"}
+{"breton": "benveg", "français": "organe"}
+{"breton": "binviou", "français": "organe"}
+{"breton": "benvegenn", "français": "organe"}
+{"breton": "biz-troad", "français": "orteil"}
+{"breton": "bizied-troad", "français": "orteil"}
 {"breton": "meud-troad", "français": "gros orteil"}
-{"breton": "askourn, eskern", "français": "os"}
-{"breton": "askournek, askournel", "français": "osseux"}
-{"breton": "eskernadur, eskernadurez, eskernidigez", "français": "ossification"}
+{"breton": "askourn", "français": "os"}
+{"breton": "eskern", "français": "os"}
+{"breton": "askournek", "français": "osseux"}
+{"breton": "askournel", "français": "osseux"}
+{"breton": "eskernadur", "français": "ossification"}
+{"breton": "eskernadurez", "français": "ossification"}
+{"breton": "eskernidigez", "français": "ossification"}
 {"breton": "askourna", "français": "s'ossifier"}
 {"breton": "kleved", "français": "ouïe"}
 {"breton": "koublad", "français": "paire"}
@@ -38,5 +51,4 @@
 {"breton": "begennig", "français": "papille"}
 {"breton": "begennig-vlaza", "français": "papille du goût"}
 {"breton": "askourn-tu-ar-penn", "français": "os pariétal"}
-{"breton": "pevare koublad an nervennou-klopen", "français": "nerf pathétique"}
 {"breton": "palv", "français": "paume"}

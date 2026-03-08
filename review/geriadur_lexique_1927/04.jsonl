@@ -1,36 +1,55 @@
 {"breton": "degaser", "français": "vaisseau afférent"}
 {"breton": "pleg ar vorzed", "français": "aine"}
-{"breton": "kazel, diougazel", "français": "aisselle"}
+{"breton": "kazel", "français": "aisselle"}
+{"breton": "diougazel", "français": "aisselle"}
 {"breton": "bouedou gwennvihenvel", "français": "aliments albuminoïde"}
-{"breton": "boued, bouedou, danveziou", "français": "aliments"}
+{"breton": "boued", "français": "aliments"}
+{"breton": "bouedou", "français": "aliments"}
+{"breton": "danveziou", "français": "aliments"}
 {"breton": "bouedel", "français": "alimentaire"}
 {"breton": "maga", "français": "alimentation"}
 {"breton": "logig", "français": "alvéole"}
-{"breton": "brasaat, diroufennadur", "français": "ampliation"}
-{"breton": "sac'hig, seierigou", "français": "ampoule"}
+{"breton": "brasaat", "français": "ampliation"}
+{"breton": "diroufennadur", "français": "ampliation"}
+{"breton": "sac'hig", "français": "ampoule"}
+{"breton": "seierigou", "français": "ampoule"}
 {"breton": "mezenn ar gouzoug", "français": "amygdale"}
 {"breton": "korfadurez", "français": "anatomie"}
 {"breton": "korfadurel", "français": "anatomique"}
 {"breton": "korfadurour", "français": "anatomiste"}
 {"breton": "loenel", "français": "animal"}
-{"breton": "kelc'h, kelc'henn", "français": "anneau"}
+{"breton": "kelc'h", "français": "anneau"}
+{"breton": "kelc'henn", "français": "anneau"}
 {"breton": "kelc'hiek", "français": "annulaire"}
-{"breton": "pevare biz, biz ar galon", "français": "annulaire (doigt)"}
+{"breton": "pevare biz", "français": "annulaire (doigt)"}
+{"breton": "biz ar galon", "français": "annulaire (doigt)"}
 {"breton": "eneberez", "français": "antagonisme (musculaire)"}
-{"breton": "mellek, meller", "français": "articulé"}
+{"breton": "mellek", "français": "articulé"}
+{"breton": "meller", "français": "articulé"}
 {"breton": "fraez", "français": "anus"}
 {"breton": "pennwadgaser ar galon", "français": "aorte"}
-{"breton": "lienenn-c'holei, golo-kigenn", "français": "aponévrose"}
-{"breton": "beg-askourn, draen-askourn, drein-askourn", "français": "apophyse"}
+{"breton": "lienenn-c'holei", "français": "aponévrose"}
+{"breton": "golo-kigenn", "français": "aponévrose"}
+{"breton": "beg-askourn", "français": "apophyse"}
+{"breton": "draen-askourn", "français": "apophyse"}
+{"breton": "drein-askourn", "français": "apophyse"}
 {"breton": "benvegad", "français": "appareil"}
-{"breton": "prenvenn, lost-bouzellenn prenvhenvel", "français": "appendice vermiforme"}
-{"breton": "golo-empenn kreiz, gwiad-kefnid", "français": "arachnoïde"}
+{"breton": "prenvenn", "français": "appendice vermiforme"}
+{"breton": "lost-bouzellenn prenvhenvel", "français": "appendice vermiforme"}
+{"breton": "golo-empenn kreiz", "français": "arachnoïde"}
+{"breton": "gwiad-kefnid", "français": "arachnoïde"}
 {"breton": "gwareg", "français": "arc"}
 {"breton": "bolz", "français": "arcade"}
-{"breton": "gwareghenvel, stumm-gwareg", "français": "arciforme"}
-{"breton": "gwadgaser, gwazienn-gas, gwazied-kas", "français": "artère"}
-{"breton": "gwadgaserel, ar gwadgaseriou, ar gwazied-kas", "français": "artériel"}
+{"breton": "gwareghenvel", "français": "arciforme"}
+{"breton": "stumm-gwareg", "français": "arciforme"}
+{"breton": "gwadgaser", "français": "artère"}
+{"breton": "gwazienn-gas", "français": "artère"}
+{"breton": "gwazied-kas", "français": "artère"}
+{"breton": "gwadgaserel", "français": "artériel"}
+{"breton": "ar gwadgaseriou", "français": "artériel"}
+{"breton": "ar gwazied-kas", "français": "artériel"}
 {"breton": "gwadgaserig", "français": "artériole"}
 {"breton": "koublel", "français": "articulaire"}
 {"breton": "stagell-goubl", "français": "ligament articulaire"}
-{"breton": "koubl, mell", "français": "articulation"}
+{"breton": "koubl", "français": "articulation"}
+{"breton": "mell", "français": "articulation"}

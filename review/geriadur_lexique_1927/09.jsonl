@@ -1,11 +1,14 @@
-{"breton": "mell heloc'h, mell hefinv", "français": "diarthrose"}
+{"breton": "mell heloc'h", "français": "diarthrose"}
+{"breton": "mell hefinv", "français": "diarthrose"}
 {"breton": "goell-goi", "français": "diastase"}
 {"breton": "distriza ar galon", "français": "diastole"}
 {"breton": "goi", "français": "digérer"}
 {"breton": "gousted", "français": "digestibilité"}
 {"breton": "goüs", "français": "digestible"}
 {"breton": "benvegad-goi", "français": "appareil digestif"}
-{"breton": "goi, goerez, goidi-gez", "français": "digestion"}
+{"breton": "goi", "français": "digestion"}
+{"breton": "goerez", "français": "digestion"}
+{"breton": "goidi-gez", "français": "digestion"}
 {"breton": "spoue-eskern", "français": "diploé"}
 {"breton": "pizskejadur", "français": "dissection"}
 {"breton": "pizskeja", "français": "disséquer"}
@@ -16,22 +19,32 @@
 {"breton": "kein", "français": "dos"}
 {"breton": "kil an dourn", "français": "dos de la main"}
 {"breton": "kigenn-sounn ar c'horf", "français": "grand droit"}
-{"breton": "duodenon, kenta kevrenn ar vouzellenn voan", "français": "duodénum"}
-{"breton": "golo-empenn-diavaez, golo-empenn lerek", "français": "dure-mère"}
-{"breton": "hirausted, gwevnded", "français": "élasticité"}
-{"breton": "hiraus, gwevn", "français": "élastique"}
+{"breton": "duodenon", "français": "duodénum"}
+{"breton": "golo-empenn-diavaez", "français": "dure-mère"}
+{"breton": "golo-empenn lerek", "français": "dure-mère"}
+{"breton": "hirausted", "français": "élasticité"}
+{"breton": "gwevnded", "français": "élasticité"}
+{"breton": "hiraus", "français": "élastique"}
+{"breton": "gwevn", "français": "élastique"}
 {"breton": "bos", "français": "éminence"}
 {"breton": "empenn", "français": "encéphale"}
-{"breton": "golo-diabarz ar galon, engoloenn-galon", "français": "endocarde"}
-{"breton": "skoaz, diouskoaz", "français": "épaule"}
+{"breton": "golo-diabarz ar galon", "français": "endocarde"}
+{"breton": "engoloenn-galon", "français": "endocarde"}
+{"breton": "skoaz", "français": "épaule"}
+{"breton": "diouskoaz", "français": "épaule"}
 {"breton": "ezkroc'hen", "français": "épiderme"}
 {"breton": "korf-krec'h", "français": "épigastre"}
-{"breton": "stouf ar gorzenn-aer, stankerez ar gorzenn-aer", "français": "épiglotte"}
+{"breton": "stouf ar gorzenn-aer", "français": "épiglotte"}
+{"breton": "stankerez ar gorzenn-aer", "français": "épiglotte"}
 {"breton": "spernenn-askourn", "français": "épine"}
 {"breton": "mel-kein", "français": "moelle épinière"}
-{"breton": "astennus, sounnus", "français": "érectile"}
-{"breton": "astenn, sounna", "français": "érection"}
-{"breton": "sac'h-boued, kreuz, stomok", "français": "estomac"}
+{"breton": "astennus", "français": "érectile"}
+{"breton": "sounnus", "français": "érectile"}
+{"breton": "astenn", "français": "érection"}
+{"breton": "sounna", "français": "érection"}
+{"breton": "sac'h-boued", "français": "estomac"}
+{"breton": "kreuz", "français": "estomac"}
+{"breton": "stomok", "français": "estomac"}
 {"breton": "askourn kellaouek", "français": "ethmoïde"}
 {"breton": "distaoladuriou", "français": "excrétat"}
 {"breton": "distaolerez", "français": "excrétion"}

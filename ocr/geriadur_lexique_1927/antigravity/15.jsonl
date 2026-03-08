@@ -1,4 +1,5 @@
-{"breton": "kroc'hen-lagad, krec'hin-lagad", "français": "paupière"}
+{"breton": "kroc'hen-lagad", "français": "paupière"}
+{"breton": "krec'hin-lagad", "français": "paupière"}
 {"breton": "pleg ar skouarn", "français": "pavillon (de l'oreille)"}
 {"breton": "kroc'hen", "français": "peau"}
 {"breton": "kigenn-groc'hen", "français": "peaucier"}
@@ -7,20 +8,24 @@
 {"breton": "gourizel", "français": "pelvien"}
 {"breton": "pepsina", "français": "pepsine"}
 {"breton": "goadur", "français": "peptone"}
-{"breton": "golo-kalon, ezkolôenn-galon", "français": "péricarde"}
+{"breton": "golo-kalon", "français": "péricarde"}
+{"breton": "ezkolôenn-galon", "français": "péricarde"}
 {"breton": "golo-migourn", "français": "périchondre"}
 {"breton": "garbedenn", "français": "périnée"}
 {"breton": "golo-askourn", "français": "périoste"}
 {"breton": "rouedenn", "français": "péritoine"}
 {"breton": "eilwerzid-c'har", "français": "péroné"}
 {"breton": "an eilwerzid-c'har", "français": "péronier"}
-{"breton": "askourn-biz, askourn-biz tosta", "français": "phalange"}
+{"breton": "askourn-biz", "français": "phalange"}
+{"breton": "askourn-biz tosta", "français": "phalange"}
 {"breton": "askourn-biz pella", "français": "phalangette"}
 {"breton": "askourn-biz kreiz", "français": "phalangine"}
-{"breton": "korzailhenn, toull-gouzoug", "français": "pharynx"}
+{"breton": "korzailhenn", "français": "pharynx"}
+{"breton": "toull-gouzoug", "français": "pharynx"}
 {"breton": "korfspeurennel", "français": "phrénique"}
 {"breton": "korfoniez", "français": "physiologie"}
-{"breton": "korfoniel, korfoniezel", "français": "physiologique"}
+{"breton": "korfoniel", "français": "physiologique"}
+{"breton": "korfoniezel", "français": "physiologique"}
 {"breton": "korfoniour", "français": "physiologiste"}
 {"breton": "troad", "français": "pied"}
 {"breton": "golo-empenn diabarz", "français": "pie-mère"}
@@ -30,9 +35,14 @@
 {"breton": "plasma", "français": "plasma"}
 {"breton": "golo-skevent", "français": "plèvre"}
 {"breton": "emweadenn", "français": "plexus"}
-{"breton": "skevent-ha-kreuz, skevent-ha-sac'h-boued", "français": "pneumo-gastrique"}
-{"breton": "sac'h, seier", "français": "poche"}
+{"breton": "skevent-ha-kreuz", "français": "pneumo-gastrique"}
+{"breton": "skevent-ha-sac'h-boued", "français": "pneumo-gastrique"}
+{"breton": "sac'h", "français": "poche"}
+{"breton": "seier", "français": "poche"}
 {"breton": "arzourn", "français": "poignet"}
-{"breton": "blevenn-gorf, bleo-korf", "français": "poil (du corps)"}
-{"breton": "brennid, askre", "français": "poitrine"}
-{"breton": "askourn-jod, askourn-boc'h", "français": "pommette"}
+{"breton": "blevenn-gorf", "français": "poil (du corps)"}
+{"breton": "bleo-korf", "français": "poil (du corps)"}
+{"breton": "brennid", "français": "poitrine"}
+{"breton": "askre", "français": "poitrine"}
+{"breton": "askourn-jod", "français": "pommette"}
+{"breton": "askourn-boc'h", "français": "pommette"}

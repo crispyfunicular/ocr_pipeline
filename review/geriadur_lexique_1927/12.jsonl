@@ -1,15 +1,23 @@
 {"breton": "kanevedenn-lagad", "français": "iris"}
 {"breton": "askourn-izellez", "français": "ischion"}
 {"breton": "izellez-ha-bouzellenndeo", "français": "ischio-rectal"}
-{"breton": "gar, diouhar, divesker", "français": "jambe"}
+{"breton": "gar", "français": "jambe"}
+{"breton": "diouhar", "français": "jambe"}
+{"breton": "divesker", "français": "jambe"}
 {"breton": "arzell", "français": "jarret"}
-{"breton": "jejunon, eil kevrenn ar vouzellenn voan", "français": "jéjunum"}
-{"breton": "boc'h, divoc'h, jod, dioujod", "français": "joue"}
+{"breton": "jejunon", "français": "jéjunum"}
+{"breton": "boc'h", "français": "joue"}
+{"breton": "divoc'h", "français": "joue"}
+{"breton": "jod", "français": "joue"}
+{"breton": "dioujod", "français": "joue"}
 {"breton": "gouzougel", "français": "jugulaire"}
 {"breton": "daeraouel", "français": "lacrymal"}
 {"breton": "teod", "français": "langue"}
-{"breton": "gourlanchenn, anchenn", "français": "larynx"}
-{"breton": "gweuz, diweuz, muzell", "français": "lèvre"}
+{"breton": "gourlanchenn", "français": "larynx"}
+{"breton": "anchenn", "français": "larynx"}
+{"breton": "gweuz", "français": "lèvre"}
+{"breton": "diweuz", "français": "lèvre"}
+{"breton": "muzell", "français": "lèvre"}
 {"breton": "ere", "français": "ligament"}
 {"breton": "linenn wenn", "français": "ligne blanche"}
 {"breton": "teodel", "français": "lingual"}
@@ -18,19 +26,33 @@
 {"breton": "kroazlezel", "français": "lombaire"}
 {"breton": "kroazell", "français": "région lombaire"}
 {"breton": "lagadenn-askourn-kroazell", "français": "vertèbre lombaire"}
-{"breton": "kroazlez, diougroazell", "français": "lombes"}
-{"breton": "hugenn, ankoue", "français": "luette"}
+{"breton": "kroazlez", "français": "lombes"}
+{"breton": "diougroazell", "français": "lombes"}
+{"breton": "hugenn", "français": "luette"}
+{"breton": "ankoue", "français": "luette"}
 {"breton": "lumfel", "français": "lymphatique"}
-{"breton": "gwazied-lumfa, lumfgaseriou", "français": "vaisseaux lymphatiques"}
+{"breton": "gwazied-lumfa", "français": "vaisseaux lymphatiques"}
+{"breton": "lumfgaseriou", "français": "vaisseaux lymphatiques"}
 {"breton": "lumfa", "français": "lymphe"}
-{"breton": "karvan, diougarvan, aven, diouaven", "français": "mâchoire"}
+{"breton": "karvan", "français": "mâchoire"}
+{"breton": "diougarvan", "français": "mâchoire"}
+{"breton": "aven", "français": "mâchoire"}
+{"breton": "diouaven", "français": "mâchoire"}
 {"breton": "karvan-draon", "français": "mâchoire inférieure"}
 {"breton": "karvan-grec'h", "français": "mâchoire supérieure"}
-{"breton": "dourn, daouarn", "français": "main"}
-{"breton": "biz kreiz, trede biz", "français": "majeur (doigt)"}
-{"breton": "boc'hel, jodel", "français": "malaire"}
-{"breton": "ufern, daouufern, fer", "français": "malléole"}
-{"breton": "bronn, divronn", "français": "mamelle"}
+{"breton": "dourn", "français": "main"}
+{"breton": "daouarn", "français": "main"}
+{"breton": "biz kreiz", "français": "majeur (doigt)"}
+{"breton": "trede biz", "français": "majeur (doigt)"}
+{"breton": "boc'hel", "français": "malaire"}
+{"breton": "jodel", "français": "malaire"}
+{"breton": "ufern", "français": "malléole"}
+{"breton": "daouufern", "français": "malléole"}
+{"breton": "fer", "français": "malléole"}
+{"breton": "bronn", "français": "mamelle"}
+{"breton": "divronn", "français": "mamelle"}
 {"breton": "chaokat", "français": "mastication"}
-{"breton": "bronnhenvel, stumm-bronn", "français": "mastoïde"}
-{"breton": "beg-askourn bronnhenvel, klopenvronnenn", "français": "apophyse mastoïde"}
+{"breton": "bronnhenvel", "français": "mastoïde"}
+{"breton": "stumm-bronn", "français": "mastoïde"}
+{"breton": "beg-askourn bronnhenvel", "français": "apophyse mastoïde"}
+{"breton": "klopenvronnenn", "français": "apophyse mastoïde"}
