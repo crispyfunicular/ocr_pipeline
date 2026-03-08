@@ -11,7 +11,10 @@ def clean_text(text):
     # 0. Remplace les retours à la ligne par des espaces
     text = text.replace('\n', ' ')
     
-    # 1. Supprime la numérotation initiale (chiffres suivis optionnellement de points, tirets, parenthèses ou espaces)
+    # 1. Supprime les tirets initiaux (-- ou —)
+    text = re.sub(r'^\s*-{1,2}\s*', '', text)
+    
+    # 2. Supprime la numérotation initiale (chiffres suivis optionnellement de points, tirets, parenthèses ou espaces)
     text = re.sub(r'^\s*\d+[\s.\-)]*', '', text)
     
     # 2. Supprime la ponctuation finale si la longueur du segment (avant nettoyage de la fin) est < 20 caractères
