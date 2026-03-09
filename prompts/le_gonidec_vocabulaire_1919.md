@@ -42,3 +42,7 @@
   - **Van.** = Vannes.
   - **verb.** = verbe.
   - **Villem.** = de la Villemarqué.
+
+- **Précisions grammaticales et pluriels en breton :** Le dictionnaire indique parfois la préposition à utiliser avec le mot breton (ex: `ouz`), ou son pluriel (ex: `pl. tud...`, `pl. -zidi`, `pl. ...`), ou son participe (ex: `part. ...`). Ces indications concernent le **mot breton** et ne doivent absolument pas se retrouver dans le champ `français` (même si elles sont parfois accompagnées d'une glose comme `à l'égard de`). Le champ `français` ne doit contenir que le mot cible français, expurgé de ces notes de grammaire bretonne.
+  - Exemple : pour l'entrée `inexorable, didruez (ouz, à l'égard de)`, il faut extraire `{"français": "inexorable", "breton": "didruez"}`.
+  - Exemple : pour l'entrée `infidèle, dén divadez, pl. tud...`, il faut extraire `{"français": "un infidèle", "breton": "dén divadez"}`.
