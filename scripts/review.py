@@ -383,6 +383,7 @@ def review_target(target_dir: Path, out_report: Path):
     out_report.write_text("\n".join(report), encoding="utf-8")
     print(f"  ✅ Report: {out_report}")
 
+
 def copy_to_review(book_name: str, model: str, yes: bool = False) -> Path | None:
     """Copy JSONL files from ocr/<book>/<model>/ to review/<book>/.
 
@@ -423,7 +424,9 @@ def copy_to_review(book_name: str, model: str, yes: bool = False) -> Path | None
         shutil.copy2(f, dst_dir / f.name)
         copied += 1
 
-    print(f"  📋 Copied {copied} files from ocr/{book_name}/{model}/ → review/{book_name}/")
+    print(
+        f"  📋 Copied {copied} files from ocr/{book_name}/{model}/ → review/{book_name}/"
+    )
     return dst_dir
 
 
@@ -443,7 +446,8 @@ def main(argv=None):
         help=f"Model subfolder to copy from (default: {DEFAULT_MODEL}).",
     )
     parser.add_argument(
-        "--yes", "-y",
+        "--yes",
+        "-y",
         action="store_true",
         help="Skip confirmation prompts (non-interactive mode).",
     )
@@ -457,7 +461,8 @@ def main(argv=None):
             print(f"❌ OCR directory not found: {OCR_DIR}", file=sys.stderr)
             return
         books = sorted(
-            d.name for d in OCR_DIR.iterdir()
+            d.name
+            for d in OCR_DIR.iterdir()
             if d.is_dir() and (d / args.model).is_dir()
         )
 

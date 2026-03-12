@@ -43,7 +43,9 @@ def format_entry(line: str) -> str:
         return line
 
 
-def diff_files(path_a: Path, path_b: Path, verbose: bool = False) -> tuple[int, int, int]:
+def diff_files(
+    path_a: Path, path_b: Path, verbose: bool = False
+) -> tuple[int, int, int]:
     """Diff two JSONL files line-by-line.
 
     Returns (added, removed, modified) counts.
@@ -162,7 +164,8 @@ def main(argv=None):
         help="Right side: directory or .jsonl file (default: review/).",
     )
     parser.add_argument(
-        "-v", "--verbose",
+        "-v",
+        "--verbose",
         action="store_true",
         help="Show individual changed lines.",
     )

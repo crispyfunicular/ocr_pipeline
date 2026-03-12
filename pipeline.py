@@ -3,23 +3,27 @@
 Unified OCR pipeline CLI for Breton-French corpus extraction.
 
 Stages:
-    extract   — PDF → PNG pages (300 DPI)
-    enhance   — Image enhancement (CLAHE + optional DocRes AI)
-    ocr       — VLM-based bilingual text extraction (OpenAI / Anthropic)
-    review    — JSONL quality assurance
-    evaluate  — Compute WER and CER against human reference
-    corpus    — Deduplicate and merge review output into corpus/<book>.jsonl
-    diff      — Compare two JSONL directories or files
-    ignore    — Add pages to the per-book droplist
-    run       — Chain all stages end-to-end
+    extract      — PDF → PNG pages (300 DPI)
+    enhance      — Image enhancement (CLAHE + optional DocRes AI)
+    ocr          — VLM-based bilingual text extraction (OpenAI / Anthropic / Gemini)
+    batch_status — Check / collect Gemini Batch API job results
+    review       — JSONL quality assurance
+    evaluate     — Compute WER and CER against human reference
+    corpus       — Deduplicate and merge review output into corpus/<book>.jsonl
+    diff         — Compare two JSONL directories or files
+    ignore       — Add pages to the per-book droplist
+    run          — Chain all stages end-to-end
 
 
 Usage:
     python pipeline.py run                          # full pipeline, all PDFs
     python pipeline.py run pdfs/my_book.pdf         # full pipeline, one PDF
     python pipeline.py extract                      # extract only, all PDFs
-    python pipeline.py enhance --docres --prepocr      # enhance with AI
-    python pipeline.py ocr Manuel_1865             # OCR one book
+    python pipeline.py enhance --docres --prepocr   # enhance with AI
+    python pipeline.py ocr Manuel_1865              # OCR one book (sync)
+    python pipeline.py ocr Manuel_1865 --batch      # OCR via Gemini Batch API (async, 50% cost)
+    python pipeline.py batch_status                 # check all pending batch jobs
+    python pipeline.py batch_status Manuel_1865 --wait  # poll until done, then collect
 """
 
 import argparse
@@ -55,6 +59,10 @@ def cmd_enhance(args):
         argv.append("--prepocr")
     if args.classical:
         argv.append("--classical")
+    if args.format:
+        argv.extend(["--format", args.format])
+    if args.jpeg_quality is not None:
+        argv.extend(["--jpeg-quality", str(args.jpeg_quality)])
     return enhance_main(argv)
 
 
@@ -94,6 +102,9 @@ def cmd_compare(args):
 
 def cmd_ocr(args):
     """Run OCR extraction."""
+    if getattr(args, "batch", False):
+        return _cmd_ocr_batch(args)
+
     from scripts.ocr import main as ocr_main
 
     argv = []
@@ -108,6 +119,71 @@ def cmd_ocr(args):
     if args.limit:
         argv.extend(["--limit", str(args.limit)])
     return ocr_main(argv)
+
+
+def _cmd_ocr_batch(args):
+    """Submit OCR via Gemini Batch API."""
+    from scripts.ocr_batch import submit_batch_job
+    from scripts.utils import discover_targets
+
+    pages_dir = PROJECT_ROOT / "pages_enhanced"
+    ocr_root = Path(args.output) if args.output else PROJECT_ROOT / "ocr"
+
+    book_dirs, single_images = discover_targets(args.targets or None, pages_dir)
+    if single_images:
+        print("❌ Batch mode does not support single-image targets.", file=sys.stderr)
+        sys.exit(1)
+    if not book_dirs:
+        print(f"Aucun livre trouvé dans {pages_dir.absolute()}")
+        sys.exit(1)
+
+    from scripts.ocr import DEFAULT_MODEL
+
+    model = args.model or DEFAULT_MODEL
+
+    for book_dir in book_dirs:
+        submit_batch_job(
+            book_dir,
+            model=model,
+            ocr_root=ocr_root,
+            limit=args.limit,
+            debug=getattr(args, "debug", False),
+        )
+
+
+def cmd_batch_status(args):
+    """Check status of Gemini Batch API jobs."""
+    from scripts.ocr_batch import check_batch_status, find_pending_batch_dirs
+    from scripts.ocr import DEFAULT_MODEL
+
+    ocr_root = Path(args.output) if args.output else PROJECT_ROOT / "ocr"
+    model = args.model or DEFAULT_MODEL
+
+    if args.targets:
+        books = list(args.targets)
+    else:
+        # Auto-discover books with pending batch jobs
+        books = []
+        if ocr_root.exists():
+            for book_dir in sorted(ocr_root.iterdir()):
+                if not book_dir.is_dir():
+                    continue
+                model_dir = book_dir / model
+                if find_pending_batch_dirs(model_dir):
+                    books.append(book_dir.name)
+        if not books:
+            print("  No pending batch jobs found.")
+            return
+
+    for book in books:
+        print(f"\n{'─' * 60}")
+        check_batch_status(
+            book,
+            model=model,
+            ocr_root=ocr_root,
+            wait=getattr(args, "wait", False),
+            cancel=getattr(args, "cancel", False),
+        )
 
 
 def cmd_review(args):
@@ -242,6 +318,10 @@ def cmd_run(args):
         enhance_argv.append("--prepocr")
     if args.classical:
         enhance_argv.append("--classical")
+    if args.format:
+        enhance_argv.extend(["--format", args.format])
+    if args.jpeg_quality is not None:
+        enhance_argv.extend(["--jpeg-quality", str(args.jpeg_quality)])
     enhance_main(enhance_argv)
 
     # Stage 3: OCR
@@ -290,9 +370,12 @@ Examples:
   %(prog)s run                            Full pipeline, all PDFs
   %(prog)s run pdfs/my_book.pdf           Full pipeline, one PDF
   %(prog)s extract                        Extract pages from all PDFs
-  %(prog)s enhance --docres --prepocr      Enhance with AI restoration
-  %(prog)s ocr Manuel_1865                OCR one specific book
-  %(prog)s evaluate                       Compute CER & WER on all reference books
+  %(prog)s enhance --docres --prepocr     Enhance with AI restoration
+  %(prog)s ocr Manuel_1865               OCR one specific book (sync)
+  %(prog)s ocr Manuel_1865 --batch       OCR via Gemini Batch API (async, 50%% cost)
+  %(prog)s batch_status                  Check all pending batch jobs
+  %(prog)s batch_status Manuel_1865 --wait   Poll until done, then collect
+  %(prog)s evaluate                      Compute CER & WER on all reference books
 """,
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -346,6 +429,18 @@ Examples:
         default=None,
         help="Process only N random pages per book for OCR (for testing).",
     )
+    p_run.add_argument(
+        "--format",
+        choices=["jpg", "png"],
+        default=None,
+        help="Enhanced image format (default: jpg q=85; use png for lossless)",
+    )
+    p_run.add_argument(
+        "--jpeg-quality",
+        type=int,
+        default=None,
+        help="JPEG quality 0-100 (default: 85)",
+    )
     p_run.set_defaults(func=cmd_run)
 
     # --- extract ---
@@ -389,6 +484,18 @@ Examples:
         default=False,
         help="Enable classical enhancement (grayscale + CLAHE)",
     )
+    p_enhance.add_argument(
+        "--format",
+        choices=["jpg", "png"],
+        default=None,
+        help="Output format (default: jpg q=85; use png for lossless)",
+    )
+    p_enhance.add_argument(
+        "--jpeg-quality",
+        type=int,
+        default=None,
+        help="JPEG quality 0-100 (default: 85)",
+    )
     p_enhance.set_defaults(func=cmd_enhance)
 
     # --- compare ---
@@ -415,14 +522,14 @@ Examples:
     p_ignore.set_defaults(func=cmd_ignore)
 
     # --- ocr ---
-    p_ocr = subparsers.add_parser("ocr", help="Run OCR extraction via OpenAI VLM")
+    p_ocr = subparsers.add_parser("ocr", help="Run VLM-based OCR extraction")
     p_ocr.add_argument(
         "targets", nargs="*", help="Book folder(s) to process (default: all)"
     )
     p_ocr.add_argument(
         "--model",
         default=None,
-        help="Model to use (default: from ocr.py). Supports OpenAI and Claude models.",
+        help="Model to use (default: from ocr.py). Supports OpenAI, Claude, and Gemini models.",
     )
     p_ocr.add_argument(
         "-o",
@@ -442,7 +549,38 @@ Examples:
         default=None,
         help="Process only N random pages per book (for testing).",
     )
+    p_ocr.add_argument(
+        "--batch",
+        action="store_true",
+        default=False,
+        help="Submit via Gemini Batch API (50%% cost, async). Gemini models only.",
+    )
     p_ocr.set_defaults(func=cmd_ocr)
+
+    # --- batch_status ---
+    p_batch = subparsers.add_parser(
+        "batch_status", help="Check / collect Gemini Batch API job results"
+    )
+    p_batch.add_argument(
+        "targets", nargs="*", help="Book(s) to check (default: all pending jobs)"
+    )
+    p_batch.add_argument(
+        "--model",
+        default=None,
+        help="Model subfolder (default: from ocr.py).",
+    )
+    p_batch.add_argument("-o", "--output", default=None, help="OCR root directory.")
+    p_batch.add_argument(
+        "--wait",
+        action="store_true",
+        help="Poll until job completes, then collect results.",
+    )
+    p_batch.add_argument(
+        "--cancel",
+        action="store_true",
+        help="Cancel the running batch job.",
+    )
+    p_batch.set_defaults(func=cmd_batch_status)
 
     # --- review ---
     p_review = subparsers.add_parser(
@@ -459,7 +597,8 @@ Examples:
         help="Model subfolder to copy from (default: antigravity).",
     )
     p_review.add_argument(
-        "--yes", "-y",
+        "--yes",
+        "-y",
         action="store_true",
         help="Skip confirmation prompts (non-interactive mode).",
     )
@@ -470,7 +609,9 @@ Examples:
         "evaluate", help="Compute WER and CER for OCR outputs against human reference"
     )
     p_evaluate.add_argument(
-        "targets", nargs="*", help="Book folder(s) to evaluate (default: all in error_rates/)"
+        "targets",
+        nargs="*",
+        help="Book folder(s) to evaluate (default: all in error_rates/)",
     )
     p_evaluate.set_defaults(func=cmd_evaluate)
 
@@ -504,7 +645,8 @@ Examples:
         help="Right side: directory or .jsonl file (default: review/).",
     )
     p_diff.add_argument(
-        "-v", "--verbose",
+        "-v",
+        "--verbose",
         action="store_true",
         help="Show individual changed lines.",
     )

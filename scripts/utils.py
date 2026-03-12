@@ -213,3 +213,28 @@ def discover_targets(
         )
 
     return book_dirs, single_images
+
+
+def discover_images(directory: Path) -> list[Path]:
+    """Find all image files in a directory, sorted by name.
+
+    Uses IMAGE_EXTENSIONS as the source of truth for supported formats.
+    Replaces hardcoded ``*.png`` globs throughout the pipeline.
+    """
+    return sorted(
+        p
+        for p in directory.iterdir()
+        if p.is_file() and p.suffix.lower() in IMAGE_EXTENSIONS
+    )
+
+
+def mime_type_for_image(path: Path) -> str:
+    """Return the MIME type string for an image file based on its extension."""
+    ext = path.suffix.lower()
+    return {
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".tiff": "image/tiff",
+        ".tif": "image/tiff",
+    }.get(ext, "image/png")

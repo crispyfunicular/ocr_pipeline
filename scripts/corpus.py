@@ -129,10 +129,14 @@ def main(argv=None):
         grand_final += final_count
 
         dupe_info = f" (−{duplicates} duplicates)" if duplicates else ""
-        print(f"     {total_raw} → {final_count} pairs{dupe_info} → corpus/{book}.jsonl")
+        print(
+            f"     {total_raw} → {final_count} pairs{dupe_info} → corpus/{book}.jsonl"
+        )
 
     print(f"\n{'═' * 60}")
-    print(f"✅ Corpus built: {grand_raw} → {grand_final} pairs (−{grand_dupes} duplicates)")
+    print(
+        f"✅ Corpus built: {grand_raw} → {grand_final} pairs (−{grand_dupes} duplicates)"
+    )
     print(f"   Output: {corpus_root.resolve()}/")
     print(f"{'═' * 60}")
 

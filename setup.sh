@@ -91,12 +91,28 @@ STEP=$((STEP + 1))
 echo ""
 echo "── Step ${STEP}/${TOTAL_STEPS}: API keys ──"
 
+if [ -n "${GEMINI_API_KEY:-}" ]; then
+    echo "  ✅ GEMINI_API_KEY is set"
+else
+    echo "  ⚠️  GEMINI_API_KEY is NOT set"
+    echo "     Required for Gemini models (default)."
+    echo "     Set it with:  export GEMINI_API_KEY='...'"
+fi
+
 if [ -n "${OPENAI_API_KEY:-}" ]; then
     echo "  ✅ OPENAI_API_KEY is set"
 else
     echo "  ⚠️  OPENAI_API_KEY is NOT set"
-    echo "     The OCR stage requires an OpenAI API key."
+    echo "     Required for OpenAI models (gpt-*)."
     echo "     Set it with:  export OPENAI_API_KEY='sk-...'"
+fi
+
+if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+    echo "  ✅ ANTHROPIC_API_KEY is set"
+else
+    echo "  ⚠️  ANTHROPIC_API_KEY is NOT set"
+    echo "     Required for Claude models."
+    echo "     Set it with:  export ANTHROPIC_API_KEY='sk-ant-...'"
 fi
 
 # ── Enhancement tools (opt-in) ────────────────────────
