@@ -31,7 +31,8 @@ OCR_pipeline/
 │   ├── utils.py             ← Shared helpers (types, parsing, target discovery)
 │   ├── extract.py           ← PDF → PNG
 │   ├── enhance.py           ← Image enhancement (DocRes + PreP-OCR + CLAHE)
-│   ├── ocr.py               ← VLM-based OCR extraction
+│   ├── ocr.py               ← VLM-based OCR extraction (sync) + parse_vlm_response()
+│   ├── ocr_batch.py         ← Gemini Batch API OCR (async, 50% cost)
 │   ├── review.py            ← JSONL quality assurance
 │   ├── evaluate.py          ← WER/CER evaluation against human reference
 │   └── corpus.py            ← Final corpus merge (stub)
@@ -102,11 +103,34 @@ Comparison tool (`pipeline.py compare`):
 
 ### 3. OCR Extraction (`scripts/ocr.py`)
 
-- Sends each page image to the configured model (default: `gpt-5.2`, override with `--model`)
+- Sends each page image to the configured model (default: `gemini-3.1-pro-preview`, override with `--model`)
+- Supports OpenAI, Anthropic Claude, and Google Gemini models
 - Extracts breton/français pairs as JSONL
 - Default output: `ocr/<book>/<model>/` (override with `-o`/`--output`)
 - Auto-generates quality report in `reports/<book>/<model>/report.md`
 - Resumable (skips existing .jsonl files)
+- `parse_vlm_response()` — shared response parser for `=== JSONL ===` / `=== RAPPORT ===` blocks
+
+### 3b. Batch OCR (`scripts/ocr_batch.py`)
+
+Asynchronous alternative to `ocr.py` using the **Gemini Batch API** at **50% cost**.
+
+**Three-phase workflow:**
+1. **Submit** (`pipeline.py ocr <book> --batch`) — uploads page images via File API (with dedup), creates batch job, saves state
+2. **Status** (`pipeline.py batch_status <book>`) — polls job state (PENDING → RUNNING → SUCCEEDED)
+3. **Collect** (`pipeline.py batch_status <book> --wait`) — retrieves results, writes per-page `.jsonl` + report
+
+**Output folder** — each batch run is self-contained:
+```
+ocr/<book>/<model>/batch-YYYYMMDD-HHMM/
+  ├── batch_state.json   ← job metadata + submitted page list (kept after completion)
+  ├── prompt.md          ← full prompt snapshot (system + global + book)
+  ├── corpus/            ← per-page JSONL files
+  └── reports/
+      └── report.md      ← quality report
+```
+
+**File API deduplication**: images are uploaded with `display_name=ocr/<book>/<page>`. Before re-uploading, existing uploads are checked by display name and reused if still active (files expire after 48h).
 
 ### 4. Review (`scripts/review.py`)
 
