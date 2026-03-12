@@ -42,17 +42,19 @@ from scripts.utils import (
     ReportRow,
     compute_summary_stats,
     count_jsonl_pairs,
+    discover_images,
     discover_targets,
     format_cost,
     image_sort_key,
     is_auth_error,
+    mime_type_for_image,
     safe_float,
     safe_int,
     write_jsonl,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_MODEL = "gpt-5.2"
+DEFAULT_MODEL = "gemini-3.1-pro-preview"
 
 
 def encode_image(image_path: Path) -> str:
@@ -151,6 +153,7 @@ MODEL_PRICING = {
     "claude-haiku-3.5": {"input": 0.80, "output": 4.00},
     # Google Gemini
     "gemini-3.1-pro": {"input": 2.00, "output": 12.00},
+    "gemini-3.1-pro-preview": {"input": 2.00, "output": 12.00},
     "gemini-3-pro": {"input": 2.00, "output": 12.00},
     "gemini-3-flash": {"input": 0.50, "output": 3.00},
     "gemini-2.5-pro": {"input": 1.25, "output": 10.00},
@@ -220,7 +223,9 @@ def create_client(provider: str):
 # ── Provider-specific API calls ────────────────────────────────
 
 
-def _call_openai(client, model: str, workflow: str, user_text: str, b64: str) -> dict:
+def _call_openai(
+    client, model: str, workflow: str, user_text: str, b64: str, mime: str = "image/png"
+) -> dict:
     """Call OpenAI chat completions API. Returns normalized response dict."""
     messages = [
         {"role": "system", "content": workflow},
@@ -231,7 +236,7 @@ def _call_openai(client, model: str, workflow: str, user_text: str, b64: str) ->
                 {
                     "type": "image_url",
                     "image_url": {
-                        "url": f"data:image/png;base64,{b64}",
+                        "url": f"data:{mime};base64,{b64}",
                         "detail": "high",
                     },
                 },
@@ -266,7 +271,7 @@ def _call_openai(client, model: str, workflow: str, user_text: str, b64: str) ->
 
 
 def _call_anthropic(
-    client, model: str, workflow: str, user_text: str, b64: str
+    client, model: str, workflow: str, user_text: str, b64: str, mime: str = "image/png"
 ) -> dict:
     """Call Anthropic Messages API. Returns normalized response dict."""
     response = client.messages.create(
@@ -280,7 +285,7 @@ def _call_anthropic(
                         "type": "image",
                         "source": {
                             "type": "base64",
-                            "media_type": "image/png",
+                            "media_type": mime,
                             "data": b64,
                         },
                     },
@@ -301,20 +306,21 @@ def _call_anthropic(
     }
 
 
-def _call_google(client, model: str, workflow: str, user_text: str, b64: str) -> dict:
+def _call_google(
+    client, model: str, workflow: str, user_text: str, b64: str, mime: str = "image/png"
+) -> dict:
     """Call Google Gemini API. Returns normalized response dict."""
     image_bytes = base64.b64decode(b64)
 
     config = _genai_types.GenerateContentConfig(
         system_instruction=workflow,
         temperature=0,
-        max_output_tokens=4000,
     )
 
     response = client.models.generate_content(
         model=model,
         contents=[
-            _genai_types.Part.from_bytes(data=image_bytes, mime_type="image/png"),
+            _genai_types.Part.from_bytes(data=image_bytes, mime_type=mime),
             user_text,
         ],
         config=config,
@@ -328,61 +334,17 @@ def _call_google(client, model: str, workflow: str, user_text: str, b64: str) ->
     }
 
 
-# ── Main processing function ──────────────────────────────────
+# ── Response parsing ──────────────────────────────────────────
 
 
-def process_single_image(
-    client,
-    img_path: Path,
-    workflow: str,
-    model: str = DEFAULT_MODEL,
-    debug: bool = False,
-) -> dict:
-    """Send a single image to the VLM and parse the structured response."""
-    b64 = encode_image(img_path)
-    user_text = SINGLE_IMAGE_PROMPT.format(filename=img_path.name)
-    provider = detect_provider(model)
+def parse_vlm_response(text: str) -> dict:
+    """Parse a VLM response into JSONL content and report fields.
 
-    if debug:
-        print(f"\n{'┄' * 60}")
-        print(f"  🐛 DEBUG — Provider: {provider}")
-        print(f"  🐛 DEBUG — System prompt ({len(workflow)} chars):")
-        print(f"{'┄' * 60}")
-        print(workflow[:2000])
-        if len(workflow) > 2000:
-            print(f"  ... ({len(workflow) - 2000} more chars)")
-        print(f"{'┄' * 60}")
-        print(f"  🐛 DEBUG — User prompt:")
-        print(f"{'┄' * 60}")
-        print(user_text)
-        print(f"  🐛 DEBUG — Image: {img_path} (base64 {len(b64)} chars)")
-        print(f"{'┄' * 60}")
+    Extracts the === JSONL === and === RAPPORT === blocks from the raw
+    model response.  Used by both synchronous and batch OCR paths.
 
-    t0 = time.time()
-
-    if provider == "anthropic":
-        result = _call_anthropic(client, model, workflow, user_text, b64)
-    elif provider == "google":
-        result = _call_google(client, model, workflow, user_text, b64)
-    else:
-        result = _call_openai(client, model, workflow, user_text, b64)
-
-    elapsed = time.time() - t0
-    text = result["text"]
-    prompt_tokens = result["prompt_tokens"]
-    completion_tokens = result["completion_tokens"]
-
-    cost = estimate_cost(model, prompt_tokens, completion_tokens)
-
-    if debug:
-        print(f"\n{'┄' * 60}")
-        print(
-            f"  🐛 DEBUG — Response ({elapsed:.1f}s, {prompt_tokens}+{completion_tokens} tokens, ${cost:.4f} est.):"
-        )
-        print(f"{'┄' * 60}")
-        print(text)
-        print(f"{'┄' * 60}")
-
+    Returns a dict with keys: jsonl, statut, score, remarques, observations.
+    """
     # --- Parse JSONL ---
     jsonl_match = re.search(r"=== JSONL ===\s*\n(.*?)\n=== /JSONL ===", text, re.DOTALL)
     jsonl_content = jsonl_match.group(1).strip() if jsonl_match else ""
@@ -416,6 +378,69 @@ def process_single_image(
         "score": score,
         "remarques": remarques,
         "observations": observations,
+    }
+
+
+# ── Main processing function ──────────────────────────────────
+
+
+def process_single_image(
+    client,
+    img_path: Path,
+    workflow: str,
+    model: str = DEFAULT_MODEL,
+    debug: bool = False,
+) -> dict:
+    """Send a single image to the VLM and parse the structured response."""
+    b64 = encode_image(img_path)
+    mime = mime_type_for_image(img_path)
+    user_text = SINGLE_IMAGE_PROMPT.format(filename=img_path.name)
+    provider = detect_provider(model)
+
+    if debug:
+        print(f"\n{'┄' * 60}")
+        print(f"  🐛 DEBUG — Provider: {provider}")
+        print(f"  🐛 DEBUG — System prompt ({len(workflow)} chars):")
+        print(f"{'┄' * 60}")
+        print(workflow[:2000])
+        if len(workflow) > 2000:
+            print(f"  ... ({len(workflow) - 2000} more chars)")
+        print(f"{'┄' * 60}")
+        print(f"  🐛 DEBUG — User prompt:")
+        print(f"{'┄' * 60}")
+        print(user_text)
+        print(f"  🐛 DEBUG — Image: {img_path} ({mime}, base64 {len(b64)} chars)")
+        print(f"{'┄' * 60}")
+
+    t0 = time.time()
+
+    if provider == "anthropic":
+        result = _call_anthropic(client, model, workflow, user_text, b64, mime=mime)
+    elif provider == "google":
+        result = _call_google(client, model, workflow, user_text, b64, mime=mime)
+    else:
+        result = _call_openai(client, model, workflow, user_text, b64, mime=mime)
+
+    elapsed = time.time() - t0
+    text = result["text"]
+    prompt_tokens = result["prompt_tokens"]
+    completion_tokens = result["completion_tokens"]
+
+    cost = estimate_cost(model, prompt_tokens, completion_tokens)
+
+    if debug:
+        print(f"\n{'┄' * 60}")
+        print(
+            f"  🐛 DEBUG — Response ({elapsed:.1f}s, {prompt_tokens}+{completion_tokens} tokens, ${cost:.4f} est.):"
+        )
+        print(f"{'┄' * 60}")
+        print(text)
+        print(f"{'┄' * 60}")
+
+    parsed = parse_vlm_response(text)
+
+    return {
+        **parsed,
         "raw": text,
         "elapsed": round(elapsed, 1),
         "prompt_tokens": prompt_tokens,
@@ -456,7 +481,7 @@ def load_rapport(rapport_path: Path) -> tuple[list[dict], list[str]]:
 
     # Parse table rows: Image | Paires | Statut | Score | Temps | Coût | Remarques
     for m in re.finditer(
-        r"^\|\s*`?(\d+\.png)`?\s*\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|",
+        r"^\|\s*`?(\d+\.\w+)`?\s*\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|",
         text,
         re.MULTILINE,
     ):
@@ -575,7 +600,7 @@ def process_book_ocr(
 
     Returns the number of images processed.
     """
-    images = sorted(book_dir.glob("*.png"))
+    images = discover_images(book_dir)
     if not images:
         print(f"  ⚠️  No images found in {book_dir}/")
         return 0
@@ -597,9 +622,7 @@ def process_book_ocr(
         rapport_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Resume: skip if the .jsonl already exists (even if empty)
-    to_process = [
-        img for img in images if not (ocr_dir / f"{img.stem}.jsonl").exists()
-    ]
+    to_process = [img for img in images if not (ocr_dir / f"{img.stem}.jsonl").exists()]
 
     # Apply --limit: random sample
     if limit and limit < len(to_process):
@@ -731,7 +754,7 @@ def main(argv=None):
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
-        help=f"OpenAI model to use (default: {DEFAULT_MODEL})",
+        help=f"VLM model to use (default: {DEFAULT_MODEL})",
     )
     parser.add_argument(
         "-o",
@@ -782,9 +805,7 @@ def main(argv=None):
     is_single_image = len(single_images) == 1 and not book_dirs
     if is_single_book:
         print(f"📥 Entrée : {book_dirs[0].resolve()}/")
-        print(
-            f"📂 Sortie : {(ocr_root / book_dirs[0].name / args.model).resolve()}/"
-        )
+        print(f"📂 Sortie : {(ocr_root / book_dirs[0].name / args.model).resolve()}/")
     elif is_single_image:
         print(f"📥 Entrée : {single_images[0].resolve()}")
         img_book = single_images[0].parent.name
