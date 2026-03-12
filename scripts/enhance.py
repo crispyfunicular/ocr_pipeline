@@ -17,7 +17,7 @@ Optionally:
   --binarize    Adaptive Gaussian thresholding (B&W output)
   --upscale     2× Lanczos upscale
 
-Outputs lossless PNG.
+Outputs JPEG (quality 85) by default. Use --format png for lossless.
 
 By default, processes all subdirectories in pages/ and writes to
 pages_enhanced/<subdir>/.
@@ -48,7 +48,7 @@ ENHANCED_DIR = PROJECT_ROOT / "pages_enhanced"
 DOCRES_DIR = PROJECT_ROOT / "docres"
 RESSHIFT_DIR = PROJECT_ROOT / "resshift"
 
-from scripts.utils import discover_targets
+from scripts.utils import discover_targets, discover_images
 
 # ── Individual processing stages ───────────────────────────────────
 
@@ -692,10 +692,10 @@ def process_book(
 ) -> int:
     """Process all pages of a single book directory. Returns count."""
     output_dir.mkdir(parents=True, exist_ok=True)
-    images = sorted(input_dir.glob("*.png"))
+    images = discover_images(input_dir)
 
     if not images:
-        print(f"  ⚠️  No PNG files in {input_dir}/")
+        print(f"  ⚠️  No image files in {input_dir}/")
         return 0
 
     # Filter out dropped pages
@@ -812,8 +812,8 @@ def main(argv=None):
     parser.add_argument(
         "--format",
         choices=["jpg", "png"],
-        default="png",
-        help="Output format (default: png — lossless, best quality for OCR)",
+        default="jpg",
+        help="Output format (default: jpg q=85; use png for lossless)",
     )
     parser.add_argument(
         "--jpeg-quality",
@@ -890,12 +890,23 @@ def main(argv=None):
         sys.exit(1)
 
     # Detect no-op mode (no enhancement flags given)
-    any_enhancement = args.docres or args.prepocr or args.classical or args.binarize or args.upscale or args.denoise
+    any_enhancement = (
+        args.docres
+        or args.prepocr
+        or args.classical
+        or args.binarize
+        or args.upscale
+        or args.denoise
+    )
 
     if book_dirs:
-        print(f"🔧 {'Enhancing' if any_enhancement else 'Copying (no-op)'} {len(book_dirs)} book(s)")
+        print(
+            f"🔧 {'Enhancing' if any_enhancement else 'Copying (no-op)'} {len(book_dirs)} book(s)"
+        )
     if single_images:
-        print(f"🔧 {'Enhancing' if any_enhancement else 'Copying (no-op)'} {len(single_images)} individual image(s)")
+        print(
+            f"🔧 {'Enhancing' if any_enhancement else 'Copying (no-op)'} {len(single_images)} individual image(s)"
+        )
     print(
         f"  📦 Output: {args.format.upper()}"
         f"{f' (q={args.jpeg_quality})' if args.format == 'jpg' else ''}"
