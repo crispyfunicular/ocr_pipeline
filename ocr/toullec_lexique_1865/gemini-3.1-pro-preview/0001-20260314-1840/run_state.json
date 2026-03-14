@@ -1,0 +1,17 @@
+{
+  "prompt_hash": "fab15314",
+  "model": "gemini-3.1-pro-preview",
+  "book": "toullec_lexique_1865",
+  "mode": "sync",
+  "status": "in_progress",
+  "created_at": "2026-03-14T18:40:38.358075+00:00",
+  "updated_at": "2026-03-14T18:44:04.388101+00:00",
+  "processed_pages": [
+    "21",
+    "39",
+    "54",
+    "57",
+    "61"
+  ],
+  "total_pages": 62
+}

@@ -117,6 +117,10 @@ Les explications de règles sont en français avec des exemples bretons intégr�
 - **Exercices de copie** (« Skriv en distro ») → **exclure** (monolingue)
 - **Exercices avec paires bilingues complètes** (traduction française fournie) → **extraire**
 
+### En-têtes de leçon (KENTEL / LEÇON)
+
+Les en-têtes de leçon (`KENTEL 3 [LEÇON 3]`, `KENTEL 12 [LEÇON 12]`, etc.) sont des marqueurs structurels, pas du vocabulaire → **exclure**. Ne les extrayez pas comme paires bilingues.
+
 ### Qualité du scan
 
 Les pages sont nettes. Le texte est en corps standard, bien lisible. Les colonnes de vocabulaire sont clairement alignées.

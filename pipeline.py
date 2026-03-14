@@ -108,8 +108,6 @@ def cmd_ocr(args):
     from scripts.ocr import main as ocr_main
 
     argv = []
-    if args.targets:
-        argv.extend(["--targets"] + list(args.targets))
     if args.model:
         argv.extend(["--model", args.model])
     if args.output:
@@ -118,12 +116,16 @@ def cmd_ocr(args):
         argv.append("--debug")
     if args.limit:
         argv.extend(["--limit", str(args.limit)])
+    if getattr(args, "seed", None) is not None:
+        argv.extend(["--seed", str(args.seed)])
+    if args.targets:
+        argv.extend(list(args.targets))
     return ocr_main(argv)
 
 
 def _cmd_ocr_batch(args):
     """Submit OCR via Gemini Batch API."""
-    from scripts.ocr_batch import submit_batch_job
+    from scripts.ocr.batch import submit_batch_job
     from scripts.utils import discover_targets
 
     pages_dir = PROJECT_ROOT / "pages_enhanced"
@@ -137,7 +139,7 @@ def _cmd_ocr_batch(args):
         print(f"Aucun livre trouvé dans {pages_dir.absolute()}")
         sys.exit(1)
 
-    from scripts.ocr import DEFAULT_MODEL
+    from scripts.ocr.core import DEFAULT_MODEL
 
     model = args.model or DEFAULT_MODEL
 
@@ -153,8 +155,8 @@ def _cmd_ocr_batch(args):
 
 def cmd_batch_status(args):
     """Check status of Gemini Batch API jobs."""
-    from scripts.ocr_batch import check_batch_status, find_pending_batch_dirs
-    from scripts.ocr import DEFAULT_MODEL
+    from scripts.ocr.batch import check_batch_status
+    from scripts.ocr.core import find_pending_runs, DEFAULT_MODEL
 
     ocr_root = Path(args.output) if args.output else PROJECT_ROOT / "ocr"
     model = args.model or DEFAULT_MODEL
@@ -169,7 +171,7 @@ def cmd_batch_status(args):
                 if not book_dir.is_dir():
                     continue
                 model_dir = book_dir / model
-                if find_pending_batch_dirs(model_dir):
+                if find_pending_runs(model_dir, mode="batch"):
                     books.append(book_dir.name)
         if not books:
             print("  No pending batch jobs found.")
@@ -195,6 +197,8 @@ def cmd_review(args):
         argv.extend(list(args.targets))
     if args.model:
         argv.extend(["--model", args.model])
+    if args.run:
+        argv.extend(["--run", args.run])
     if args.yes:
         argv.append("--yes")
     return review_main(argv)
@@ -415,7 +419,7 @@ Examples:
     p_run.add_argument(
         "--model",
         default=None,
-        help="OpenAI model to use for OCR (default: from ocr.py)",
+        help="Model to use for OCR (default: gemini-3.1-pro-preview).",
     )
     p_run.add_argument(
         "--debug",
@@ -529,7 +533,7 @@ Examples:
     p_ocr.add_argument(
         "--model",
         default=None,
-        help="Model to use (default: from ocr.py). Supports OpenAI, Claude, and Gemini models.",
+        help="Model to use (default: gemini-3.1-pro-preview). Supports OpenAI, Claude, and Gemini models.",
     )
     p_ocr.add_argument(
         "-o",
@@ -548,6 +552,12 @@ Examples:
         type=int,
         default=None,
         help="Process only N random pages per book (for testing).",
+    )
+    p_ocr.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for reproducible --limit sampling.",
     )
     p_ocr.add_argument(
         "--batch",
@@ -595,6 +605,11 @@ Examples:
         "--model",
         default=None,
         help="Model subfolder to copy from (default: antigravity).",
+    )
+    p_review.add_argument(
+        "--run",
+        required=True,
+        help="Run folder name (e.g. 0001-20260314-1624).",
     )
     p_review.add_argument(
         "--yes",

@@ -83,9 +83,16 @@ Les pages de lecture présentent des textes en vers ou en prose numérotés (1.,
 - **Notes grammaticales** en bas de page (numérotées `(1)`, `(2)`) : explications de règles → **exclure**
 - **Exercices « Skrivet hag echuit ar gerion-man »** (Écrire et compléter les mots suivants) → **exclure** (monolingue, phrases à trous)
 - **Sections « Grammaire »** en bas de page droite → **exclure** (consignes monolingues)
-- **Sections « Verbou / Verbes »** : paradigmes de conjugaison (1°, 2°, 3°) → **exclure** entièrement (y compris les infinitifs)
-- **Tableaux de pronoms ou mots grammaticaux** (ex : *Raganoiou staga* / Pronoms relatifs) → **exclure** (conformément à la règle globale sur les mots-outils)
+- **Sections « Verbou / Verbes »** — **conjugaisons avec paradigmes** (1°, 2°, 3°) → **exclure**. En revanche, quand une section Verbou est une simple **liste de vocabulaire** (infinitif breton + traduction française, sans paradigmes), **extraire** comme n'importe quelle liste de vocabulaire. Même règle pour « Anoïou gwan / Adjectifs » : extraire les listes breton/français.
+- **Tableaux de pronoms, déterminants et mots grammaticaux** (ex : *Raganoiou staga* / Pronoms relatifs, *Raganoiou damziskoueza* / Pronoms indéfinis) → **exclure entièrement** (conformément à la règle globale sur les mots-outils). Exemples de paires à **NE PAS extraire** :
+  ```
+  {"breton": "hini ebet, den ebet, nikun", "français": "aucun, nul, personne"}
+  {"breton": "pep hini, peb unan", "français": "chacun, chacune"}
+  {"breton": "an hevelep", "français": "le même, la même"}
+  {"breton": "me end-eeun", "français": "moi-même"}
+  ```
 - **Sections « Thème » / « Da lakat e galleg »** : exercices de traduction dirigés → **exclure** (monolingues ou semi-monolingues)
+- **Phrases d'instruction pédagogique** : les consignes qui introduisent un exercice ou une liste (ex : `Skrivit ha deskit ar geriou-man : / Ecrivez et apprenez les mots suivants :`) → **exclure**. Ce ne sont pas des paires bilingues exploitables pour le corpus, même si les deux langues sont présentes.
 - **Attributions d'auteur / noms propres** : les lignes de crédit ou signatures d'auteur en fin de texte ou de poème (ex : `JAFFRENNOU (Barzaz-Taldir)`, `MATHALIZ (Breiz divarvel)`, `D'après JAFFRENNOU`) → **exclure**. De façon générale, ne pas extraire les noms propres isolés (noms d'auteurs, de lieux sans traduction, etc.) comme paires bilingues.
 
 ### Nettoyage

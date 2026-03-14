@@ -51,14 +51,15 @@ always use **relative paths** to read write files not absolute paths
      ```
 
 6. **Save the JSONL output**:
-   - Create directory `ocr/<book_name>/antigravity/` if needed
-   - Write ONLY the JSONL lines (not the report) to `ocr/<book_name>/antigravity/<page_number>.jsonl`
+   - Create directory `ocr/<book_name>/antigravity/<current_run>/extracted/` if needed
+   - Write ONLY the JSONL lines (not the report) to `ocr/<book_name>/antigravity/<current_run>/extracted/<page_number>.jsonl`
    - Use `write_to_file` to create the file
    - always use relative paths to read write files not absolute paths !!!
+   - **Run folder discovery**: check for existing run folders under `ocr/<book_name>/antigravity/`. Reuse the latest one, or create `0001-YYYYMMDD-HHMM` if none exist.
 
 7. **Save the page report**:
-   - Create directory `reports/<book_name>/antigravity/ocr/` if needed
-   - Write the RAPPORT section to `reports/<book_name>/antigravity/ocr/<page_number>.md` with the following format:
+   - Create directory `ocr/<book_name>/antigravity/<current_run>/reports/extraction/` if needed
+   - Write the RAPPORT section to `ocr/<book_name>/antigravity/<current_run>/reports/extraction/<page_number>.md` with the following format:
      ```markdown
      # Page <page_number>
 

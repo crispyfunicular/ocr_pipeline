@@ -1,0 +1,17 @@
+{
+  "prompt_hash": "c539f228",
+  "model": "gemini-3.1-pro-preview",
+  "book": "normant_lexique_1902",
+  "mode": "sync",
+  "status": "in_progress",
+  "created_at": "2026-03-14T18:33:25.592228+00:00",
+  "updated_at": "2026-03-14T18:37:25.230850+00:00",
+  "processed_pages": [
+    "14",
+    "23",
+    "50",
+    "56",
+    "69"
+  ],
+  "total_pages": 60
+}
