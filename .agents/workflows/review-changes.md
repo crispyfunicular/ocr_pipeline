@@ -138,27 +138,36 @@ source .venv/bin/activate && python -m py_compile pipeline.py 2>&1
 ```
 
 ```bash
-for f in scripts/*.py; do python -m py_compile "$f" 2>&1; done
+for f in scripts/*.py scripts/ocr/*.py; do python -m py_compile "$f" 2>&1; done
 ```
 
 ```bash
-black --check pipeline.py scripts/*.py 2>&1
+black --check pipeline.py scripts/ tests/ 2>&1
 ```
 
-### 5. Smoke test
+### 5. Run unit tests
 
-If there are code changes, run a quick smoke test (fast, no GPU/API needed):
+If there are code changes, run the full test suite (fast, no GPU/API needed):
+
+```bash
+make test
+```
+
+All tests must pass. If any fail, flag them as 🔴 Critical issues.
+
+### 6. Smoke test
+
+If there are code changes, run a quick smoke test:
 
 ```bash
 source .venv/bin/activate && python pipeline.py --help 2>&1
 python pipeline.py extract --help 2>&1
 python pipeline.py enhance --help 2>&1
 python pipeline.py ocr --help 2>&1
-python pipeline.py cleanup --help 2>&1
 python pipeline.py corpus --help 2>&1
 ```
 
-### 6. Produce the review report
+### 7. Produce the review report
 
 Structure the output as:
 
@@ -184,13 +193,14 @@ Structure the output as:
 
 ## Checklist
 - [ ] Compiles clean
+- [ ] Tests pass (`make test`)
 - [ ] CLI help works
 - [ ] Docs updated
 - [ ] ARCHITECTURE.md in sync
 - [ ] AGENTS.md in sync
 ```
 
-### 7. Offer to fix issues
+### 8. Offer to fix issues
 
 If issues are found, ask the user:
 > Would you like me to fix the [critical/suggested] issues?
