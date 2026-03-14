@@ -42,7 +42,19 @@ git diff --cached
   - Check for placeholder text, debugging `print()` statements, or `TODO`s.
 - If the diff looks suspicious, recommend the user run `/review-changes` first to ensure quality.
 
-### 3. Draft the Commit Message
+### 3. Run Tests
+
+If the staged changes include code modifications (`.py` files), run the test suite to ensure nothing is broken:
+
+```bash
+// turbo
+make test
+```
+
+- If tests **fail**, stop and inform the user. Do NOT proceed with the commit.
+- If tests **pass**, continue to step 4.
+
+### 4. Draft the Commit Message
 
 Analyze the `git diff --cached` and draft a high-quality commit message based on the following formatting rules:
 
@@ -59,7 +71,7 @@ Analyze the `git diff --cached` and draft a high-quality commit message based on
    - Explain **why** the change was made and **what** problem it solves, rather than strictly detailing *how* the code changed (the diff shows the *how*).
    - Note any side effects or important architectural implications.
 
-### 4. Present for User Approval
+### 5. Present for User Approval
 
 **CRITICAL**: NEVER commit without explicit user approval. 
 
@@ -79,7 +91,7 @@ attributions, ensuring cleaner bilingual sentence pairs.
 Would you like me to proceed with this commit, or do you want to make any adjustments?
 ```
 
-### 5. Execute the Commit
+### 6. Execute the Commit
 
 Only **after** the user explicitly approves the drafted message, execute the commit. For multiline commit messages, it is safest to create a temporary file:
 

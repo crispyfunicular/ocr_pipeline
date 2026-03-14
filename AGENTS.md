@@ -84,6 +84,8 @@ All scripts also work standalone: `python -m scripts.ocr --help`
   - `__init__.py` — Unified `main()` entry point with `--batch` flag
   - `__main__.py` — Enables `python -m scripts.ocr`
 - `tests/test_ocr_core.py` — Unit tests for OCR core pure functions (33 tests)
+- `tests/test_extract.py` — Unit tests for PDF extraction: `pdf_stem`, `extract_pages`, droplist, CLI (9 tests)
+- `tests/test_enhance.py` — Unit tests for enhance copy/compress: no-op copy, JPEG/PNG output, quality, droplist, pure helpers (17 tests)
 - `ocr/<book>/<model>/<run>/reports/extraction/report.md` — Auto-generated extraction quality reports
 - `requirements.txt` — Python dependencies (PyTorch installed separately)
 - `setup.sh` — One-command environment setup (venv + deps + DocRes)
