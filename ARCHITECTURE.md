@@ -10,7 +10,7 @@ A multi-stage pipeline for extracting bilingual Breton-French parallel text from
 graph LR
     A[pdfs/] -->|extract.py| B["pages/ (300dpi PNGs)"]
     B -->|enhance.py| C[pages_enhanced/]
-    C -->|ocr.py| D["ocr/<book>/<model>/"]
+    C -->|ocr/| D["ocr/<book>/<model>/<run>/extracted/"]
     D -->|review.py| E["review/<book>/"]
     E -->|"human correction"| E
     E -->|corpus.py| F["corpus/<book>.jsonl"]
@@ -31,31 +31,32 @@ OCR_pipeline/
 │   ├── utils.py             ← Shared helpers (types, parsing, target discovery)
 │   ├── extract.py           ← PDF → PNG
 │   ├── enhance.py           ← Image enhancement (DocRes + PreP-OCR + CLAHE)
-│   ├── ocr.py               ← VLM-based OCR extraction (sync) + parse_vlm_response()
-│   ├── ocr_batch.py         ← Gemini Batch API OCR (async, 50% cost)
+│   ├── ocr/                 ← VLM-based OCR extraction (package)
+│   │   ├── __init__.py      ← Unified CLI (--batch flag routes to batch)
+│   │   ├── core.py          ← Shared infra + run-folder management
+│   │   ├── sync.py          ← Page-by-page VLM processing
+│   │   └── batch.py         ← Gemini Batch API (async, 50% cost)
 │   ├── review.py            ← JSONL quality assurance
 │   ├── evaluate.py          ← WER/CER evaluation against human reference
 │   └── corpus.py            ← Final corpus merge (stub)
 ├── prompts/
 │   ├── extract_bilingual_corpus.md   ← Base system prompt
-│   ├── bozec_methode_1933.md         ← Book-specific overrides
-│   ├── colloque_1890.md
-│   ├── colloque_lourec_1884.md
-│   ├── daniel_ker_vreiz_1944.md
-│   ├── geriadur_lexique_1927.md
-│   ├── normant_lexique_1902.md
-│   ├── roparz_cours_elementaire_1930.md
-│   ├── toullec_lexique_1865.md
-│   └── yez_hon_tadou_1940.md
+│   └── <book>.md                     ← Book-specific overrides
 ├── pdfs/                    ← Source PDFs
 ├── pages/                   ← Extracted PNGs (per book)
 ├── pages_enhanced/          ← DocRes-enhanced PNGs
-├── ocr/                     ← JSONL output (per book, per model)
+├── ocr/                     ← OCR output (unified run-folder structure)
 │   └── <book>/
-│       └── <model>/         ← e.g. gpt-5.2/
-├── reports/                 ← Auto-generated quality reports
-│   └── <book>/
-│       └── <model>/report.md
+│       └── <model>/
+│           └── <NNNN>-<YYYYMMDD>-<HHMM>/  ← Run folder
+│               ├── prompt.md
+│               ├── run_state.json
+│               ├── extracted/*.jsonl
+│               └── reports/extraction/
+│                   ├── XX.md        ← Per-page report
+│                   └── report.md    ← Summary report
+├── reports/                 ← Review-stage reports
+│   └── <book>/review.md
 ├── docres/                  ← Cloned DocRes repo + weights
 ├── resshift/                ← Cloned ResShift repo + weights (PreP-OCR)
 ├── compare/                 ← Enhancement comparison outputs
@@ -101,40 +102,54 @@ Comparison tool (`pipeline.py compare`):
 - Generates all 18 permutations of DocRes/PreP-OCR/Classical for a single page
 - Output: `compare/<book>/<page>/` with 19 images (original + 18 variants)
 
-### 3. OCR Extraction (`scripts/ocr.py`)
+### 3. OCR Extraction (`scripts/ocr/`)
 
+The OCR step is a Python package with four modules:
+
+- **`__init__.py`** — unified `main()` entry point; `--batch` flag routes to batch mode
+- **`core.py`** — shared infra: VLM clients, cost estimation, `parse_vlm_response()`, run-folder management (prompt hashing, folder discovery/creation, state I/O)
+- **`sync.py`** — synchronous page-by-page processing via `process_book_ocr()`
+- **`batch.py`** — Gemini Batch API: submit, poll, collect
+
+**Sync mode** (default):
 - Sends each page image to the configured model (default: `gemini-3.1-pro-preview`, override with `--model`)
 - Supports OpenAI, Anthropic Claude, and Google Gemini models
 - Extracts breton/français pairs as JSONL
-- Default output: `ocr/<book>/<model>/` (override with `-o`/`--output`)
-- Auto-generates quality report in `reports/<book>/<model>/report.md`
-- Resumable (skips existing .jsonl files)
+- **Run-folder output**: `ocr/<book>/<model>/<NNNN>-<YYYYMMDD>-<HHMM>/` with `prompt.md`, `run_state.json`, `extracted/*.jsonl`, and `reports/extraction/`
+- **Prompt-hash reuse**: if the full prompt (system + global + book) hasn't changed, reuses the existing run folder and resumes processing. A prompt change creates a new run folder with incremented counter.
+- Override output with `-o`/`--output` (bypasses run-folder structure)
 - `parse_vlm_response()` — shared response parser for `=== JSONL ===` / `=== RAPPORT ===` blocks
 
-### 3b. Batch OCR (`scripts/ocr_batch.py`)
+**Batch mode** (`--batch`):
+Asynchronous alternative using the **Gemini Batch API** at **50% cost**.
 
-Asynchronous alternative to `ocr.py` using the **Gemini Batch API** at **50% cost**.
-
-**Three-phase workflow:**
 1. **Submit** (`pipeline.py ocr <book> --batch`) — uploads page images via File API (with dedup), creates batch job, saves state
 2. **Status** (`pipeline.py batch_status <book>`) — polls job state (PENDING → RUNNING → SUCCEEDED)
 3. **Collect** (`pipeline.py batch_status <book> --wait`) — retrieves results, writes per-page `.jsonl` + report
 
-**Output folder** — each batch run is self-contained:
+**Output**: uses the same unified run-folder structure:
 ```
-ocr/<book>/<model>/batch-YYYYMMDD-HHMM/
-  ├── batch_state.json   ← job metadata + submitted page list (kept after completion)
-  ├── prompt.md          ← full prompt snapshot (system + global + book)
-  ├── corpus/            ← per-page JSONL files
+ocr/<book>/<model>/<NNNN>-<YYYYMMDD>-<HHMM>/
+  ├── prompt.md          ← full prompt snapshot
+  ├── run_state.json     ← job metadata, status, submitted pages
+  ├── extracted/         ← per-page JSONL files
   └── reports/
-      └── report.md      ← quality report
+      └── extraction/
+          ├── XX.md      ← per-page extraction report
+          └── report.md  ← quality summary report
 ```
 
 **File API deduplication**: images are uploaded with `display_name=ocr/<book>/<page>`. Before re-uploading, existing uploads are checked by display name and reused if still active (files expire after 48h).
 
+**Run-folder management** (in `core.py`):
+- `compute_prompt_hash()` — SHA-256 first 8 hex chars of the full prompt text
+- `find_or_create_run_folder()` — scans existing run folders for matching prompt hash, reuses or creates new
+- `load_run_state()` / `save_run_state()` — read/write `run_state.json`
+- `find_pending_runs()` — finds runs with non-completed status (used by batch status)
+
 ### 4. Review (`scripts/review.py`)
 
-Copies JSONL files from `ocr/<book>/<model>/` to `review/<book>/` (flat, no model subfolder), then runs quality assurance checks. Prompts for confirmation (`y/N`) before erasing existing content in `review/<book>/`. Use `--yes` to skip prompts. Reports go to `reports/<book>/review.md`.
+Copies JSONL files from `ocr/<book>/<model>/<run>/extracted/` to `review/<book>/` (flat, no model subfolder). Requires `--run` to specify which run folder to copy from. Prompts for confirmation (`y/N`) before erasing existing content. Reports go to `reports/<book>/review.md`.
 
 ### 5. Evaluate (`scripts/evaluate.py`)
 

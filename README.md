@@ -70,8 +70,8 @@ pdfs/ → extract → pages/ → enhance → pages_enhanced/ → ocr → ocr/<bo
 |---|-------|-------|--------|--------|-------------|
 | 1 | **extract** | `pdfs/` | `pages/<book>/` | `scripts/extract.py` | Render PDF pages as 300 DPI PNGs |
 | 2 | **enhance** | `pages/<book>/` | `pages_enhanced/<book>/` | `scripts/enhance.py` | Copy pages (no-op by default) or apply opt-in enhancements |
-| 3 | **ocr** | `pages_enhanced/<book>/` | `ocr/<book>/<model>/` | `scripts/ocr.py` | VLM-based bilingual text extraction |
-| 4 | **review** | `ocr/<book>/<model>/` | `review/<book>/` + `reports/<book>/` | `scripts/review.py` | Copy JSONL to review folder + quality assurance |
+| 3 | **ocr** | `pages_enhanced/<book>/` | `ocr/<book>/<model>/<run>/` | `scripts/ocr/` | VLM-based bilingual text extraction |
+| 4 | **review** | `ocr/<book>/<model>/<run>/extracted/` | `review/<book>/` + `reports/<book>/` | `scripts/review.py` | Copy JSONL to review folder + quality assurance |
 | 5 | **diff** | `ocr/`, `review/` | stdout | `scripts/diff.py` | Compare two JSONL directories/files to see human corrections |
 | 6 | **evaluate** | `error_rates/<book>/` | stdout | `scripts/evaluate.py` | Compute WER & CER against human reference |
 | 7 | **corpus** | `review/<book>/` | `corpus/<book>.jsonl` | `scripts/corpus.py` | Deduplicate and merge reviewed JSONL into one file per book |
@@ -220,7 +220,7 @@ python pipeline.py ocr --limit 5 my_book                # Random sample of 5 pag
 | `claude-sonnet-4-6` | Anthropic | ~$0.015 | — | Not yet benchmarked | **~$8.50** |
 | `gpt-5.2` | OpenAI | ~$0.021 | ~10s | Better precision, correct alignment, cleaner OCR | **~$12** / ~1.5h |
 
-> **Recommendation:** Use `gpt-5.2` (default) for production runs — the higher accuracy justifies the ~5× cost. Use `gpt-4.1-mini` for rapid iteration and prompt testing. Cost estimates for Gemini and Anthropic are based on token pricing from `ocr.py` and are not yet benchmarked on this corpus.
+> **Recommendation:** Use `gpt-5.2` (default) for production runs — the higher accuracy justifies the ~5× cost. Use `gpt-4.1-mini` for rapid iteration and prompt testing. Cost estimates for Gemini and Anthropic are based on token pricing and are not yet benchmarked on this corpus.
 
 ### Prompt System
 
@@ -249,7 +249,7 @@ Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to 
 
 ### Review Overview
 
-Copies JSONL files from `ocr/<book>/<model>/` to `review/<book>/` (flat, no model subfolder), then scans them for common errors and quality issues. If `review/<book>/` already exists, a confirmation prompt is shown before erasing its content.
+Copies JSONL files from `ocr/<book>/<model>/<run>/extracted/` to `review/<book>/` (flat, no model subfolder), then scans them for common errors and quality issues. Requires `--run` to specify which run folder to copy from. If `review/<book>/` already exists, a confirmation prompt is shown before erasing its content.
 
 After the review step, humans can inspect and correct the JSONL files in `review/<book>/` before building the final corpus.
 
@@ -260,10 +260,10 @@ Generates a Markdown report at `reports/<book>/review.md`.
 ### Review Usage
 
 ```bash
-python pipeline.py review                                 # All books
-python pipeline.py review my_book                        # One book
-python pipeline.py review --model gpt-5.2 my_book        # Copy from a specific model
-python pipeline.py review --yes                          # Skip confirmation prompts
+python pipeline.py review --run 0001-20260314-1624                    # All books, specific run
+python pipeline.py review --run 0001-20260314-1624 my_book           # One book
+python pipeline.py review --run 0001-20260314-1624 --model gpt-5.2   # Specific model
+python pipeline.py review --yes --run 0001-20260314-1624             # Skip confirmation prompts
 ```
 
 ---
@@ -335,7 +335,12 @@ python pipeline.py corpus -o /tmp/my_corpus                  # Custom output dir
 │   ├── utils.py             # Shared helpers (types, parsing, target discovery)
 │   ├── extract.py           # PDF → PNG extraction
 │   ├── enhance.py           # Image enhancement (DocRes + PreP-OCR + CLAHE)
-│   ├── ocr.py               # VLM-based OCR (OpenAI / Anthropic)
+│   ├── ocr/                 # VLM-based OCR (package)
+│   │   ├── core.py          # Constants, types, cost estimation, run-folder management
+│   │   ├── providers.py     # VLM client creation, retry logic, API wrappers
+│   │   ├── reports.py       # Report generation and parsing
+│   │   ├── sync.py          # Synchronous page-by-page processing
+│   │   └── batch.py         # Gemini Batch API: submit, poll, collect
 │   ├── review.py            # JSONL quality assurance
 │   ├── evaluate.py          # WER/CER evaluation against human reference
 │   └── corpus.py            # Deduplicate and merge into corpus/<book>.jsonl
@@ -354,12 +359,16 @@ python pipeline.py corpus -o /tmp/my_corpus                  # Custom output dir
 │       ├── 01.png
 │       ├── 02.png
 │       └── ...
-├── ocr/                     # Raw OCR output (per book, per model)
+├── ocr/                     # Raw OCR output (per book, per model, per run)
 │   └── <book>/
 │       └── <model>/
-│           ├── 01.jsonl
-│           ├── 02.jsonl
-│           └── ...
+│           └── <NNNN>-<YYYYMMDD>-<HHMM>/
+│               ├── prompt.md
+│               ├── run_state.json
+│               ├── extracted/
+│               │   ├── 01.jsonl
+│               │   └── ...
+│               └── reports/extraction/
 ├── review/                  # Staging area for human correction
 │   └── <book>/
 │       ├── 01.jsonl

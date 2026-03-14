@@ -33,6 +33,15 @@ Extrayez chaque paire :
 {"breton": "al loar", "français": "la lune"}
 ```
 
+#### Tableaux singulier/pluriel
+
+Quand une entrée montre la forme radicale suivie de la forme mutée avec article puis le pluriel (ex. `kaier — ar c'haier : le cahier / ar c'haierou : les cahiers`), extrayez **deux paires avec article uniquement** :
+```json
+{"breton": "ar c'haier", "français": "le cahier"}
+{"breton": "ar c'haierou", "français": "les cahiers"}
+```
+N'incluez PAS la forme radicale nue (`kaier`) dans le champ breton.
+
 ### Nettoyage du vocabulaire
 
 - **Prononciation entre parenthèses** : `(-ou)`, `(-iou)`, `(-eu)` → **supprimer**
@@ -40,6 +49,7 @@ Extrayez chaque paire :
   - `an endervez (m) (-iou)` → `an endervez`
 - **Marques de genre** : `(m)`, `(f)`, `(e)` → **supprimer**
 - **Formes verbales** après un verbe : par exemple `diskar (diskaret)` → extraire `diskar`
+- **Synonymes français** : quand un mot breton a plusieurs traductions françaises séparées par une virgule (ex. `brao : beau, joli`), **gardez-les ensemble** dans un seul champ français : `"beau, joli"`. Ceci n'est PAS une énumération à éclater — c'est une définition unique avec des synonymes.
 
 ### Mutations consonantiques initiales
 
@@ -145,6 +155,7 @@ Les encadrés contiennent des règles grammaticales en français (ex : « *Les p
 - **Textes de lecture** « LENNADENN » = texte continu monolingue breton → **exclure** entièrement. Même si le texte contient des mots français en italique entre parenthèses (ex. « *pour le soigner* », « *littéralement* »), ces éléments sont des gloses contextuelles, pas des traductions systématiques
 - **POELLADENNOU** (exercices) → **exclure** entièrement — les sections « Traduisez » et « Répondez en breton » sans réponse fournie ne sont pas exploitables. 🚨 
 - **Conjugaison sans colonne française** : les formes de verbe `a so` avec situation (emaout, emaomp...) sans traduction en regard → **exclure**
+- **Marqueurs de continuation** : les lignes contenant `etc.`, `etc...` ou similaires ne sont pas des paires complètes → **exclure**
 
 ### Qualité du scan et règle de lecture stricte
 

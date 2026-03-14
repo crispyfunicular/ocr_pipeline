@@ -35,8 +35,8 @@ always use **relative paths** to read write files not absolute paths
    - After each page, give a quick update to the user.
 
 4. **Generate global summary report**:
-   - Read all per-page reports from `reports/<book_name>/antigravity/ocr/*.md` (exclude `report.md` itself)
-   - Generate `reports/<book_name>/antigravity/ocr/report.md` with the following structure:
+   - Read all per-page reports from `ocr/<book_name>/antigravity/<current_run>/reports/extraction/*.md` (exclude `report.md` itself)
+   - Generate `ocr/<book_name>/antigravity/<current_run>/reports/extraction/report.md` with the following structure:
      ```markdown
      # OCR Report — <book_name>
 

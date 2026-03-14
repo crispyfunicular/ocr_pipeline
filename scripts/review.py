@@ -384,20 +384,22 @@ def review_target(target_dir: Path, out_report: Path):
     print(f"  ✅ Report: {out_report}")
 
 
-def copy_to_review(book_name: str, model: str, yes: bool = False) -> Path | None:
-    """Copy JSONL files from ocr/<book>/<model>/ to review/<book>/.
+def copy_to_review(
+    book_name: str, model: str, run: str, yes: bool = False
+) -> Path | None:
+    """Copy JSONL files from ocr/<book>/<model>/<run>/extracted/ to review/<book>/.
 
     If review/<book>/ already exists, prompts for confirmation before erasing.
     Returns the review directory path, or None if the user declined.
     """
     import shutil
 
-    src_dir = OCR_DIR / book_name / model
+    src_dir = OCR_DIR / book_name / model / run / "extracted"
     dst_dir = REVIEW_DIR / book_name
 
     if not src_dir.exists():
         print(
-            f"  ⚠️  Model folder not found: {src_dir.relative_to(PROJECT_ROOT)}",
+            f"  ⚠️  Run folder not found: {src_dir.relative_to(PROJECT_ROOT)}",
             file=sys.stderr,
         )
         return None
@@ -425,7 +427,7 @@ def copy_to_review(book_name: str, model: str, yes: bool = False) -> Path | None
         copied += 1
 
     print(
-        f"  📋 Copied {copied} files from ocr/{book_name}/{model}/ → review/{book_name}/"
+        f"  📋 Copied {copied} files from ocr/{book_name}/{model}/{run}/extracted/ → review/{book_name}/"
     )
     return dst_dir
 
@@ -433,7 +435,7 @@ def copy_to_review(book_name: str, model: str, yes: bool = False) -> Path | None
 def main(argv=None):
     """Entry point. Pass argv list for programmatic use, or None for CLI."""
     parser = argparse.ArgumentParser(
-        description="Copy JSONL from OCR output to review/ staging folder, then run quality assurance.",
+        description="Copy JSONL from OCR run folder to review/ staging folder, then run quality assurance.",
     )
     parser.add_argument(
         "targets",
@@ -444,6 +446,11 @@ def main(argv=None):
         "--model",
         default=DEFAULT_MODEL,
         help=f"Model subfolder to copy from (default: {DEFAULT_MODEL}).",
+    )
+    parser.add_argument(
+        "--run",
+        required=True,
+        help="Run folder name (e.g. 0001-20260314-1624).",
     )
     parser.add_argument(
         "--yes",
@@ -471,10 +478,10 @@ def main(argv=None):
         return
 
     # Phase 1: Copy JSONL to review/<book>/
-    print(f"📚 Copying OCR output to review/ (model: {args.model})")
+    print(f"📚 Copying OCR output to review/ (model: {args.model}, run: {args.run})")
     review_dirs = []  # (book_name, review_dir)
     for book in books:
-        review_dir = copy_to_review(book, args.model, yes=args.yes)
+        review_dir = copy_to_review(book, args.model, args.run, yes=args.yes)
         if review_dir is not None:
             review_dirs.append((book, review_dir))
 

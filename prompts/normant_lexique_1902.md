@@ -74,6 +74,16 @@ Quand un mot est défini comme un superlatif d'un adjectif (`adj. superl. de [ad
 > `{"breton": "Braz", "français": "grand"}`
 > `{"breton": "Brasa", "français": "le plus grand"}`
 
+**Même règle pour les comparatifs** (`compar. de X`, `adj. compar.`) : extraire le comparatif ET l'adjectif de base en deux paires distinctes. Le comparatif français utilise « **plus** » (sans article) devant l'adjectif.
+
+> Exemple : `Huelloc'h, adj. compar. de huel, haut, élevé` → doit générer DEUX lignes :
+> `{"breton": "Huel", "français": "haut, élevé"}`
+> `{"breton": "Huelloc'h", "français": "plus haut, plus élevé"}`
+>
+> Exemple : `Muioc'h, adv. compar. de kalz, beaucoup` → doit générer DEUX lignes :
+> `{"breton": "Kalz", "français": "beaucoup"}`
+> `{"breton": "Muioc'h", "français": "plus, davantage"}`
+
 ### Définitions longues et encyclopédiques
 
 Certaines entrées ont des définitions étendues avec explications grammaticales ou phonétiques. **Gardez uniquement la première traduction concise**, pas les explications :

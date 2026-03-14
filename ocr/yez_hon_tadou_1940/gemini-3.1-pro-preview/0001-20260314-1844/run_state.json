@@ -1,0 +1,17 @@
+{
+  "prompt_hash": "71d97d42",
+  "model": "gemini-3.1-pro-preview",
+  "book": "yez_hon_tadou_1940",
+  "mode": "sync",
+  "status": "in_progress",
+  "created_at": "2026-03-14T18:44:05.251246+00:00",
+  "updated_at": "2026-03-14T18:50:21.831187+00:00",
+  "processed_pages": [
+    "12",
+    "28",
+    "36",
+    "64",
+    "84"
+  ],
+  "total_pages": 36
+}
