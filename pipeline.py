@@ -36,7 +36,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 
 def cmd_extract(args):
     """Extract pages from PDFs."""
-    from scripts.extract import main as extract_main
+    from src.extract import main as extract_main
 
     argv = list(args.targets) if args.targets else []
     if args.dpi:
@@ -46,7 +46,7 @@ def cmd_extract(args):
 
 def cmd_enhance(args):
     """Enhance extracted pages."""
-    from scripts.enhance import main as enhance_main
+    from src.enhance import main as enhance_main
 
     argv = []
     if args.targets:
@@ -69,7 +69,7 @@ def cmd_enhance(args):
 def cmd_compare(args):
     """Generate comparison matrix of all enhancement permutations."""
     from pathlib import Path
-    from scripts.enhance import run_comparison, PROJECT_ROOT
+    from src.enhance import run_comparison, PROJECT_ROOT
     import cv2
 
     img_path = Path(args.image)
@@ -105,7 +105,7 @@ def cmd_ocr(args):
     if getattr(args, "batch", False):
         return _cmd_ocr_batch(args)
 
-    from scripts.ocr import main as ocr_main
+    from src.ocr import main as ocr_main
 
     argv = []
     if args.model:
@@ -118,6 +118,10 @@ def cmd_ocr(args):
         argv.extend(["--limit", str(args.limit)])
     if getattr(args, "seed", None) is not None:
         argv.extend(["--seed", str(args.seed)])
+    if getattr(args, "main_prompt", None) is not None:
+        argv.extend(["--main-prompt", str(args.main_prompt)])
+    if getattr(args, "book_prompt", None) is not None:
+        argv.extend(["--book-prompt", str(args.book_prompt)])
     if args.targets:
         argv.extend(list(args.targets))
     return ocr_main(argv)
@@ -125,8 +129,8 @@ def cmd_ocr(args):
 
 def _cmd_ocr_batch(args):
     """Submit OCR via Gemini Batch API."""
-    from scripts.ocr.batch import submit_batch_job
-    from scripts.utils import discover_targets
+    from src.ocr.batch import submit_batch_job
+    from src.utils import discover_targets
 
     pages_dir = PROJECT_ROOT / "pages_enhanced"
     ocr_root = Path(args.output) if args.output else PROJECT_ROOT / "ocr"
@@ -139,7 +143,7 @@ def _cmd_ocr_batch(args):
         print(f"Aucun livre trouvé dans {pages_dir.absolute()}")
         sys.exit(1)
 
-    from scripts.ocr.core import DEFAULT_MODEL
+    from src.ocr.core import DEFAULT_MODEL
 
     model = args.model or DEFAULT_MODEL
 
@@ -150,13 +154,15 @@ def _cmd_ocr_batch(args):
             ocr_root=ocr_root,
             limit=args.limit,
             debug=getattr(args, "debug", False),
+            main_prompt=getattr(args, "main_prompt", None),
+            book_prompt=getattr(args, "book_prompt", None),
         )
 
 
 def cmd_batch_status(args):
     """Check status of Gemini Batch API jobs."""
-    from scripts.ocr.batch import check_batch_status
-    from scripts.ocr.core import find_pending_runs, DEFAULT_MODEL
+    from src.ocr.batch import check_batch_status
+    from src.ocr.core import find_pending_runs, DEFAULT_MODEL
 
     ocr_root = Path(args.output) if args.output else PROJECT_ROOT / "ocr"
     model = args.model or DEFAULT_MODEL
@@ -190,7 +196,7 @@ def cmd_batch_status(args):
 
 def cmd_review(args):
     """Copy OCR output to review/ and run quality assurance."""
-    from scripts.review import main as review_main
+    from src.review import main as review_main
 
     argv = []
     if args.targets:
@@ -206,7 +212,7 @@ def cmd_review(args):
 
 def cmd_evaluate(args):
     """Run evaluation (WER/CER)."""
-    from scripts.evaluate import main as evaluate_main
+    from src.evaluate import main as evaluate_main
 
     argv = []
     if args.targets:
@@ -216,7 +222,7 @@ def cmd_evaluate(args):
 
 def cmd_corpus(args):
     """Build corpus from reviewed output."""
-    from scripts.corpus import main as corpus_main
+    from src.corpus import main as corpus_main
 
     argv = []
     if args.targets:
@@ -228,7 +234,7 @@ def cmd_corpus(args):
 
 def cmd_diff(args):
     """Compare two JSONL directories or files."""
-    from scripts.diff import main as diff_main
+    from src.diff import main as diff_main
 
     argv = []
     if args.source_a:
@@ -290,11 +296,11 @@ def cmd_ignore(args):
 
 def cmd_run(args):
     """Run the full pipeline end-to-end."""
-    from scripts.extract import main as extract_main
-    from scripts.enhance import main as enhance_main
-    from scripts.ocr import main as ocr_main
-    from scripts.review import main as review_main
-    from scripts.corpus import main as corpus_main
+    from src.extract import main as extract_main
+    from src.enhance import main as enhance_main
+    from src.ocr import main as ocr_main
+    from src.review import main as review_main
+    from src.corpus import main as corpus_main
 
     print("=" * 60)
     print("🚀 FULL PIPELINE")
@@ -564,6 +570,18 @@ Examples:
         action="store_true",
         default=False,
         help="Submit via Gemini Batch API (50%% cost, async). Gemini models only.",
+    )
+    p_ocr.add_argument(
+        "--main-prompt",
+        type=Path,
+        default=None,
+        help="Override the main system prompt file (default: prompts/extract_bilingual_corpus.md).",
+    )
+    p_ocr.add_argument(
+        "--book-prompt",
+        type=Path,
+        default=None,
+        help="Override the book-specific prompt file (default: auto-detected from book name).",
     )
     p_ocr.set_defaults(func=cmd_ocr)
 

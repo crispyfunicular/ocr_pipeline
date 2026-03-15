@@ -1,4 +1,4 @@
-"""Unit tests for scripts/enhance.py — copy, compress, and pure helpers.
+"""Unit tests for src/enhance.py — copy, compress, and pure helpers.
 
 Covers only non-AI code paths: no-op copy, JPEG/PNG output, droplist
 filtering, and lightweight image operations (grayscale, upscale, binarize).
@@ -16,7 +16,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from scripts.enhance import (
+from src.enhance import (
     adaptive_binarize,
     apply_clahe,
     bilateral_denoise,
@@ -184,7 +184,7 @@ class TestProcessBook(unittest.TestCase):
             drop_dir.mkdir(parents=True)
             (drop_dir / "drop_pages.json").write_text(json.dumps([2]), encoding="utf-8")
 
-            import scripts.utils as utils_mod
+            import src.utils as utils_mod
 
             orig_root = utils_mod.PROJECT_ROOT
             utils_mod.PROJECT_ROOT = Path(tmp)

@@ -1,4 +1,4 @@
-"""Unit tests for scripts/extract.py — PDF extraction and helpers.
+"""Unit tests for src/extract.py — PDF extraction and helpers.
 
 Uses stdlib unittest (no external dependencies beyond PyMuPDF).
 Run:  python -m unittest tests.test_extract -v
@@ -11,7 +11,7 @@ from pathlib import Path
 
 import fitz  # PyMuPDF
 
-from scripts.extract import extract_pages, main, pdf_stem
+from src.extract import extract_pages, main, pdf_stem
 
 
 def _make_tiny_pdf(path: Path, pages: int = 2) -> None:
@@ -95,7 +95,7 @@ class TestExtractPages(unittest.TestCase):
             (drop_dir / "drop_pages.json").write_text(json.dumps([2]), encoding="utf-8")
 
             # Monkey-patch PROJECT_ROOT so load_droplist finds our temp droplist
-            import scripts.utils as utils_mod
+            import src.utils as utils_mod
 
             orig_root = utils_mod.PROJECT_ROOT
             utils_mod.PROJECT_ROOT = Path(tmp)

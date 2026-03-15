@@ -26,7 +26,7 @@ OCR_pipeline/
 ├── setup.sh                 ← One-command env setup
 ├── requirements.txt
 ├── requirements-enhance.txt
-├── scripts/
+├── src/
 │   ├── __init__.py
 │   ├── utils.py             ← Shared helpers (types, parsing, target discovery)
 │   ├── extract.py           ← PDF → PNG
@@ -69,13 +69,13 @@ OCR_pipeline/
 
 ## Stage Details
 
-### 1. Page Extraction (`scripts/extract.py`)
+### 1. Page Extraction (`src/extract.py`)
 
 - Uses PyMuPDF to render each page at 300 DPI
 - Output: `pages/<pdf_stem>/NN.png` (2480×3509 px typical)
 - Handles multiple PDFs, auto-discovers from `pdfs/`
 
-### 2. Enhancement (`scripts/enhance.py`)
+### 2. Enhancement (`src/enhance.py`)
 
 **Default: no-op** — pages are copied from `pages/` to `pages_enhanced/` unchanged.
 
@@ -102,7 +102,7 @@ Comparison tool (`pipeline.py compare`):
 - Generates all 18 permutations of DocRes/PreP-OCR/Classical for a single page
 - Output: `compare/<book>/<page>/` with 19 images (original + 18 variants)
 
-### 3. OCR Extraction (`scripts/ocr/`)
+### 3. OCR Extraction (`src/ocr/`)
 
 The OCR step is a Python package with four modules:
 
@@ -147,15 +147,15 @@ ocr/<book>/<model>/<NNNN>-<YYYYMMDD>-<HHMM>/
 - `load_run_state()` / `save_run_state()` — read/write `run_state.json`
 - `find_pending_runs()` — finds runs with non-completed status (used by batch status)
 
-### 4. Review (`scripts/review.py`)
+### 4. Review (`src/review.py`)
 
 Copies JSONL files from `ocr/<book>/<model>/<run>/extracted/` to `review/<book>/` (flat, no model subfolder). Requires `--run` to specify which run folder to copy from. Prompts for confirmation (`y/N`) before erasing existing content. Reports go to `reports/<book>/review.md`.
 
-### 5. Evaluate (`scripts/evaluate.py`)
+### 5. Evaluate (`src/evaluate.py`)
 
 Computes WER and CER against manually corrected human references in `error_rates/<book>/human_reference/`. Reports metrics per page, per language (Breton and French).
 
-### 6. Corpus Build (`scripts/corpus.py`)
+### 6. Corpus Build (`src/corpus.py`)
 
 Reads per-page JSONL from `review/<book>/` (after human correction), deduplicates exact `{breton, français}` pairs, and writes a single `corpus/<book>.jsonl` per book.
 

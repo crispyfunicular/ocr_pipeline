@@ -122,6 +122,7 @@ Skip this section entirely if no files under `prompts/` are modified.
 - [ ] Are CLI examples up-to-date and copy-paste ready?
 - [ ] Are options/flags documented consistently with `--help` output?
 - [ ] Does ARCHITECTURE.md data flow diagram reflect the current pipeline?
+- [ ] Does README.md usage section cover new CLI flags, subcommands, or changed defaults?
 
 ### 3. Cross-check with project context
 
@@ -138,11 +139,11 @@ source .venv/bin/activate && python -m py_compile pipeline.py 2>&1
 ```
 
 ```bash
-for f in scripts/*.py scripts/ocr/*.py; do python -m py_compile "$f" 2>&1; done
+for f in src/*.py src/ocr/*.py; do python -m py_compile "$f" 2>&1; done
 ```
 
 ```bash
-black --check pipeline.py scripts/ tests/ 2>&1
+black --check pipeline.py src/ tests/ 2>&1
 ```
 
 ### 5. Run unit tests

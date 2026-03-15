@@ -68,13 +68,13 @@ pdfs/ → extract → pages/ → enhance → pages_enhanced/ → ocr → ocr/<bo
 
 | # | Stage | Input | Output | Script | Description |
 |---|-------|-------|--------|--------|-------------|
-| 1 | **extract** | `pdfs/` | `pages/<book>/` | `scripts/extract.py` | Render PDF pages as 300 DPI PNGs |
-| 2 | **enhance** | `pages/<book>/` | `pages_enhanced/<book>/` | `scripts/enhance.py` | Copy pages (no-op by default) or apply opt-in enhancements |
-| 3 | **ocr** | `pages_enhanced/<book>/` | `ocr/<book>/<model>/<run>/` | `scripts/ocr/` | VLM-based bilingual text extraction |
-| 4 | **review** | `ocr/<book>/<model>/<run>/extracted/` | `review/<book>/` + `reports/<book>/` | `scripts/review.py` | Copy JSONL to review folder + quality assurance |
-| 5 | **diff** | `ocr/`, `review/` | stdout | `scripts/diff.py` | Compare two JSONL directories/files to see human corrections |
-| 6 | **evaluate** | `error_rates/<book>/` | stdout | `scripts/evaluate.py` | Compute WER & CER against human reference |
-| 7 | **corpus** | `review/<book>/` | `corpus/<book>.jsonl` | `scripts/corpus.py` | Deduplicate and merge reviewed JSONL into one file per book |
+| 1 | **extract** | `pdfs/` | `pages/<book>/` | `src/extract.py` | Render PDF pages as 300 DPI PNGs |
+| 2 | **enhance** | `pages/<book>/` | `pages_enhanced/<book>/` | `src/enhance.py` | Copy pages (no-op by default) or apply opt-in enhancements |
+| 3 | **ocr** | `pages_enhanced/<book>/` | `ocr/<book>/<model>/<run>/` | `src/ocr/` | VLM-based bilingual text extraction |
+| 4 | **review** | `ocr/<book>/<model>/<run>/extracted/` | `review/<book>/` + `reports/<book>/` | `src/review.py` | Copy JSONL to review folder + quality assurance |
+| 5 | **diff** | `ocr/`, `review/` | stdout | `src/diff.py` | Compare two JSONL directories/files to see human corrections |
+| 6 | **evaluate** | `error_rates/<book>/` | stdout | `src/evaluate.py` | Compute WER & CER against human reference |
+| 7 | **corpus** | `review/<book>/` | `corpus/<book>.jsonl` | `src/corpus.py` | Deduplicate and merge reviewed JSONL into one file per book |
 
 ## Pipeline Usage
 
@@ -110,7 +110,7 @@ python pipeline.py extract pdfs/my_book.pdf           # One specific PDF
 python pipeline.py extract pdfs/a.pdf pdfs/b.pdf      # Multiple PDFs
 
 # Direct script usage with extra options
-python scripts/extract.py --dpi 400 pdfs/my_book.pdf
+python src/extract.py --dpi 400 pdfs/my_book.pdf
 ```
 
 ---
@@ -153,7 +153,7 @@ python pipeline.py enhance my_book                                # One book
 python pipeline.py enhance pages/my_book/05.png                   # Single image
 
 # Direct script usage
-python scripts/enhance.py --classical --binarize --upscale
+python src/enhance.py --classical --binarize --upscale
 ```
 
 ---
@@ -209,6 +209,8 @@ python pipeline.py ocr --model gemini-3.1-pro           # Google Gemini
 python pipeline.py ocr pages/my_book/05.png             # Single image
 python pipeline.py ocr --debug pages/my_book/05.png     # Show full prompts & response
 python pipeline.py ocr --limit 5 my_book                # Random sample of 5 pages
+python pipeline.py ocr --book-prompt prompts/my_book-next.md my_book   # Test a new book prompt
+python pipeline.py ocr --main-prompt prompts/extract_bilingual_corpus-next.md  # Test a new base prompt
 ```
 
 ### Cost Estimation
@@ -240,6 +242,8 @@ Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to 
 | `daniel_ker_vreiz_1944.md` | Vocabulary with pronunciation, LENNADENN exclusions |
 
 > **Adding a new book:** Create `prompts/<book_folder_name>.md` following the same structure. The OCR stage picks it up automatically based on folder name.
+
+> **Testing prompt changes:** To iterate on a prompt without losing existing run data, copy it to a `-next.md` variant (e.g. `prompts/my_book-next.md`) and pass it via `--book-prompt` or `--main-prompt`. The prompt hash changes automatically, so a new run folder is created.
 
 ---
 
@@ -331,7 +335,7 @@ python pipeline.py corpus -o /tmp/my_corpus                  # Custom output dir
 ├── setup.sh                 # Environment setup script
 ├── requirements.txt         # Core Python dependencies
 ├── requirements-enhance.txt # Enhancement deps (installed with --with-enhance)
-├── scripts/
+├── src/
 │   ├── utils.py             # Shared helpers (types, parsing, target discovery)
 │   ├── extract.py           # PDF → PNG extraction
 │   ├── enhance.py           # Image enhancement (DocRes + PreP-OCR + CLAHE)
