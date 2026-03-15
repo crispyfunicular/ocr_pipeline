@@ -122,6 +122,7 @@ Skip this section entirely if no files under `prompts/` are modified.
 - [ ] Are CLI examples up-to-date and copy-paste ready?
 - [ ] Are options/flags documented consistently with `--help` output?
 - [ ] Does ARCHITECTURE.md data flow diagram reflect the current pipeline?
+- [ ] Does README.md usage section cover new CLI flags, subcommands, or changed defaults?
 
 ### 3. Cross-check with project context
 

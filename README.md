@@ -209,6 +209,8 @@ python pipeline.py ocr --model gemini-3.1-pro           # Google Gemini
 python pipeline.py ocr pages/my_book/05.png             # Single image
 python pipeline.py ocr --debug pages/my_book/05.png     # Show full prompts & response
 python pipeline.py ocr --limit 5 my_book                # Random sample of 5 pages
+python pipeline.py ocr --book-prompt prompts/my_book-next.md my_book   # Test a new book prompt
+python pipeline.py ocr --main-prompt prompts/extract_bilingual_corpus-next.md  # Test a new base prompt
 ```
 
 ### Cost Estimation
@@ -240,6 +242,8 @@ Each book has a dedicated prompt file in `prompts/` that teaches the LLM how to 
 | `daniel_ker_vreiz_1944.md` | Vocabulary with pronunciation, LENNADENN exclusions |
 
 > **Adding a new book:** Create `prompts/<book_folder_name>.md` following the same structure. The OCR stage picks it up automatically based on folder name.
+
+> **Testing prompt changes:** To iterate on a prompt without losing existing run data, copy it to a `-next.md` variant (e.g. `prompts/my_book-next.md`) and pass it via `--book-prompt` or `--main-prompt`. The prompt hash changes automatically, so a new run folder is created.
 
 ---
 
