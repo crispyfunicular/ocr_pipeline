@@ -1,20 +1,22 @@
 # AGENTS.md — OCR Pipeline
 
-> Context file for AI coding assistants/agents
+> Quick-reference for AI coding assistants. For full system architecture, data flow, and stage details, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Project Purpose
 
 Extract bilingual Breton-French parallel corpora from scanned old books. The pipeline processes PDFs through several stages to produce structured JSONL output.
 
-## Pipeline Architecture
+## Pipeline Overview
 
 ```
 PDFs (pdfs/)
   └── src/extract.py ──→ Raw PNGs (pages/<book>/)
         └── src/enhance.py ──→ Enhanced PNGs (pages_enhanced/<book>/)
-              └── src/ocr/ ──→ ocr/<book>/<model>/<run>/extracted/*.jsonl
+              └── src/ocr/ ──→ ocr/<book>/<model[-think-level]>/<run>/extracted/*.jsonl
               │     ├── __init__.py  ← unified CLI (--batch flag routes to batch)
               │     ├── core.py      ← shared infra + run-folder management
+              │     ├── providers.py  ← VLM clients, retry, API wrappers
+              │     ├── reports.py   ← report template + helpers
               │     ├── sync.py      ← page-by-page VLM processing
               │     └── batch.py     ← Gemini Batch API (async, 50% cost)
               └── src/review.py ──→ Quality-assured JSONL
@@ -39,36 +41,19 @@ PDFs (pdfs/)
 
 All scripts also work standalone: `python -m src.ocr --help`
 
-## Key Design Decisions
+## Conventions & Gotchas (Agent-Specific)
 
-- **`main(argv=None)`** pattern: each script's `main()` accepts an optional argv list. When None, falls back to `sys.argv`. This allows both standalone and pipeline use.
-- **One step = one module**: pipeline steps are either single `.py` files or packages (a directory with `__init__.py`). The OCR step is `src/ocr/` because it's large enough to warrant a package split.
+These are patterns and pitfalls that AI agents must follow when editing this codebase:
+
+- **`main(argv=None)` pattern**: every pipeline module's `main()` accepts an optional argv list. When `None`, falls back to `sys.argv`. Always pass `[]` (empty list) for "no args" — never `None`.
+- **One step = one module**: pipeline steps are either single `.py` files or packages (a directory with `__init__.py`).
 - **Consistent positional `targets`**: all subcommands accept targets as positional args (PDFs for extract, book folder names or image paths for others).
+- **Consistent `-o`/`--output`**: all stages accept `-o`/`--output` for overriding the output directory.
 - **Sanitized folder names** (`pdf_stem()`) are the thread between stages: the same name flows from `pages/` to `pages_enhanced/` to `ocr/<book>/<model>/`.
-- **Important**: when calling `main(argv)`, always pass `[]` (empty list) for "no args" — never `None` (which means "use sys.argv").
-- **`enhance_image()`** is the core enhancement function (CLAHE + optional DocRes). Accepts single images or batch via `process_book()`.
-- **Default JPEG output**: Enhanced images are JPEG quality 85 by default (configurable via `--format` and `--jpeg-quality`). Use `--format png` for lossless output. JPEG provides ~5× disk savings over PNG with negligible OCR quality impact.
-- **`--thinking` level**: Controls Gemini reasoning depth via `ThinkingConfig`. Choices: `default` (model decides), `off`, `minimal`, `low`, `medium`, `high`. Non-default values append `-think-<level>` to the model directory name (e.g., `gemini-3.1-pro-preview-think-high/`) and affect the prompt hash for separate run folders. Silently ignored for non-Gemini providers. Stored in `run_state.json`.
-- **`model_dir_name()`**: Core helper that builds the model directory name, appending `-think-<level>` suffix when a non-default thinking level is set.
-- **`discover_images()`**: Shared helper in `utils.py` that finds all images in a directory matching `IMAGE_EXTENSIONS`. Replaces hardcoded `*.png` globs across all pipeline stages.
-- **`mime_type_for_image()`**: Shared helper in `utils.py` that maps file extensions to MIME types. Used by OCR API calls (OpenAI, Anthropic, Gemini) to send the correct `media_type` for both PNG and JPEG inputs.
-- **Unified run-folder structure**: Both sync and batch OCR output to `ocr/<book>/<model>/<NNNN>-<YYYYMMDD>-<HHMM>/` containing `prompt.md`, `run_state.json`, `extracted/*.jsonl`, and `reports/extraction/`. The `<NNNN>` counter is 4-digit zero-padded and auto-incrementing.
-- **Prompt-hash reuse**: `src/ocr/core.py` computes a SHA-256 hash (first 8 hex) of the full prompt (system + global + book). If the hash matches an existing run folder (including completed ones), that folder is reused — the caller detects all pages are done and skips. A hash change triggers a new run folder.
-- **`run_state.json`**: Tracks run metadata (prompt hash, model, book, mode, status, processed pages, batch job info).
-- **Per-page reports**: Each page gets an individual extraction report at `reports/extraction/XX.md` alongside the summary `reports/extraction/report.md`.
-- **Consistent `-o`/`--output`**: all stages accept `-o`/`--output` for overriding the output directory. When passed, bypasses the run-folder structure entirely.
-- **`--main-prompt` / `--book-prompt`**: optional CLI flags to override the system or book-specific prompt file paths. The prompt hash is computed from whatever prompts are actually used, so different prompt versions get separate run folders automatically.
-- **`--debug` mode**: prints full system/user prompts and raw LLM responses to stdout for troubleshooting.
-- **Report metadata**: reports include per-image date, model, response time, and estimated cost (based on `MODEL_PRICING` dict). Synthèse shows total time and cost.
-- **`parse_vlm_response()`**: shared response parser in `src/ocr/core.py` that extracts `=== JSONL ===` and `=== RAPPORT ===` blocks from raw VLM text. Used by both synchronous and batch OCR paths.
-- **File API deduplication**: batch mode lists existing Gemini File API uploads by `display_name` (`ocr/<book>/<page>`) and skips re-uploading unchanged images. Uploads expire after 48h.
-- **Retry with backoff**: `_retry_api_call()` in `core.py` wraps all VLM API calls with exponential backoff + jitter. Retries on 429 (rate limit), 5xx (server errors), and connection issues. Max 3 retries.
-- **Quota exhaustion abort**: `sync.py` detects daily quota errors (RESOURCE_EXHAUSTED / quota exceeded) via `is_quota_error()` and aborts immediately with state flush — no empty JSONL files are created, so pages are retried on resume.
-- **No empty JSONL on error**: API failures do not create empty `.jsonl` files. Only successful extractions (including those with 0 pairs) produce output files. This ensures failed pages are automatically retried.
-- **Typed return contracts**: `ParsedResponse` and `VLMResult` TypedDicts in `core.py` formalize the return types of `parse_vlm_response()` and `process_single_image()`.
-- **`MAX_COMPLETION_TOKENS`**: module-level constant (4000) used by all three API callers. Centralizes token budget.
-- **`--seed`**: optional CLI flag for reproducible `--limit` random sampling across sync and batch modes.
-- **`src/utils.py`**: Shared module for DRY code: `ReportRow` TypedDict, `SummaryStats` dataclass, parsing helpers (`safe_int`, `safe_float`), formatting (`format_cost`), JSONL I/O (`write_jsonl`, `count_jsonl_pairs`), target discovery (`discover_targets`), and error detection (`is_auth_error`, `is_quota_error`). Imported by `src/ocr/` and `src/enhance.py`.
+- **`model_dir_name()`**: always use this helper when building model directory paths — it handles the `-think-<level>` suffix.
+- **No empty JSONL on error**: API failures must not create empty `.jsonl` files. Only successful extractions produce output. This ensures failed pages are automatically retried on resume.
+- **Typed return contracts**: `ParsedResponse` and `VLMResult` TypedDicts in `core.py` formalize return types — keep them in sync if changing function signatures.
+- **`[] or None` bug pattern**: never write `argv or None` — use explicit `is None` checks. `[]` is falsy in Python.
 
 ## Environment
 

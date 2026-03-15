@@ -49,7 +49,7 @@ OCR_pipeline/
 ├── pages_enhanced/          ← DocRes-enhanced PNGs
 ├── ocr/                     ← OCR output (unified run-folder structure)
 │   └── <book>/
-│       └── <model>/
+│       └── <model[-think-level]>/
 │           └── <NNNN>-<YYYYMMDD>-<HHMM>/  ← Run folder
 │               ├── prompt.md
 │               ├── run_state.json
