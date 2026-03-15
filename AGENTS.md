@@ -32,6 +32,7 @@ PDFs (pdfs/)
 | `python pipeline.py ocr [book ...] --batch [--model X] [--limit N]` | Submit OCR via Gemini Batch API (async, 50% cost) |
 | `python pipeline.py ocr ... --book-prompt prompts/X-next.md` | Test a different book prompt version |
 | `python pipeline.py ocr ... --main-prompt prompts/extract_bilingual_corpus-next.md` | Test a different main prompt version |
+| `python pipeline.py ocr ... --thinking high` | Control Gemini thinking level (off/minimal/low/medium/high) |
 | `python pipeline.py batch_status [book ...] [--wait] [--cancel]` | Check / collect Gemini Batch API results |
 | `python pipeline.py review [book ...] --run <folder> [--model X]` | JSONL QA (requires explicit `--run`) |
 | `python pipeline.py corpus [book ...] [-o dir]` | Final corpus merge (stub) |
@@ -47,6 +48,8 @@ All scripts also work standalone: `python -m src.ocr --help`
 - **Important**: when calling `main(argv)`, always pass `[]` (empty list) for "no args" — never `None` (which means "use sys.argv").
 - **`enhance_image()`** is the core enhancement function (CLAHE + optional DocRes). Accepts single images or batch via `process_book()`.
 - **Default JPEG output**: Enhanced images are JPEG quality 85 by default (configurable via `--format` and `--jpeg-quality`). Use `--format png` for lossless output. JPEG provides ~5× disk savings over PNG with negligible OCR quality impact.
+- **`--thinking` level**: Controls Gemini reasoning depth via `ThinkingConfig`. Choices: `default` (model decides), `off`, `minimal`, `low`, `medium`, `high`. Non-default values append `-think-<level>` to the model directory name (e.g., `gemini-3.1-pro-preview-think-high/`) and affect the prompt hash for separate run folders. Silently ignored for non-Gemini providers. Stored in `run_state.json`.
+- **`model_dir_name()`**: Core helper that builds the model directory name, appending `-think-<level>` suffix when a non-default thinking level is set.
 - **`discover_images()`**: Shared helper in `utils.py` that finds all images in a directory matching `IMAGE_EXTENSIONS`. Replaces hardcoded `*.png` globs across all pipeline stages.
 - **`mime_type_for_image()`**: Shared helper in `utils.py` that maps file extensions to MIME types. Used by OCR API calls (OpenAI, Anthropic, Gemini) to send the correct `media_type` for both PNG and JPEG inputs.
 - **Unified run-folder structure**: Both sync and batch OCR output to `ocr/<book>/<model>/<NNNN>-<YYYYMMDD>-<HHMM>/` containing `prompt.md`, `run_state.json`, `extracted/*.jsonl`, and `reports/extraction/`. The `<NNNN>` counter is 4-digit zero-padded and auto-incrementing.
@@ -88,7 +91,7 @@ All scripts also work standalone: `python -m src.ocr --help`
   - `batch.py` — Gemini Batch API: submit, poll, collect
   - `__init__.py` — Unified `main()` entry point with `--batch` flag
   - `__main__.py` — Enables `python -m src.ocr`
-- `tests/test_ocr_core.py` — Unit tests for OCR core pure functions (33 tests)
+- `tests/test_ocr_core.py` — Unit tests for OCR core pure functions (42 tests)
 - `tests/test_extract.py` — Unit tests for PDF extraction: `pdf_stem`, `extract_pages`, droplist, CLI (9 tests)
 - `tests/test_enhance.py` — Unit tests for enhance copy/compress: no-op copy, JPEG/PNG output, quality, droplist, pure helpers (17 tests)
 - `ocr/<book>/<model>/<run>/reports/extraction/report.md` — Auto-generated extraction quality reports

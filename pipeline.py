@@ -122,6 +122,8 @@ def cmd_ocr(args):
         argv.extend(["--main-prompt", str(args.main_prompt)])
     if getattr(args, "book_prompt", None) is not None:
         argv.extend(["--book-prompt", str(args.book_prompt)])
+    if getattr(args, "thinking", None) is not None:
+        argv.extend(["--thinking", args.thinking])
     if args.targets:
         argv.extend(list(args.targets))
     return ocr_main(argv)
@@ -156,16 +158,18 @@ def _cmd_ocr_batch(args):
             debug=getattr(args, "debug", False),
             main_prompt=getattr(args, "main_prompt", None),
             book_prompt=getattr(args, "book_prompt", None),
+            thinking=getattr(args, "thinking", None),
         )
 
 
 def cmd_batch_status(args):
     """Check status of Gemini Batch API jobs."""
     from src.ocr.batch import check_batch_status
-    from src.ocr.core import find_pending_runs, DEFAULT_MODEL
+    from src.ocr.core import find_pending_runs, DEFAULT_MODEL, model_dir_name
 
     ocr_root = Path(args.output) if args.output else PROJECT_ROOT / "ocr"
     model = args.model or DEFAULT_MODEL
+    thinking = getattr(args, "thinking", None)
 
     if args.targets:
         books = list(args.targets)
@@ -176,7 +180,7 @@ def cmd_batch_status(args):
             for book_dir in sorted(ocr_root.iterdir()):
                 if not book_dir.is_dir():
                     continue
-                model_dir = book_dir / model
+                model_dir = book_dir / model_dir_name(model, thinking)
                 if find_pending_runs(model_dir, mode="batch"):
                     books.append(book_dir.name)
         if not books:
@@ -191,6 +195,7 @@ def cmd_batch_status(args):
             ocr_root=ocr_root,
             wait=getattr(args, "wait", False),
             cancel=getattr(args, "cancel", False),
+            thinking=getattr(args, "thinking", None),
         )
 
 
@@ -583,6 +588,12 @@ Examples:
         default=None,
         help="Override the book-specific prompt file (default: auto-detected from book name).",
     )
+    p_ocr.add_argument(
+        "--thinking",
+        choices=["default", "off", "minimal", "low", "medium", "high"],
+        default=None,
+        help="Gemini thinking level (default: model decides). Only affects Gemini models.",
+    )
     p_ocr.set_defaults(func=cmd_ocr)
 
     # --- batch_status ---
@@ -607,6 +618,12 @@ Examples:
         "--cancel",
         action="store_true",
         help="Cancel the running batch job.",
+    )
+    p_batch.add_argument(
+        "--thinking",
+        choices=["default", "off", "minimal", "low", "medium", "high"],
+        default=None,
+        help="Gemini thinking level (must match the level used during submission).",
     )
     p_batch.set_defaults(func=cmd_batch_status)
 

@@ -28,6 +28,7 @@ from src.ocr.core import (
     DEFAULT_MODEL,
     PROJECT_ROOT,
     SINGLE_IMAGE_PROMPT,
+    THINKING_LEVELS,
     compute_prompt_hash,
     detect_provider,
     estimate_cost,
@@ -37,6 +38,7 @@ from src.ocr.core import (
     get_book_prompt,
     get_workflow_prompt,
     load_run_state,
+    model_dir_name,
     parse_vlm_response,
     reports_extraction_dir,
     save_run_state,
@@ -124,6 +126,7 @@ def submit_batch_job(
     debug: bool = False,
     main_prompt: Path | None = None,
     book_prompt: Path | None = None,
+    thinking: str | None = None,
 ) -> str | None:
     """Submit a whole book as a Gemini Batch API job.
 
@@ -143,7 +146,7 @@ def submit_batch_job(
 
     if ocr_root is None:
         ocr_root = PROJECT_ROOT / "ocr"
-    model_dir = ocr_root / book / model
+    model_dir = ocr_root / book / model_dir_name(model, thinking)
 
     # Build the full prompt first (needed for hash)
     global_prompt = get_workflow_prompt(path=main_prompt)
@@ -193,7 +196,12 @@ def submit_batch_job(
 
     # Create or reuse run folder
     run_dir = find_or_create_run_folder(
-        model_dir, book, model, system_prompt, mode="batch"
+        model_dir,
+        book,
+        model,
+        system_prompt,
+        mode="batch",
+        thinking=thinking,
     )
 
     print(f"\n📦 Batch submission for {book}")
@@ -240,6 +248,17 @@ def submit_batch_job(
                 "temperature": 0,
             },
         }
+
+        # Add thinking config to batch request if specified
+        if thinking and thinking != "default":
+            if thinking == "off":
+                request["config"]["thinking_config"] = {"thinking_budget": 0}
+            else:
+                level_name = THINKING_LEVELS.get(thinking)
+                if level_name:
+                    request["config"]["thinking_config"] = {
+                        "thinking_level": level_name
+                    }
         inline_requests.append(request)
         page_key_map[str(idx)] = page_stem
         page_extensions[page_stem] = img.suffix
@@ -281,7 +300,7 @@ def submit_batch_job(
             "job_name": job_name,
             "model": model,
             "book": book,
-            "prompt_hash": compute_prompt_hash(system_prompt),
+            "prompt_hash": compute_prompt_hash(system_prompt, thinking=thinking),
             "submitted_at": datetime.now(timezone.utc).isoformat(),
             "updated_at": datetime.now(timezone.utc).isoformat(),
             "total_pages": total_pages,
@@ -313,6 +332,7 @@ def check_batch_status(
     wait: bool = False,
     cancel: bool = False,
     poll_interval: int = 30,
+    thinking: str | None = None,
 ) -> str | None:
     """Check the status of a batch job, optionally waiting for completion.
 
@@ -322,7 +342,7 @@ def check_batch_status(
 
     if ocr_root is None:
         ocr_root = PROJECT_ROOT / "ocr"
-    model_dir = ocr_root / book / model
+    model_dir = ocr_root / book / model_dir_name(model, thinking)
 
     pending = find_pending_runs(model_dir, mode="batch")
     if not pending:
@@ -639,4 +659,5 @@ def run_batch(args) -> None:
             debug=args.debug,
             main_prompt=getattr(args, "main_prompt", None),
             book_prompt=getattr(args, "book_prompt", None),
+            thinking=getattr(args, "thinking", None),
         )

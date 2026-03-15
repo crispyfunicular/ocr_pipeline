@@ -16,6 +16,7 @@ from src.ocr.core import (
     compute_prompt_hash,
     detect_provider,
     estimate_cost,
+    model_dir_name,
     find_or_create_run_folder,
     list_run_folders,
     load_run_state,
@@ -65,6 +66,60 @@ class TestComputePromptHash(unittest.TestCase):
         h1 = compute_prompt_hash("prompt A")
         h2 = compute_prompt_hash("prompt B")
         self.assertNotEqual(h1, h2)
+
+    def test_thinking_changes_hash(self):
+        h1 = compute_prompt_hash("prompt")
+        h2 = compute_prompt_hash("prompt", thinking="high")
+        self.assertNotEqual(h1, h2)
+
+    def test_thinking_default_same_as_none(self):
+        h1 = compute_prompt_hash("prompt")
+        h2 = compute_prompt_hash("prompt", thinking="default")
+        self.assertEqual(h1, h2)
+
+    def test_thinking_none_same_as_omitted(self):
+        h1 = compute_prompt_hash("prompt")
+        h2 = compute_prompt_hash("prompt", thinking=None)
+        self.assertEqual(h1, h2)
+
+
+# ── model_dir_name ──────────────────────────────────────────────
+
+
+class TestModelDirName(unittest.TestCase):
+    def test_default_no_suffix(self):
+        self.assertEqual(
+            model_dir_name("gemini-3.1-pro-preview"), "gemini-3.1-pro-preview"
+        )
+
+    def test_none_no_suffix(self):
+        self.assertEqual(
+            model_dir_name("gemini-3.1-pro-preview", None), "gemini-3.1-pro-preview"
+        )
+
+    def test_default_value_no_suffix(self):
+        self.assertEqual(
+            model_dir_name("gemini-3.1-pro-preview", "default"),
+            "gemini-3.1-pro-preview",
+        )
+
+    def test_high_thinking(self):
+        self.assertEqual(
+            model_dir_name("gemini-3.1-pro-preview", "high"),
+            "gemini-3.1-pro-preview-think-high",
+        )
+
+    def test_off_thinking(self):
+        self.assertEqual(
+            model_dir_name("gemini-3.1-pro-preview", "off"),
+            "gemini-3.1-pro-preview-think-off",
+        )
+
+    def test_minimal_thinking(self):
+        self.assertEqual(
+            model_dir_name("gemini-3.1-pro-preview", "minimal"),
+            "gemini-3.1-pro-preview-think-minimal",
+        )
 
 
 # ── estimate_cost ────────────────────────────────────────────────

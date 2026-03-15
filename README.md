@@ -211,6 +211,7 @@ python pipeline.py ocr --debug pages/my_book/05.png     # Show full prompts & re
 python pipeline.py ocr --limit 5 my_book                # Random sample of 5 pages
 python pipeline.py ocr --book-prompt prompts/my_book-next.md my_book   # Test a new book prompt
 python pipeline.py ocr --main-prompt prompts/extract_bilingual_corpus-next.md  # Test a new base prompt
+python pipeline.py ocr --thinking high my_book              # Deep reasoning (Gemini only)
 ```
 
 ### Cost Estimation

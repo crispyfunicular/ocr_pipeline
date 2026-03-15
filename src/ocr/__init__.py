@@ -78,6 +78,12 @@ def main(argv=None):
         default=None,
         help="Override the book-specific prompt file (default: auto-detected from book name).",
     )
+    parser.add_argument(
+        "--thinking",
+        choices=["default", "off", "minimal", "low", "medium", "high"],
+        default=None,
+        help="Gemini thinking level (default: model decides). Only affects Gemini models.",
+    )
     args = parser.parse_args(argv)
 
     if args.batch:
