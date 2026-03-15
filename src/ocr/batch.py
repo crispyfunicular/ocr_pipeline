@@ -637,6 +637,6 @@ def run_batch(args) -> None:
             ocr_root=ocr_root,
             limit=args.limit,
             debug=args.debug,
-            main_prompt=getattr(args, 'main_prompt', None),
-            book_prompt=getattr(args, 'book_prompt', None),
+            main_prompt=getattr(args, "main_prompt", None),
+            book_prompt=getattr(args, "book_prompt", None),
         )

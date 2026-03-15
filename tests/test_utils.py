@@ -13,9 +13,7 @@ class TestIsAuthError(unittest.TestCase):
         self.assertTrue(is_auth_error("Authentication failed for user"))
 
     def test_quota_is_not_auth(self):
-        self.assertFalse(
-            is_auth_error("429 RESOURCE_EXHAUSTED. quota exceeded")
-        )
+        self.assertFalse(is_auth_error("429 RESOURCE_EXHAUSTED. quota exceeded"))
 
     def test_normal_error_is_not_auth(self):
         self.assertFalse(is_auth_error("500 Internal Server Error"))
