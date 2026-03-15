@@ -43,6 +43,30 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 DEFAULT_MODEL = "gemini-3.1-pro-preview"
 MAX_COMPLETION_TOKENS = 4000
 
+# Valid thinking levels for Gemini models.
+# Maps CLI values to google.genai ThinkingLevel enum names (resolved at call time).
+THINKING_LEVELS = {
+    "off": None,  # thinkingBudget=0 (no thinking)
+    "minimal": "MINIMAL",
+    "low": "LOW",
+    "medium": "MEDIUM",
+    "high": "HIGH",
+}
+
+
+def model_dir_name(model: str, thinking: str | None = None) -> str:
+    """Build model directory name, appending thinking suffix when non-default.
+
+    Examples:
+        >>> model_dir_name("gemini-3.1-pro-preview")
+        'gemini-3.1-pro-preview'
+        >>> model_dir_name("gemini-3.1-pro-preview", "high")
+        'gemini-3.1-pro-preview-think-high'
+    """
+    if thinking and thinking != "default":
+        return f"{model}-think-{thinking}"
+    return model
+
 
 class ParsedResponse(TypedDict):
     """Structured fields extracted from a VLM response."""
@@ -291,12 +315,19 @@ REPORTS_EXTRACTION_DIR = "reports/extraction"
 RUN_FOLDER_RE = re.compile(r"^(\d{4})-(\d{8})-(\d{4})$")
 
 
-def compute_prompt_hash(prompt_text: str) -> str:
-    """Compute a short hash of the full prompt text.
+def compute_prompt_hash(prompt_text: str, *, thinking: str | None = None) -> str:
+    """Compute a short hash of the full prompt text + config modifiers.
+
+    When ``thinking`` is set (not None/default), it is appended to the
+    prompt text before hashing so different thinking levels produce
+    separate run folders.
 
     Returns the first 8 hex characters of the SHA-256 digest.
     """
-    return hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()[:8]
+    blob = prompt_text
+    if thinking and thinking != "default":
+        blob += f"\n__thinking={thinking}"
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:8]
 
 
 def _parse_run_number(name: str) -> int | None:
@@ -363,6 +394,8 @@ def find_or_create_run_folder(
     prompt_text: str,
     *,
     mode: str = "sync",
+    thinking: str | None = None,
+    temperature: float = 0,
 ) -> Path:
     """Find an existing run folder with matching prompt hash, or create a new one.
 
@@ -376,11 +409,13 @@ def find_or_create_run_folder(
         model: Model name.
         prompt_text: Full concatenated prompt (system + global + book).
         mode: ``"sync"`` or ``"batch"``.
+        thinking: Gemini thinking level (None/default omitted from state).
+        temperature: Temperature value stored in run_state.
 
     Returns:
         Path to the run folder (created if new).
     """
-    prompt_hash = compute_prompt_hash(prompt_text)
+    prompt_hash = compute_prompt_hash(prompt_text, thinking=thinking)
 
     # Scan existing folders for a matching prompt hash
     for run_dir in reversed(list_run_folders(model_dir)):
@@ -406,10 +441,13 @@ def find_or_create_run_folder(
         "book": book,
         "mode": mode,
         "status": "in_progress",
+        "temperature": temperature,
         "created_at": datetime.now(timezone.utc).isoformat(),
         "updated_at": datetime.now(timezone.utc).isoformat(),
         "processed_pages": [],
     }
+    if thinking and thinking != "default":
+        state["thinking"] = thinking
     save_run_state(run_dir, state)
 
     # Write full prompt snapshot

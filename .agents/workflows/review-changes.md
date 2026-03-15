@@ -124,11 +124,28 @@ Skip this section entirely if no files under `prompts/` are modified.
 - [ ] Does ARCHITECTURE.md data flow diagram reflect the current pipeline?
 - [ ] Does README.md usage section cover new CLI flags, subcommands, or changed defaults?
 
+**AGENTS.md vs ARCHITECTURE.md separation** — these two docs serve different audiences and must not duplicate each other:
+
+| | **AGENTS.md** | **ARCHITECTURE.md** |
+|---|---|---|
+| **Audience** | AI coding assistants/agents | Humans (developers, contributors) |
+| **Purpose** | Quick-reference cheat sheet for editing the code safely | Complete system design documentation |
+| **Contains** | Entry points table, coding conventions & gotchas, environment setup, file map | Data flow diagrams, stage-by-stage details, schema definitions, quality metrics, roadmap |
+| **Tone** | Imperative rules ("always do X", "never do Y") | Descriptive documentation ("the system does X") |
+
+Rules for keeping them clean:
+
+- [ ] **No system details in AGENTS.md**: AGENTS.md should never describe *how* a feature works internally (e.g., batch API flow, ThinkingConfig wiring). Cross-reference ARCHITECTURE.md instead.
+- [ ] **No agent gotchas in ARCHITECTURE.md**: ARCHITECTURE.md should not contain agent-specific warnings like "always pass `[]` not `None`". Those belong in AGENTS.md.
+- [ ] **Facts live in one place**: if a fact (e.g., run_state.json schema, folder naming convention) is documented in ARCHITECTURE.md, AGENTS.md should reference it, not restate it.
+- [ ] **Entry points table is AGENTS.md-only**: the CLI command table with copy-paste examples lives in AGENTS.md (and README.md for users). ARCHITECTURE.md describes the stages conceptually.
+- [ ] **Test counts in AGENTS.md are accurate**: when adding tests, update the counts in AGENTS.md's Important Files section.
+
 ### 3. Cross-check with project context
 
 - Read ARCHITECTURE.md and AGENTS.md
 - Verify the change aligns with documented patterns
-- Check if any of these docs need updating
+- Check if any of these docs need updating, respecting the separation rules above
 
 ### 4. Lint and syntax check
 

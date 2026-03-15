@@ -34,6 +34,8 @@ OCR_pipeline/
 │   ├── ocr/                 ← VLM-based OCR extraction (package)
 │   │   ├── __init__.py      ← Unified CLI (--batch flag routes to batch)
 │   │   ├── core.py          ← Shared infra + run-folder management
+│   │   ├── providers.py     ← VLM client creation, retry logic, API call wrappers
+│   │   ├── reports.py       ← Report template, load/write helpers
 │   │   ├── sync.py          ← Page-by-page VLM processing
 │   │   └── batch.py         ← Gemini Batch API (async, 50% cost)
 │   ├── review.py            ← JSONL quality assurance
@@ -47,7 +49,7 @@ OCR_pipeline/
 ├── pages_enhanced/          ← DocRes-enhanced PNGs
 ├── ocr/                     ← OCR output (unified run-folder structure)
 │   └── <book>/
-│       └── <model>/
+│       └── <model[-think-level]>/
 │           └── <NNNN>-<YYYYMMDD>-<HHMM>/  ← Run folder
 │               ├── prompt.md
 │               ├── run_state.json
@@ -107,7 +109,9 @@ Comparison tool (`pipeline.py compare`):
 The OCR step is a Python package with four modules:
 
 - **`__init__.py`** — unified `main()` entry point; `--batch` flag routes to batch mode
-- **`core.py`** — shared infra: VLM clients, cost estimation, `parse_vlm_response()`, run-folder management (prompt hashing, folder discovery/creation, state I/O)
+- **`core.py`** — shared infra: constants, TypedDicts, cost estimation, `parse_vlm_response()`, run-folder management (prompt hashing, folder discovery/creation, state I/O)
+- **`providers.py`** — VLM client creation (`create_client()`), retry with backoff (`_retry_api_call()`), provider-specific API wrappers (`_call_openai`, `_call_anthropic`, `_call_google`), and unified `process_single_image()` entry point
+- **`reports.py`** — report template, `load_rapport()`, `write_rapport()`, `write_page_report()`
 - **`sync.py`** — synchronous page-by-page processing via `process_book_ocr()`
 - **`batch.py`** — Gemini Batch API: submit, poll, collect
 
@@ -117,8 +121,17 @@ The OCR step is a Python package with four modules:
 - Extracts breton/français pairs as JSONL
 - **Run-folder output**: `ocr/<book>/<model>/<NNNN>-<YYYYMMDD>-<HHMM>/` with `prompt.md`, `run_state.json`, `extracted/*.jsonl`, and `reports/extraction/`
 - **Prompt-hash reuse**: if the full prompt (system + global + book) hasn't changed, reuses the existing run folder and resumes processing. A prompt change creates a new run folder with incremented counter.
+- **Prompt overrides**: `--main-prompt` and `--book-prompt` CLI flags allow testing alternative prompts. The hash is computed from whichever prompts are used, so overrides get separate run folders automatically.
 - Override output with `-o`/`--output` (bypasses run-folder structure)
 - `parse_vlm_response()` — shared response parser for `=== JSONL ===` / `=== RAPPORT ===` blocks
+
+**Thinking level** (`--thinking`):
+- Controls Gemini reasoning depth via `ThinkingConfig`: `default` (model decides), `off`, `minimal`, `low`, `medium`, `high`
+- Non-default values append `-think-<level>` to the model directory name (e.g., `gemini-3.1-pro-preview-think-high/`)
+- Included in the prompt hash → different thinking levels get separate run folders
+- Stored in `run_state.json` alongside temperature
+- Silently ignored for non-Gemini providers (with a stderr warning)
+- `model_dir_name()` helper in `core.py` builds the directory name
 
 **Batch mode** (`--batch`):
 Asynchronous alternative using the **Gemini Batch API** at **50% cost**.
@@ -142,10 +155,28 @@ ocr/<book>/<model>/<NNNN>-<YYYYMMDD>-<HHMM>/
 **File API deduplication**: images are uploaded with `display_name=ocr/<book>/<page>`. Before re-uploading, existing uploads are checked by display name and reused if still active (files expire after 48h).
 
 **Run-folder management** (in `core.py`):
-- `compute_prompt_hash()` — SHA-256 first 8 hex chars of the full prompt text
+- `compute_prompt_hash()` — SHA-256 first 8 hex chars of the full prompt text (includes thinking level when non-default)
+- `model_dir_name()` — builds model directory name with optional `-think-<level>` suffix
 - `find_or_create_run_folder()` — scans existing run folders for matching prompt hash, reuses or creates new
 - `load_run_state()` / `save_run_state()` — read/write `run_state.json`
 - `find_pending_runs()` — finds runs with non-completed status (used by batch status)
+
+**`run_state.json` schema**:
+```json
+{
+  "prompt_hash": "0abf5b98",
+  "model": "gemini-3.1-pro-preview",
+  "book": "my_book",
+  "mode": "sync",
+  "status": "in_progress",
+  "temperature": 0,
+  "thinking": "high",
+  "created_at": "...",
+  "updated_at": "...",
+  "processed_pages": ["11", "17"]
+}
+```
+`thinking` is omitted when not explicitly set (default behavior). `temperature` defaults to 0.
 
 ### 4. Review (`src/review.py`)
 

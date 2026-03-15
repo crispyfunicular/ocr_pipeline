@@ -31,6 +31,7 @@ from src.ocr.core import (
     DEFAULT_MODEL,
     MAX_COMPLETION_TOKENS,
     SINGLE_IMAGE_PROMPT,
+    THINKING_LEVELS,
     VLMResult,
     detect_provider,
     encode_image,
@@ -207,15 +208,38 @@ def _call_anthropic(
 
 
 def _call_google(
-    client, model: str, workflow: str, user_text: str, b64: str, mime: str = "image/png"
+    client,
+    model: str,
+    workflow: str,
+    user_text: str,
+    b64: str,
+    mime: str = "image/png",
+    thinking: str | None = None,
 ) -> dict:
     """Call Google Gemini API. Returns normalized response dict."""
     image_bytes = base64.b64decode(b64)
 
-    config = _genai_types.GenerateContentConfig(
-        system_instruction=workflow,
-        temperature=0,
-    )
+    config_kwargs = {
+        "system_instruction": workflow,
+        "temperature": 0,
+    }
+
+    # Apply thinking config for Gemini models
+    if thinking and thinking != "default":
+        if thinking == "off":
+            config_kwargs["thinking_config"] = _genai_types.ThinkingConfig(
+                thinking_budget=0,
+            )
+        else:
+            level_name = THINKING_LEVELS.get(thinking)
+            if level_name:
+                from google.genai.types import ThinkingLevel
+
+                config_kwargs["thinking_config"] = _genai_types.ThinkingConfig(
+                    thinking_level=getattr(ThinkingLevel, level_name),
+                )
+
+    config = _genai_types.GenerateContentConfig(**config_kwargs)
 
     def _do_call():
         return client.models.generate_content(
@@ -245,6 +269,7 @@ def process_single_image(
     workflow: str,
     model: str = DEFAULT_MODEL,
     debug: bool = False,
+    thinking: str | None = None,
 ) -> VLMResult:
     """Send a single image to the VLM and parse the structured response."""
     b64 = encode_image(img_path)
@@ -252,9 +277,20 @@ def process_single_image(
     user_text = SINGLE_IMAGE_PROMPT.format(filename=img_path.name)
     provider = detect_provider(model)
 
+    # Warn if --thinking is set for a non-Gemini provider
+    if thinking and thinking != "default" and provider != "google":
+        import sys as _sys
+
+        print(
+            f"  ⚠️  --thinking is only supported for Gemini models (ignoring '{thinking}' for {provider})",
+            file=_sys.stderr,
+        )
+
     if debug:
         print(f"\n{'┄' * 60}")
         print(f"  🐛 DEBUG — Provider: {provider}")
+        if thinking and thinking != "default":
+            print(f"  🐛 DEBUG — Thinking: {thinking}")
         print(f"  🐛 DEBUG — System prompt ({len(workflow)} chars):")
         print(f"{'┄' * 60}")
         print(workflow[:2000])
@@ -272,7 +308,9 @@ def process_single_image(
     if provider == "anthropic":
         result = _call_anthropic(client, model, workflow, user_text, b64, mime=mime)
     elif provider == "google":
-        result = _call_google(client, model, workflow, user_text, b64, mime=mime)
+        result = _call_google(
+            client, model, workflow, user_text, b64, mime=mime, thinking=thinking
+        )
     else:
         result = _call_openai(client, model, workflow, user_text, b64, mime=mime)
 

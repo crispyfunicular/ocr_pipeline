@@ -19,6 +19,7 @@ from src.ocr.core import (
     get_book_prompt,
     get_workflow_prompt,
     load_run_state,
+    model_dir_name,
     reports_extraction_dir,
     save_run_state,
 )
@@ -49,6 +50,7 @@ def process_book_ocr(
     debug: bool = False,
     limit: int | None = None,
     output_flat: bool = False,
+    thinking: str | None = None,
 ) -> int:
     """Process all images in a single book directory.
 
@@ -111,7 +113,12 @@ def process_book_ocr(
         print(f"\n  [{i}/{len(to_process)}] Traitement de {img.name}...")
         try:
             result = process_single_image(
-                client, img, workflow, model=model, debug=debug
+                client,
+                img,
+                workflow,
+                model=model,
+                debug=debug,
+                thinking=thinking,
             )
 
             # Save JSONL
@@ -274,6 +281,8 @@ def run_sync(args) -> None:
         print(f"🖼️  {len(single_images)} image(s) individuelle(s)")
     print(f"🤖 Modèle : {args.model}")
 
+    thinking = getattr(args, "thinking", None)
+
     total_processed = 0
 
     # Process full book directories
@@ -293,9 +302,14 @@ def run_sync(args) -> None:
             run_dir = ocr_root / book_name / args.model
             run_dir.mkdir(parents=True, exist_ok=True)
         else:
-            model_dir = ocr_root / book_name / args.model
+            model_dir = ocr_root / book_name / model_dir_name(args.model, thinking)
             run_dir = find_or_create_run_folder(
-                model_dir, book_name, args.model, book_workflow, mode="sync"
+                model_dir,
+                book_name,
+                args.model,
+                book_workflow,
+                mode="sync",
+                thinking=thinking,
             )
             print(f"  📂 Run : {run_dir.name}")
 
@@ -308,6 +322,7 @@ def run_sync(args) -> None:
             debug=args.debug,
             limit=args.limit,
             output_flat=use_flat,
+            thinking=thinking,
         )
         total_processed += n
 
@@ -338,7 +353,12 @@ def run_sync(args) -> None:
 
         try:
             result = process_single_image(
-                client, img_path, img_workflow, model=args.model, debug=args.debug
+                client,
+                img_path,
+                img_workflow,
+                model=args.model,
+                debug=args.debug,
+                thinking=thinking,
             )
 
             # Determine output path for single image
@@ -352,9 +372,14 @@ def run_sync(args) -> None:
                     jsonl_path = img_ocr_dir / f"{img_path.stem}.jsonl"
             else:
                 # Create run-folder structure
-                model_dir = ocr_root / book_name / args.model
+                model_dir = ocr_root / book_name / model_dir_name(args.model, thinking)
                 run_dir = find_or_create_run_folder(
-                    model_dir, book_name, args.model, img_workflow, mode="sync"
+                    model_dir,
+                    book_name,
+                    args.model,
+                    img_workflow,
+                    mode="sync",
+                    thinking=thinking,
                 )
                 ext_dir = extracted_dir(run_dir)
                 ext_dir.mkdir(parents=True, exist_ok=True)
