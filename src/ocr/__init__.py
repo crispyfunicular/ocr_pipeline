@@ -5,13 +5,13 @@ Sends page images to a VLM (OpenAI, Anthropic Claude, or Google Gemini),
 parses structured JSONL output + quality report.
 
 Usage:
-    python -m scripts.ocr [targets ...] [--model X] [--batch] [--debug]
+    python -m src.ocr [targets ...] [--model X] [--batch] [--debug]
     python pipeline.py ocr [targets ...] [--model X] [--batch] [--debug]
 """
 
 from pathlib import Path
 
-from scripts.ocr.core import DEFAULT_MODEL, parse_vlm_response  # noqa: F401
+from src.ocr.core import DEFAULT_MODEL, parse_vlm_response  # noqa: F401
 
 __all__ = ["main", "DEFAULT_MODEL", "parse_vlm_response"]
 
@@ -81,11 +81,11 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     if args.batch:
-        from scripts.ocr.batch import run_batch
+        from src.ocr.batch import run_batch
 
         run_batch(args)
     else:
-        from scripts.ocr.sync import run_sync
+        from src.ocr.sync import run_sync
 
         run_sync(args)
 

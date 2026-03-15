@@ -27,7 +27,7 @@ except ImportError:
     _genai_module = None
     _genai_types = None
 
-from scripts.ocr.core import (
+from src.ocr.core import (
     DEFAULT_MODEL,
     MAX_COMPLETION_TOKENS,
     SINGLE_IMAGE_PROMPT,
@@ -37,7 +37,7 @@ from scripts.ocr.core import (
     estimate_cost,
     parse_vlm_response,
 )
-from scripts.utils import format_cost, mime_type_for_image
+from src.utils import format_cost, mime_type_for_image
 
 # ── Client creation ────────────────────────────────────────────
 

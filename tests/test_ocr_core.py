@@ -1,4 +1,4 @@
-"""Unit tests for scripts/ocr/core.py — pure function tests.
+"""Unit tests for src/ocr/core.py — pure function tests.
 
 Uses stdlib unittest (no external dependencies).
 Run:  python -m unittest tests.test_ocr_core -v
@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.ocr.core import (
+from src.ocr.core import (
     ParsedResponse,
     VLMResult,
     _parse_run_number,

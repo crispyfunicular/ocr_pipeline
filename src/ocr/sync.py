@@ -10,7 +10,7 @@ import random
 from datetime import datetime, timezone
 from pathlib import Path
 
-from scripts.ocr.core import (
+from src.ocr.core import (
     DEFAULT_MODEL,
     PROJECT_ROOT,
     detect_provider,
@@ -22,9 +22,9 @@ from scripts.ocr.core import (
     reports_extraction_dir,
     save_run_state,
 )
-from scripts.ocr.providers import create_client, process_single_image
-from scripts.ocr.reports import load_rapport, write_page_report, write_rapport
-from scripts.utils import (
+from src.ocr.providers import create_client, process_single_image
+from src.ocr.reports import load_rapport, write_page_report, write_rapport
+from src.utils import (
     ReportRow,
     compute_summary_stats,
     discover_images,

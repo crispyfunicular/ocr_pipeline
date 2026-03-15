@@ -48,7 +48,7 @@ ENHANCED_DIR = PROJECT_ROOT / "pages_enhanced"
 DOCRES_DIR = PROJECT_ROOT / "docres"
 RESSHIFT_DIR = PROJECT_ROOT / "resshift"
 
-from scripts.utils import discover_targets, discover_images
+from src.utils import discover_targets, discover_images
 
 # ── Individual processing stages ───────────────────────────────────
 
@@ -699,7 +699,7 @@ def process_book(
         return 0
 
     # Filter out dropped pages
-    from scripts.utils import load_droplist, should_drop_page
+    from src.utils import load_droplist, should_drop_page
 
     drop_pages = load_droplist(input_dir.name)
     if drop_pages:

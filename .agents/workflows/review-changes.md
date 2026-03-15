@@ -139,11 +139,11 @@ source .venv/bin/activate && python -m py_compile pipeline.py 2>&1
 ```
 
 ```bash
-for f in scripts/*.py scripts/ocr/*.py; do python -m py_compile "$f" 2>&1; done
+for f in src/*.py src/ocr/*.py; do python -m py_compile "$f" 2>&1; done
 ```
 
 ```bash
-black --check pipeline.py scripts/ tests/ 2>&1
+black --check pipeline.py src/ tests/ 2>&1
 ```
 
 ### 5. Run unit tests

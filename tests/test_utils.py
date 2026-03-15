@@ -1,8 +1,8 @@
-"""Unit tests for scripts/utils.py — error detection helpers."""
+"""Unit tests for src/utils.py — error detection helpers."""
 
 import unittest
 
-from scripts.utils import is_auth_error, is_quota_error
+from src.utils import is_auth_error, is_quota_error
 
 
 class TestIsAuthError(unittest.TestCase):

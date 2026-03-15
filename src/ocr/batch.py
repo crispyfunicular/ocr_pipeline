@@ -24,7 +24,7 @@ except ImportError:
     genai = None
     genai_types = None
 
-from scripts.ocr.core import (
+from src.ocr.core import (
     DEFAULT_MODEL,
     PROJECT_ROOT,
     SINGLE_IMAGE_PROMPT,
@@ -41,9 +41,9 @@ from scripts.ocr.core import (
     reports_extraction_dir,
     save_run_state,
 )
-from scripts.ocr.providers import create_client
-from scripts.ocr.reports import load_rapport, write_page_report, write_rapport
-from scripts.utils import (
+from src.ocr.providers import create_client
+from src.ocr.reports import load_rapport, write_page_report, write_rapport
+from src.utils import (
     ReportRow,
     discover_images,
     discover_targets,

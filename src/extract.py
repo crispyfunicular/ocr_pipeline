@@ -31,7 +31,7 @@ def extract_pages(
     # Load droplist if book name is known
     drop_pages: set[int] = set()
     if book_name:
-        from scripts.utils import load_droplist
+        from src.utils import load_droplist
 
         drop_pages = load_droplist(book_name)
 

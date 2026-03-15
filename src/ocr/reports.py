@@ -9,8 +9,8 @@ import re
 from datetime import datetime
 from pathlib import Path
 
-from scripts.ocr.core import DEFAULT_MODEL
-from scripts.utils import (
+from src.ocr.core import DEFAULT_MODEL
+from src.utils import (
     ReportRow,
     compute_summary_stats,
     format_cost,
@@ -22,7 +22,7 @@ from scripts.utils import (
 RAPPORT_HEADER = """\
 # Rapport d'extraction du corpus bilingue
 
-> Généré automatiquement par `scripts/ocr`
+> Généré automatiquement par `src/ocr`
 > Dernière mise à jour : {date}
 > Livre : `{book_name}`
 > Modèle : `{model}`
