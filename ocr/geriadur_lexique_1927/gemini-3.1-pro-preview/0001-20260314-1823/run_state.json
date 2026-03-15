@@ -3,15 +3,28 @@
   "model": "gemini-3.1-pro-preview",
   "book": "geriadur_lexique_1927",
   "mode": "sync",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2026-03-14T18:23:19.182840+00:00",
-  "updated_at": "2026-03-14T18:26:34.597023+00:00",
+  "updated_at": "2026-03-15T10:56:51.177158+00:00",
   "processed_pages": [
     "07",
     "08",
     "13",
     "14",
-    "20"
+    "20",
+    "03",
+    "04",
+    "05",
+    "06",
+    "09",
+    "10",
+    "11",
+    "12",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19"
   ],
   "total_pages": 18
 }
