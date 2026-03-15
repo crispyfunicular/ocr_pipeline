@@ -133,6 +133,16 @@ def is_auth_error(err_msg: str) -> bool:
     return "401" in err_msg or "auth" in err_msg.lower()
 
 
+def is_quota_error(err_msg: str) -> bool:
+    """Check if an error message indicates daily quota exhaustion.
+
+    Detects RESOURCE_EXHAUSTED / quota-exceeded errors that have retry
+    delays of hours (not transient rate-limit bursts).
+    """
+    lower = err_msg.lower()
+    return "resource_exhausted" in lower or "quota" in lower
+
+
 # ── Droplist ─────────────────────────────────────────────────────────
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent

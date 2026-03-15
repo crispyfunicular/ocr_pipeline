@@ -371,9 +371,9 @@ def find_or_create_run_folder(
     for run_dir in reversed(list_run_folders(model_dir)):
         state = load_run_state(run_dir)
         if state and state.get("prompt_hash") == prompt_hash:
-            status = state.get("status", "")
-            if status != "completed":
-                return run_dir
+            # Reuse existing folder — even if completed, the caller
+            # will detect that all pages are done and skip processing.
+            return run_dir
 
     # No match — create a new folder
     number = next_run_number(model_dir)

@@ -48,7 +48,7 @@ All scripts also work standalone: `python -m scripts.ocr --help`
 - **`discover_images()`**: Shared helper in `utils.py` that finds all images in a directory matching `IMAGE_EXTENSIONS`. Replaces hardcoded `*.png` globs across all pipeline stages.
 - **`mime_type_for_image()`**: Shared helper in `utils.py` that maps file extensions to MIME types. Used by OCR API calls (OpenAI, Anthropic, Gemini) to send the correct `media_type` for both PNG and JPEG inputs.
 - **Unified run-folder structure**: Both sync and batch OCR output to `ocr/<book>/<model>/<NNNN>-<YYYYMMDD>-<HHMM>/` containing `prompt.md`, `run_state.json`, `extracted/*.jsonl`, and `reports/extraction/`. The `<NNNN>` counter is 4-digit zero-padded and auto-incrementing.
-- **Prompt-hash reuse**: `scripts/ocr/core.py` computes a SHA-256 hash (first 8 hex) of the full prompt (system + global + book). If the hash matches an existing non-completed run folder, that folder is reused for resuming. A hash change triggers a new run folder.
+- **Prompt-hash reuse**: `scripts/ocr/core.py` computes a SHA-256 hash (first 8 hex) of the full prompt (system + global + book). If the hash matches an existing run folder (including completed ones), that folder is reused — the caller detects all pages are done and skips. A hash change triggers a new run folder.
 - **`run_state.json`**: Tracks run metadata (prompt hash, model, book, mode, status, processed pages, batch job info).
 - **Per-page reports**: Each page gets an individual extraction report at `reports/extraction/XX.md` alongside the summary `reports/extraction/report.md`.
 - **Consistent `-o`/`--output`**: all stages accept `-o`/`--output` for overriding the output directory. When passed, bypasses the run-folder structure entirely.
@@ -57,10 +57,12 @@ All scripts also work standalone: `python -m scripts.ocr --help`
 - **`parse_vlm_response()`**: shared response parser in `scripts/ocr/core.py` that extracts `=== JSONL ===` and `=== RAPPORT ===` blocks from raw VLM text. Used by both synchronous and batch OCR paths.
 - **File API deduplication**: batch mode lists existing Gemini File API uploads by `display_name` (`ocr/<book>/<page>`) and skips re-uploading unchanged images. Uploads expire after 48h.
 - **Retry with backoff**: `_retry_api_call()` in `core.py` wraps all VLM API calls with exponential backoff + jitter. Retries on 429 (rate limit), 5xx (server errors), and connection issues. Max 3 retries.
+- **Quota exhaustion abort**: `sync.py` detects daily quota errors (RESOURCE_EXHAUSTED / quota exceeded) via `is_quota_error()` and aborts immediately with state flush — no empty JSONL files are created, so pages are retried on resume.
+- **No empty JSONL on error**: API failures do not create empty `.jsonl` files. Only successful extractions (including those with 0 pairs) produce output files. This ensures failed pages are automatically retried.
 - **Typed return contracts**: `ParsedResponse` and `VLMResult` TypedDicts in `core.py` formalize the return types of `parse_vlm_response()` and `process_single_image()`.
 - **`MAX_COMPLETION_TOKENS`**: module-level constant (4000) used by all three API callers. Centralizes token budget.
 - **`--seed`**: optional CLI flag for reproducible `--limit` random sampling across sync and batch modes.
-- **`scripts/utils.py`**: Shared module for DRY code: `ReportRow` TypedDict, `SummaryStats` dataclass, parsing helpers (`safe_int`, `safe_float`), formatting (`format_cost`), JSONL I/O (`write_jsonl`, `count_jsonl_pairs`), target discovery (`discover_targets`), and error detection (`is_auth_error`). Imported by `scripts/ocr/` and `scripts/enhance.py`.
+- **`scripts/utils.py`**: Shared module for DRY code: `ReportRow` TypedDict, `SummaryStats` dataclass, parsing helpers (`safe_int`, `safe_float`), formatting (`format_cost`), JSONL I/O (`write_jsonl`, `count_jsonl_pairs`), target discovery (`discover_targets`), and error detection (`is_auth_error`, `is_quota_error`). Imported by `scripts/ocr/` and `scripts/enhance.py`.
 
 ## Environment
 

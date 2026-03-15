@@ -31,6 +31,7 @@ from scripts.utils import (
     discover_targets,
     format_cost,
     is_auth_error,
+    is_quota_error,
     load_droplist,
     should_drop_page,
     write_jsonl,
@@ -175,8 +176,23 @@ def process_book_ocr(
                     file=sys.stderr,
                 )
                 sys.exit(1)
-            # Other errors: create empty file and continue
-            (ext_dir / f"{img.stem}.jsonl").touch()
+            if is_quota_error(err_msg):
+                print(
+                    f"\n⛔ Quota API épuisé. Relancez plus tard."
+                    f" ({i - 1}/{len(to_process)} pages traitées)",
+                    file=sys.stderr,
+                )
+                # Flush state so resume picks up here
+                if run_state:
+                    save_run_state(run_dir, run_state)
+                if rapport_path:
+                    write_rapport(
+                        rapport_path, rows, observations,
+                        model=model, total_pages=total_pages,
+                        book_name=book_dir.name,
+                    )
+                sys.exit(1)
+            # Don't create empty file on error — page will be retried on resume
             rows.append(
                 ReportRow(
                     image=img.name,

@@ -253,7 +253,7 @@ class TestRunFolderManagement(unittest.TestCase):
             run2 = find_or_create_run_folder(model_dir, "book", "model", "prompt v2")
             self.assertNotEqual(run1, run2)
 
-    def test_find_or_create_skips_completed(self):
+    def test_find_or_create_reuses_completed(self):
         with tempfile.TemporaryDirectory() as tmp:
             model_dir = Path(tmp) / "book" / "model"
             run1 = find_or_create_run_folder(model_dir, "book", "model", "my prompt")
@@ -262,7 +262,7 @@ class TestRunFolderManagement(unittest.TestCase):
             save_run_state(run1, state)
 
             run2 = find_or_create_run_folder(model_dir, "book", "model", "my prompt")
-            self.assertNotEqual(run1, run2)
+            self.assertEqual(run1, run2)
 
 
 if __name__ == "__main__":
