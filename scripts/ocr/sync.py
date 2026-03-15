@@ -256,7 +256,7 @@ def run_sync(args) -> None:
     # Default OCR output root: ocr/   (overridden by --output)
     ocr_root = args.output if args.output is not None else PROJECT_ROOT / "ocr"
 
-    workflow = get_workflow_prompt()
+    workflow = get_workflow_prompt(path=getattr(args, 'main_prompt', None))
 
     # Smart target detection: separate image files from book directories
     book_dirs, single_images = discover_targets(args.targets, pages_dir)
@@ -280,7 +280,7 @@ def run_sync(args) -> None:
         print(f"📖 {book_name}")
         print(f"{'─' * 60}")
 
-        book_workflow = workflow + get_book_prompt(book_name)
+        book_workflow = workflow + get_book_prompt(book_name, path=getattr(args, 'book_prompt', None))
 
         use_flat = args.output is not None
         if use_flat:
@@ -327,7 +327,7 @@ def run_sync(args) -> None:
         print(f"🖼️  {img_path.resolve()}")
         print(f"{'─' * 60}")
 
-        img_workflow = workflow + get_book_prompt(book_name)
+        img_workflow = workflow + get_book_prompt(book_name, path=getattr(args, 'book_prompt', None))
 
         try:
             result = process_single_image(

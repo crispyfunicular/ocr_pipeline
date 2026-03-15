@@ -122,6 +122,8 @@ def submit_batch_job(
     ocr_root: Path | None = None,
     limit: int | None = None,
     debug: bool = False,
+    main_prompt: Path | None = None,
+    book_prompt: Path | None = None,
 ) -> str | None:
     """Submit a whole book as a Gemini Batch API job.
 
@@ -144,9 +146,9 @@ def submit_batch_job(
     model_dir = ocr_root / book / model
 
     # Build the full prompt first (needed for hash)
-    global_prompt = get_workflow_prompt()
-    book_prompt = get_book_prompt(book)
-    system_prompt = global_prompt + book_prompt
+    global_prompt = get_workflow_prompt(path=main_prompt)
+    book_prompt_text = get_book_prompt(book, path=book_prompt)
+    system_prompt = global_prompt + book_prompt_text
 
     # Check for existing pending batch job
     pending = find_pending_runs(model_dir, mode="batch")
@@ -635,4 +637,6 @@ def run_batch(args) -> None:
             ocr_root=ocr_root,
             limit=args.limit,
             debug=args.debug,
+            main_prompt=getattr(args, 'main_prompt', None),
+            book_prompt=getattr(args, 'book_prompt', None),
         )

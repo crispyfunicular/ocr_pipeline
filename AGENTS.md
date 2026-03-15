@@ -30,6 +30,8 @@ PDFs (pdfs/)
 | `python pipeline.py enhance [book/image ...] [--format jpg|png] [--jpeg-quality N]` | Enhance (classical by default; use `--docres` / `--prepocr` for AI) |
 | `python pipeline.py ocr [book ...] [--model X] [-o dir] [--debug]` | VLM-based OCR extraction (synchronous) |
 | `python pipeline.py ocr [book ...] --batch [--model X] [--limit N]` | Submit OCR via Gemini Batch API (async, 50% cost) |
+| `python pipeline.py ocr ... --book-prompt prompts/X-next.md` | Test a different book prompt version |
+| `python pipeline.py ocr ... --main-prompt prompts/extract_bilingual_corpus-next.md` | Test a different main prompt version |
 | `python pipeline.py batch_status [book ...] [--wait] [--cancel]` | Check / collect Gemini Batch API results |
 | `python pipeline.py review [book ...] --run <folder> [--model X]` | JSONL QA (requires explicit `--run`) |
 | `python pipeline.py corpus [book ...] [-o dir]` | Final corpus merge (stub) |
@@ -52,6 +54,7 @@ All scripts also work standalone: `python -m scripts.ocr --help`
 - **`run_state.json`**: Tracks run metadata (prompt hash, model, book, mode, status, processed pages, batch job info).
 - **Per-page reports**: Each page gets an individual extraction report at `reports/extraction/XX.md` alongside the summary `reports/extraction/report.md`.
 - **Consistent `-o`/`--output`**: all stages accept `-o`/`--output` for overriding the output directory. When passed, bypasses the run-folder structure entirely.
+- **`--main-prompt` / `--book-prompt`**: optional CLI flags to override the system or book-specific prompt file paths. The prompt hash is computed from whatever prompts are actually used, so different prompt versions get separate run folders automatically.
 - **`--debug` mode**: prints full system/user prompts and raw LLM responses to stdout for troubleshooting.
 - **Report metadata**: reports include per-image date, model, response time, and estimated cost (based on `MODEL_PRICING` dict). Synthèse shows total time and cost.
 - **`parse_vlm_response()`**: shared response parser in `scripts/ocr/core.py` that extracts `=== JSONL ===` and `=== RAPPORT ===` blocks from raw VLM text. Used by both synchronous and batch OCR paths.

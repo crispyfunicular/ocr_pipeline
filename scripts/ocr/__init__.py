@@ -66,6 +66,18 @@ def main(argv=None):
         default=False,
         help="Use Gemini Batch API (async, 50%% cost).  Gemini models only.",
     )
+    parser.add_argument(
+        "--main-prompt",
+        type=Path,
+        default=None,
+        help="Override the main system prompt file (default: prompts/extract_bilingual_corpus.md).",
+    )
+    parser.add_argument(
+        "--book-prompt",
+        type=Path,
+        default=None,
+        help="Override the book-specific prompt file (default: auto-detected from book name).",
+    )
     args = parser.parse_args(argv)
 
     if args.batch:

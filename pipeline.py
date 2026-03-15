@@ -118,6 +118,10 @@ def cmd_ocr(args):
         argv.extend(["--limit", str(args.limit)])
     if getattr(args, "seed", None) is not None:
         argv.extend(["--seed", str(args.seed)])
+    if getattr(args, "main_prompt", None) is not None:
+        argv.extend(["--main-prompt", str(args.main_prompt)])
+    if getattr(args, "book_prompt", None) is not None:
+        argv.extend(["--book-prompt", str(args.book_prompt)])
     if args.targets:
         argv.extend(list(args.targets))
     return ocr_main(argv)
@@ -150,6 +154,8 @@ def _cmd_ocr_batch(args):
             ocr_root=ocr_root,
             limit=args.limit,
             debug=getattr(args, "debug", False),
+            main_prompt=getattr(args, "main_prompt", None),
+            book_prompt=getattr(args, "book_prompt", None),
         )
 
 
@@ -564,6 +570,18 @@ Examples:
         action="store_true",
         default=False,
         help="Submit via Gemini Batch API (50%% cost, async). Gemini models only.",
+    )
+    p_ocr.add_argument(
+        "--main-prompt",
+        type=Path,
+        default=None,
+        help="Override the main system prompt file (default: prompts/extract_bilingual_corpus.md).",
+    )
+    p_ocr.add_argument(
+        "--book-prompt",
+        type=Path,
+        default=None,
+        help="Override the book-specific prompt file (default: auto-detected from book name).",
     )
     p_ocr.set_defaults(func=cmd_ocr)
 

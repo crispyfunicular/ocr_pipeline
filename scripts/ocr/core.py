@@ -80,13 +80,28 @@ def encode_image(image_path: Path) -> str:
 # ── Prompt loading ──────────────────────────────────────────────
 
 
-def get_workflow_prompt() -> str:
-    path = PROJECT_ROOT / "prompts" / "extract_bilingual_corpus.md"
-    return path.read_text(encoding="utf-8")
+def get_workflow_prompt(path: Path | str | None = None) -> str:
+    """Load the main system prompt.
+
+    Args:
+        path: Override prompt file path. Default: ``prompts/extract_bilingual_corpus.md``.
+    """
+    if path is not None:
+        return Path(path).read_text(encoding="utf-8")
+    return (PROJECT_ROOT / "prompts" / "extract_bilingual_corpus.md").read_text(
+        encoding="utf-8"
+    )
 
 
-def get_book_prompt(book_name: str) -> str:
-    """Load an optional book-specific prompt from prompts/<book_name>.md."""
+def get_book_prompt(book_name: str, path: Path | str | None = None) -> str:
+    """Load a book-specific prompt.
+
+    Args:
+        book_name: Book name (used to auto-detect ``prompts/<book_name>.md``).
+        path: Override prompt file path. When given, *replaces* auto-detection.
+    """
+    if path is not None:
+        return "\n\n---\n\n" + Path(path).read_text(encoding="utf-8")
     book_prompt_path = PROJECT_ROOT / "prompts" / f"{book_name}.md"
     if book_prompt_path.exists():
         return "\n\n---\n\n" + book_prompt_path.read_text(encoding="utf-8")
