@@ -11,8 +11,5 @@ pages_enhanced/
 docres/
 resshift/
 
-# Reports (auto-generated)
-reports/
-
 # Logs
 *.log
