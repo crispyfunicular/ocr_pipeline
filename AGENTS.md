@@ -38,6 +38,7 @@ PDFs (pdfs/)
 | `python pipeline.py batch_status [book ...] [--wait] [--cancel]` | Check / collect Gemini Batch API results |
 | `python pipeline.py review [book ...] --run <folder> [--model X]` | JSONL QA (requires explicit `--run`) |
 | `python pipeline.py corpus [book ...] [-o dir]` | Final corpus merge (stub) |
+| `/review-ocr-extraction <extraction_folder>` | LLM-as-Judge quality review (agent workflow) |
 
 All scripts also work standalone: `python -m src.ocr --help`
 
@@ -67,6 +68,9 @@ These are patterns and pitfalls that AI agents must follow when editing this cod
 
 - `prompts/extract_bilingual_corpus.md` — System prompt for VLM extraction
 - `prompts/<book_name>.md` — Optional per-book prompt overrides (appended to the base prompt when present)
+- `prompts/review/bilingual-ocr-extraction-review.md` — Global review prompt (LLM-as-Judge rubric, methodology, output format)
+- `prompts/review/<book_name>-ocr-review.md` — Per-book review criteria (appended to global review prompt)
+- `.agents/workflows/review-ocr-extraction.md` — Agent workflow orchestrating quality reviews
 - `src/utils.py` — Shared types (`ReportRow`, `SummaryStats`) and helpers used across stages
 - `src/ocr/` — OCR pipeline step (package)
   - `core.py` — Constants, TypedDicts, cost estimation, response parsing, run-folder management
@@ -80,6 +84,7 @@ These are patterns and pitfalls that AI agents must follow when editing this cod
 - `tests/test_extract.py` — Unit tests for PDF extraction: `pdf_stem`, `extract_pages`, droplist, CLI (9 tests)
 - `tests/test_enhance.py` — Unit tests for enhance copy/compress: no-op copy, JPEG/PNG output, quality, droplist, pure helpers (17 tests)
 - `ocr/<book>/<model>/<run>/reports/extraction/report.md` — Auto-generated extraction quality reports
+- `ocr/<book>/<model>/<run>/reports/review/review.md` — LLM-as-Judge quality review reports
 - `requirements.txt` — Python dependencies (PyTorch installed separately)
 - `setup.sh` — One-command environment setup (venv + deps + DocRes)
 - `.gitignore` — Excludes venv, pages, enhanced pages, docres, logs
