@@ -37,7 +37,7 @@ PDFs (pdfs/)
 | `python pipeline.py ocr ... --thinking high` | Control Gemini thinking level (off/minimal/low/medium/high) |
 | `python pipeline.py batch_status [book ...] [--wait] [--cancel]` | Check / collect Gemini Batch API results |
 | `python pipeline.py review [book ...] --run <folder> [--model X]` | JSONL QA (requires explicit `--run`) |
-| `python pipeline.py corpus [book ...] [-o dir]` | Final corpus merge (stub) |
+| `python pipeline.py corpus [run_folder ...]` | Deduplicate extracted JSONL into `<run>/corpus/<book>.jsonl` |
 | `/review-ocr-extraction <extraction_folder>` | LLM-as-Judge quality review (agent workflow) |
 
 All scripts also work standalone: `python -m src.ocr --help`

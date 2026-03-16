@@ -226,12 +226,12 @@ def cmd_evaluate(args):
 
 
 def cmd_corpus(args):
-    """Build corpus from reviewed output."""
+    """Build corpus from OCR extraction runs."""
     from src.corpus import main as corpus_main
 
     argv = []
     if args.targets:
-        argv.extend(["--targets"] + list(args.targets))
+        argv.extend(list(args.targets))
     if args.output:
         argv.extend(["--output", str(args.output)])
     return corpus_main(argv)
@@ -366,7 +366,7 @@ def cmd_run(args):
     print("\n" + "─" * 60)
     print("📚 Stage 5/5: CORPUS")
     print("─" * 60)
-    corpus_argv = ["--targets"] + books if books else []
+    corpus_argv = list(books) if books else []
     corpus_main(corpus_argv)
 
     print("\n" + "=" * 60)
@@ -666,15 +666,24 @@ Examples:
     p_evaluate.set_defaults(func=cmd_evaluate)
 
     # --- corpus ---
-    p_corpus = subparsers.add_parser("corpus", help="Build corpus from reviewed output")
+    p_corpus = subparsers.add_parser(
+        "corpus",
+        help="Deduplicate OCR extraction JSONL into corpus/<book>.jsonl",
+    )
     p_corpus.add_argument(
-        "targets", nargs="*", help="Book folder(s) to process (default: all in review/)"
+        "targets",
+        nargs="*",
+        help=(
+            "Run folder path(s) to process "
+            "(e.g. ocr/bozec.../gemini.../0002-...). "
+            "Default: all completed runs missing a corpus JSONL."
+        ),
     )
     p_corpus.add_argument(
         "-o",
         "--output",
         default=None,
-        help="Output root directory (default: corpus/).",
+        help="Override output directory (default: <run>/corpus/).",
     )
     p_corpus.set_defaults(func=cmd_corpus)
 

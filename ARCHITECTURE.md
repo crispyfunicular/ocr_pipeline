@@ -11,9 +11,9 @@ graph LR
     A[pdfs/] -->|extract.py| B["pages/ (300dpi PNGs)"]
     B -->|enhance.py| C[pages_enhanced/]
     C -->|ocr/| D["ocr/<book>/<model>/<run>/extracted/"]
+    D -->|corpus.py| F["<run>/corpus/<book>.jsonl"]
     D -->|review.py| E["review/<book>/"]
     E -->|"human correction"| E
-    E -->|corpus.py| F["corpus/<book>.jsonl"]
     D -.->|review.py| R["reports/<book>/review.md"]
     G["error_rates/<book>/"] -->|evaluate.py| H[WER / CER]
 ```
@@ -40,7 +40,7 @@ OCR_pipeline/
 │   │   └── batch.py         ← Gemini Batch API (async, 50% cost)
 │   ├── review.py            ← JSONL quality assurance
 │   ├── evaluate.py          ← WER/CER evaluation against human reference
-│   └── corpus.py            ← Final corpus merge (stub)
+│   └── corpus.py            ← Deduplicate extracted JSONL into corpus/<book>.jsonl
 ├── prompts/
 │   ├── extract_bilingual_corpus.md   ← Base system prompt
 │   └── <book>.md                     ← Book-specific overrides
@@ -188,7 +188,7 @@ Computes WER and CER against manually corrected human references in `error_rates
 
 ### 6. Corpus Build (`src/corpus.py`)
 
-Reads per-page JSONL from `review/<book>/` (after human correction), deduplicates exact `{breton, français}` pairs, and writes a single `corpus/<book>.jsonl` per book.
+Reads per-page JSONL from an OCR extraction run's `extracted/` directory, deduplicates exact `{breton, français}` pairs, sorts alphabetically by Breton field, and writes `<run>/corpus/<book>.jsonl`. Accepts run folder paths as positional args, or auto-discovers all completed runs (via `run_state.json` status) that don't yet have a corpus JSONL.
 
 ## Quality Metrics (Baseline)
 
