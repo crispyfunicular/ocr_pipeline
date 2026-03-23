@@ -1,20 +1,20 @@
 # 📜 Breton-French OCR Pipeline
 
+> 🌐 **[Showcase site](https://crispyfunicular.github.io/ocr_pipeline/)** — interactive overview of the project, corpus, and metrics.
+
 A multi-stage pipeline for extracting bilingual **Breton-French** parallel corpora from scanned historical books (1860s–1940s). Produces JSONL files of aligned `{"breton": "...", "français": "..."}` pairs suitable for training translation models, building dictionaries, or linguistic research.
 
 ## Corpus
 
-The corpus spans **570+ pages** across **10 historical Breton-language books**:
+The corpus spans **800+ pages** across **9 historical Breton-language books**:
 
 | Book | Period | Type | Pages | Description |
 |------|--------|------|-------|-------------|
 | `toullec_lexique_1865` | 1865 | Lexicon | 87 | Bilingual French-Breton vocabulary by theme, with a parallel preface |
-| `colloque_lourec_1884` | 1884 | Phrasebook | 74 | 4-column vocabulary lists by profession + conversational dialogues |
-| `colloque_1890` | 1890 | Phrasebook | 74 | Similar to 1884 edition, 4-column verb lists and dialogues |
+| `colloque_lourec_1884` | 1884 | Phrasebook | 72 | 4-column vocabulary lists by profession + conversational dialogues |
 | `normant_lexique_1902` | 1902 | Dictionary | 71 | Breton→French dictionary with conjugation tables (KAOUT, BEZA) |
-| `le_gonidec_vocabulaire_1919` | 1919 | Vocabulary | — | French-Breton vocabulary |
+| `le_gonidec_vocabulaire_1919` | 1919 | Vocabulary | 313 | French-Breton vocabulary |
 | `geriadur_lexique_1927` | 1927 | Medical lexicon | 22 | French→Breton anatomical/medical terminology with sub-entries |
-| `vallee_grand_dictionnaire_1931` | 1931 | Dictionary | — | Large Breton-French dictionary |
 | `roparz_cours_elementaire_1930` | 1930 | Course | 31 | Elementary Breton course with vocabulary, dialogues (DIVIZ), and exercises |
 | `bozec_methode_1933` | 1933 | Method | 78 | Breton method with facing-page bilingual lessons and illustrations |
 | `yez_hon_tadou_1940` | 1940 | Course | 96 | Breton course with GERIADUR word lists, word families, and conjugation |
@@ -382,10 +382,16 @@ python pipeline.py corpus -o /tmp/my_corpus                  # Custom output dir
 ├── corpus/                  # Final deduplicated corpus
 │   ├── <book>.jsonl
 │   └── ...
-├── error_rates/             # WER/CER evaluation data
+├── gold/                    # Gold-standard evaluation data
 │   └── <book>/
 │       ├── human_reference/ # Gold-standard JSONL (manually corrected)
-│       └── jsonl/           # Hypothesis JSONL (OCR output to evaluate)
+│       ├── jsonl/           # Hypothesis JSONL (OCR output to evaluate)
+│       └── report.md        # CER/WER + silence/bruit analysis
+├── docs/                    # Showcase landing page (GitHub Pages)
+│   ├── index.html
+│   ├── style.css
+│   ├── script.js
+│   └── hero_illustration.png
 ├── droplist/                # Per-book page exclusion lists
 │   └── <book>/
 │       └── drop_pages.json  # JSON array of page numbers to skip
