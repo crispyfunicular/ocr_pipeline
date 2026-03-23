@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breton-French OCR Pipeline — Des vieux livres au traducteur IA</title>
+  <meta name="description" content="Pipeline d'OCR multilingue breton-français : extraction de corpus parallèles depuis des ouvrages historiques (1865–1944) par Vision Language Models, et entraînement de modèles de traduction m2m100.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ─── NAV ─── -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">📜 BZH-OCR</a>
+      <div class="nav-links">
+        <a href="#pipeline">Pipeline</a>
+        <a href="#corpus">Corpus</a>
+        <a href="#metrics">Métriques</a>
+        <a href="#m2m100">m2m100</a>
+        <a href="#tech">Stack</a>
+        <a href="https://github.com/crispyfunicular/ocr_pipeline" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <header class="hero" id="hero">
+    <div class="hero-bg-dots"></div>
+    <div class="container hero-content reveal">
+      <h1>Des vieux livres<br><span class="highlight">au traducteur IA</span></h1>
+      <p class="hero-sub">Extraction automatique de corpus bilingues breton-français depuis des ouvrages historiques (1865–1944) par Vision Language Models, puis entraînement de modèles de traduction neuronale.</p>
+      <div class="hero-ctas">
+        <a href="#pipeline" class="btn btn-primary">Explorer le pipeline</a>
+        <a href="#corpus" class="btn btn-secondary">Voir le corpus</a>
+      </div>
+      <img src="hero_illustration.png" alt="Illustration : d'un vieux livre vers des données numériques" class="hero-img" width="760" height="380">
+    </div>
+  </header>
+
+  <!-- ─── PIPELINE ─── -->
+  <section class="section" id="pipeline">
+    <div class="container reveal">
+      <h2 class="section-title">Le Pipeline</h2>
+      <p class="section-intro">Chaque ouvrage traverse 7 étapes, du PDF scanné jusqu'au corpus d'entraînement.</p>
+      <div class="pipeline-flow">
+        <div class="pipe-step card">
+          <div class="pipe-icon">📄</div>
+          <h3>Extract</h3>
+          <p>PDF → PNG à 300 DPI via PyMuPDF</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step card">
+          <div class="pipe-icon">✨</div>
+          <h3>Enhance</h3>
+          <p>CLAHE, DocRes (CVPR 2024), PreP-OCR</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step card">
+          <div class="pipe-icon">👁️</div>
+          <h3>OCR</h3>
+          <p>Extraction bilingue par VLM (GPT-5.2, Gemini, Claude)</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step card">
+          <div class="pipe-icon">🔍</div>
+          <h3>Review</h3>
+          <p>Contrôle qualité automatique + correction humaine</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step card">
+          <div class="pipe-icon">📊</div>
+          <h3>Evaluate</h3>
+          <p>WER & CER contre des références gold</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step card">
+          <div class="pipe-icon">📦</div>
+          <h3>Corpus</h3>
+          <p>Déduplication, fusion → JSONL final</p>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step card">
+          <div class="pipe-icon">🤖</div>
+          <h3>m2m100</h3>
+          <p>Fine-tuning du modèle de traduction</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CORPUS ─── -->
+  <section class="section section-alt" id="corpus">
+    <div class="container reveal">
+      <h2 class="section-title">Le Corpus</h2>
+      <p class="section-intro">10 ouvrages historiques numérisés, couvrant 80 ans de publications bretonnes. <a href="https://github.com/crispyfunicular/ocr_pipeline/tree/main/corpus" target="_blank" rel="noopener" class="btn btn-small" style="margin-left:8px; vertical-align:middle;">Accéder au corpus ↗</a></p>
+
+      <div class="stats-row">
+        <div class="stat card">
+          <span class="stat-number" data-target="50000">0</span>
+          <span class="stat-label">paires bilingues</span>
+        </div>
+        <div class="stat card">
+          <span class="stat-number" data-target="10">0</span>
+          <span class="stat-label">ouvrages</span>
+        </div>
+        <div class="stat card">
+          <span class="stat-number" data-target="500">0</span>
+          <span class="stat-label">pages traitées</span>
+        </div>
+        <div class="stat card">
+          <span class="stat-number">1865–1944</span>
+          <span class="stat-label">période couverte</span>
+        </div>
+      </div>
+
+      <div class="book-table-wrap card">
+        <table class="book-table">
+          <thead>
+            <tr>
+              <th>Ouvrage</th>
+              <th>Auteur</th>
+              <th>Année</th>
+              <th>Type</th>
+              <th>Pages</th>
+              <th>PDF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Manuel Breton-Français</td><td>Toullec</td><td>1865</td><td>Lexique</td><td>87</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/toullec_lexique_1865.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+            <tr><td>Colloque Français et Breton</td><td>Le Lourec</td><td>1884</td><td>Lexique</td><td>72</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/colloque_lourec_1884.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+            <tr><td>Lexique Breton-Français</td><td>Normant</td><td>1902</td><td>Lexique</td><td>71</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/normant_lexique_1902.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+            <tr><td>Vocabulaire Français-Breton</td><td>Le Gonidec</td><td>1919</td><td>Dictionnaire</td><td>313</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/le_gonidec_vocabulaire_1919.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+            <tr><td>Geriadur Gallek ha Brezonek</td><td>Anonyme</td><td>1927</td><td>Lexique</td><td>22</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/geriadur_lexique_1927.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+            <tr><td>Cours élémentaire de Breton</td><td>Roparz</td><td>1930</td><td>Méthode</td><td>31</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/roparz_cours_elementaire_1930.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+            <tr><td>Le Français par le Breton</td><td>Le Bozec</td><td>1933</td><td>Méthode</td><td>78</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/bozec_methode_1933.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+            <tr><td>Yez hon Tadoù</td><td>Seite</td><td>1940</td><td>Cours</td><td>96</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/yez_hon_tadou_1940.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+            <tr><td>Ker Vreiz — 1er Cours de Breton</td><td>Daniel</td><td>1944</td><td>Méthode</td><td>37</td><td><a href="https://github.com/crispyfunicular/ocr_pipeline/blob/main/pdfs/daniel_ker_vreiz_1944.pdf" target="_blank" rel="noopener" class="idbe-link">📄</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="jsonl-sample card">
+        <div class="jsonl-header">
+          <span class="jsonl-dot red"></span>
+          <span class="jsonl-dot yellow"></span>
+          <span class="jsonl-dot green"></span>
+          <span class="jsonl-filename">corpus/bozec_methode_1933.jsonl</span>
+        </div>
+        <pre class="jsonl-code"><code id="jsonl-typewriter"></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MÉTRIQUES ─── -->
+  <section class="section" id="metrics">
+    <div class="container reveal">
+      <h2 class="section-title">📊 Métriques d'évaluation de la performance <span class="badge-wip">en cours</span></h2>
+      <p class="section-intro">Taux d'erreur (CER / WER) par ouvrage et par langue, mesurés contre des références gold annotées manuellement.</p>
+      <div class="book-table-wrap card">
+        <table class="book-table metrics-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Ouvrage</th>
+              <th colspan="2" class="th-group">Post-OCR — Breton</th>
+              <th colspan="2" class="th-group">Post-OCR — Français</th>
+              <th colspan="2" class="th-group">Post-correction IA</th>
+            </tr>
+            <tr>
+              <th>CER</th>
+              <th>WER</th>
+              <th>CER</th>
+              <th>WER</th>
+              <th>CER</th>
+              <th>WER</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Toullec — Lexique</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Colloque Lourec</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+
+            <tr><td>Normant — Lexique</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Le Gonidec — Vocabulaire</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Geriadur — Lexique médical</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Roparz — Cours élémentaire</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+
+            <tr><td>Bozec — Méthode</td><td>6,6%</td><td>13,3%</td><td>4,8%</td><td>9,6%</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Yez hon Tadou</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Daniel — Ker Vreiz</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="subsection-title">Typologie des erreurs</h3>
+      <p class="section-intro" style="margin-bottom:24px;">Répartition des erreurs entre silences (paires manquantes) et bruit (paires en trop).</p>
+      <div class="book-table-wrap card">
+        <table class="book-table metrics-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Ouvrage</th>
+              <th colspan="2" class="th-group">Post-OCR</th>
+              <th colspan="2" class="th-group">Post-correction IA</th>
+            </tr>
+            <tr>
+              <th>Silences</th>
+              <th>Bruit</th>
+              <th>Silences</th>
+              <th>Bruit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Toullec — Lexique</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Colloque Lourec</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+
+            <tr><td>Normant — Lexique</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Le Gonidec — Vocabulaire</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Geriadur — Lexique médical</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Roparz — Cours élémentaire</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+
+            <tr><td>Bozec — Méthode</td><td>17,2%</td><td>4,0%</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Yez hon Tadou</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+            <tr><td>Daniel — Ker Vreiz</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td><td class="metric-placeholder">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── M2M100 ─── -->
+  <section class="section" id="m2m100">
+    <div class="container reveal">
+      <h2 class="section-title">Entraînement m2m100</h2>
+      <p class="section-intro">Le corpus extrait alimente l'entraînement de modèles de traduction neuronale Breton↔Français.</p>
+
+      <div class="m2m-grid">
+        <div class="m2m-card card">
+          <h3>🌍 m2m100 (Meta)</h3>
+          <p>Modèle multilingue de base (418M paramètres) couvrant 100 langues. Fine-tuning sur notre corpus pour spécialiser la paire breton-français.</p>
+        </div>
+        <div class="m2m-card card">
+          <h3>⚙️ m2m100_br_fr</h3>
+          <p>Variante déjà pré-entraînée pour le breton par <a href="https://huggingface.co/lgrobol/m2m100_418M_br_fr" target="_blank" rel="noopener">Loïc Grobol</a>. Entraînement complémentaire avec nos données historiques.</p>
+        </div>
+        <div class="m2m-card card">
+          <h3>📈 Objectif</h3>
+          <p>Obtenir un traducteur performant pour le breton, capable de gérer les variations orthographiques historiques et le vocabulaire spécialisé.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TECH STACK ─── -->
+  <section class="section section-alt" id="tech">
+    <div class="container reveal">
+      <h2 class="section-title">Stack technique</h2>
+      <div class="tech-grid">
+        <div class="tech-card card">
+          <span class="tech-emoji">🐍</span>
+          <h3>Python 3.11</h3>
+          <p>Pipeline modulaire, CLI unifiée</p>
+        </div>
+        <div class="tech-card card">
+          <span class="tech-emoji">👁️</span>
+          <h3>Vision LMs</h3>
+          <p>GPT-5.2, Gemini 3.1, Claude Sonnet 4</p>
+        </div>
+        <div class="tech-card card">
+          <span class="tech-emoji">🔥</span>
+          <h3>PyTorch</h3>
+          <p>DocRes, PreP-OCR</p>
+        </div>
+        <div class="tech-card card">
+          <span class="tech-emoji">🤗</span>
+          <h3>Hugging Face</h3>
+          <p>m2m100, tokenizers, Trainer</p>
+        </div>
+        <div class="tech-card card">
+          <span class="tech-emoji">📐</span>
+          <h3>CVPR 2024</h3>
+          <p>DocRes — restauration de documents</p>
+        </div>
+        <div class="tech-card card">
+          <span class="tech-emoji">⚡</span>
+          <h3>Batch API</h3>
+          <p>Gemini Batch — 50% de coûts en moins</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─── -->
+  <section class="section" id="about">
+    <div class="container reveal">
+      <div class="about-card card">
+        <h2>À propos</h2>
+        <p><strong>Morgane Bona-Pellissier</strong> — Étudiante en master de traitement automatique des langues à l'Université Paris Nanterre, docteure en traductologie (Université de Genève, 2023). Ses recherches portent sur la traduction automatique neuronale et les langues peu dotées et minorisées ; elle parle catalan et étudie le breton.</p>
+        <div class="about-links">
+          <a href="https://www.linkedin.com/in/morgane-bona-pellissier-0648aa112/" target="_blank" rel="noopener" class="btn btn-small">LinkedIn ↗</a>
+          <a href="#" class="btn btn-small btn-outline" title="À venir">Site personnel (bientôt)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer">
+    <div class="container">
+      <p>Fait avec 📜 et beaucoup de patience</p>
+      <p class="footer-sub"><a href="https://github.com/crispyfunicular/ocr_pipeline" target="_blank" rel="noopener">GitHub</a> · Morgane Bona-Pellissier · 2025</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
