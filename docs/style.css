@@ -472,15 +472,15 @@ img { max-width: 100%; height: auto; }
   font-weight: 600;
   text-decoration: none;
   padding: 4px 10px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--secondary);
   border-radius: 20px;
-  color: var(--ink);
+  color: var(--secondary);
   transition: background 0.2s, color 0.2s;
   margin-left: 4px;
 }
 .lang-switch:hover {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--secondary);
+  color: #fff;
 }
 
 /* ── Metrics Table ── */
@@ -512,7 +512,18 @@ img { max-width: 100%; height: auto; }
   border-bottom: 2px solid rgba(255,255,255,0.3);
 }
 
-.metrics-table td:not(:first-child) {
+.metrics-table {
+  table-layout: fixed;
+}
+
+.metrics-table th:first-child,
+.metrics-table td:first-child {
+  width: 30%;
+  text-align: left;
+}
+
+.metrics-table td:not(:first-child),
+.metrics-table th:not(:first-child) {
   text-align: center;
   font-family: var(--font-mono);
   font-size: 13px;
