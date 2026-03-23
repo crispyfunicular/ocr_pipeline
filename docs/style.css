@@ -467,6 +467,21 @@ img { max-width: 100%; height: auto; }
   opacity: 0.3;
   cursor: default;
 }
+.lang-switch {
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  color: var(--ink);
+  transition: background 0.2s, color 0.2s;
+  margin-left: 4px;
+}
+.lang-switch:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
 
 /* ── Metrics Table ── */
 .subsection-title {
