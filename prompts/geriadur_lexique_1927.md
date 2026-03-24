@@ -77,7 +77,7 @@ Exemples courants :
 
 ### Synonymes bretons multiples
 
-Quand une entrée a plusieurs traductions bretonnes séparées par des virgules, **gardez-les toutes dans le même champ breton**. N'éclatez PAS les synonymes.
+Quand une entrée a plusieurs traductions bretonnes séparées par des virgules, **éclatez chaque synonyme en une paire distincte** associée au même mot français. Chaque traduction bretonne doit produire sa propre ligne JSONL.
 
 ### Traductions directes vs. gloses descriptives
 
@@ -154,7 +154,8 @@ Image : `cou — gouzoug, g.`
 ### Entrée avec précision contextuelle et synonymes
 Image : `couche — (graisseuse, etc.) gwiskad, g, gwelead, g.`
 ```json
-{"breton": "gwiskad, gwelead", "français": "couche (graisseuse)"}
+{"breton": "gwiskad", "français": "couche (graisseuse)"}
+{"breton": "gwelead", "français": "couche (graisseuse)"}
 ```
 
 ### Entrée avec sous-entrées abrégées
@@ -193,7 +194,9 @@ Image : `œil — lagad, g, nd. daoulagad.`
 ### Entrée avec locution pluriel
 Image : `organe — benveg, g, l. binviou, benvegenn, gg.`
 ```json
-{"breton": "benveg, binviou, benvegenn", "français": "organe"}
+{"breton": "benveg", "français": "organe"}
+{"breton": "binviou", "français": "organe"}
+{"breton": "benvegenn", "français": "organe"}
 ```
 
 ### Entrée renvoi (à ignorer)
@@ -217,7 +220,8 @@ Image : `vocal — mouezel, -mouez — corde v. : korden-vouez, l. kerdin-mouez.
 > Gardez le mot complet (`mouezel`), **supprimez le fragment** (`-mouez`) :
 ```json
 {"breton": "mouezel", "français": "vocal"}
-{"breton": "korden-vouez, kerdin-mouez", "français": "corde vocale"}
+{"breton": "korden-vouez", "français": "corde vocale"}
+{"breton": "kerdin-mouez", "français": "corde vocale"}
 ```
 
 ### Fin du dictionnaire

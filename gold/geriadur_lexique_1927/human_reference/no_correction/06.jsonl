@@ -3,23 +3,16 @@
 {"breton": "kalir", "français": "calice (du rein)"}
 {"breton": "korf lerek", "français": "corps calleux"}
 {"breton": "kan", "français": "canal"}
-{"breton": "dant-al-lagad", "français": "canine"}
-{"breton": "dent-al-lagad", "français": "canine"}
+{"breton": "dant-al-lagad, dent-al-lagad", "français": "canine"}
 {"breton": "bleohenvel", "français": "capillaire"}
 {"breton": "gwazienn vleohenvel", "français": "vaisseau capillaire"}
 {"breton": "digor-krec'h ar sac'h-boued", "français": "cardia"}
 {"breton": "kalonel", "français": "cardiaque"}
 {"breton": "gwadgaser-gouzoug", "français": "carotide"}
 {"breton": "eskern-arzourn", "français": "carpe"}
-{"breton": "bourlas", "français": "cartilage"}
-{"breton": "grigons", "français": "cartilage"}
-{"breton": "migourn", "français": "cartilage"}
-{"breton": "eur vourlasenn", "français": "un cartilage"}
-{"breton": "eur c'hrigonsenn", "français": "un cartilage"}
-{"breton": "eur vigournenn", "français": "un cartilage"}
-{"breton": "bourlasek", "français": "cartilagineux"}
-{"breton": "grigonsek", "français": "cartilagineux"}
-{"breton": "migournek", "français": "cartilagineux"}
+{"breton": "bourlas, grigons, migourn", "français": "cartilage"}
+{"breton": "eur vourlasenn, eur c'hrigonsenn, eur vigournenn", "français": "un cartilage"}
+{"breton": "bourlasek, grigonsek, migournek", "français": "cartilagineux"}
 {"breton": "pennwadzegaser ar galon", "français": "veine cave"}
 {"breton": "toull", "français": "cavité"}
 {"breton": "kellig", "français": "cellule"}
@@ -32,14 +25,9 @@
 {"breton": "ilpenn", "français": "cervelet"}
 {"breton": "chougel", "français": "cervical"}
 {"breton": "lagadenn", "français": "vertèbre cervicale"}
-{"breton": "pennad-bleo", "français": "chevelure"}
-{"breton": "bleo", "français": "chevelure"}
-{"breton": "blevenn", "français": "cheveu"}
-{"breton": "bleo", "français": "cheveu"}
-{"breton": "blevenn-benn", "français": "cheveu"}
-{"breton": "ufern", "français": "cheville"}
-{"breton": "daoufern", "français": "cheville"}
-{"breton": "fer an troad", "français": "cheville"}
+{"breton": "pennad-bleo, bleo", "français": "chevelure"}
+{"breton": "blevenn, bleo, blevenn-benn", "français": "cheveu"}
+{"breton": "ufern, daoufern, fer an troad", "français": "cheville"}
 {"breton": "kroaz", "français": "chiasma"}
 {"breton": "founil", "français": "choane"}
 {"breton": "kan-bestl", "français": "canal cholédoque"}
@@ -47,5 +35,4 @@
 {"breton": "gwazienn chugon-boued", "français": "vaisseau chylifère"}
 {"breton": "toaz-boued", "français": "chyme"}
 {"breton": "malvenn", "français": "cil"}
-{"breton": "malvennel", "français": "ciliaire"}
-{"breton": "ar malvennou", "français": "ciliaire"}
+{"breton": "malvennel, ar malvennou", "français": "ciliaire"}

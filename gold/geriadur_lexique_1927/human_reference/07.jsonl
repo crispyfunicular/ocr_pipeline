@@ -1,9 +1,15 @@
 {"breton": "kildrôenn", "français": "circonvolution (du cerveau)"}
 {"breton": "trôella", "français": "circumduction"}
-{"breton": "ibil-skoaz, trebez", "français": "clavicule"}
-{"breton": "begou-eskern gwelehenvel, gweleou", "français": "clinoïdes"}
-{"breton": "sounna, kaouledi, poulloudenni", "français": "coagulation (du sang)"}
-{"breton": "sounna, kaouledi, poulloudenni", "français": "coaguler"}
+{"breton": "ibil-skoaz", "français": "clavicule"}
+{"breton": "trebez", "français": "clavicule"}
+{"breton": "begou-eskern gwelehenvel", "français": "clinoïdes"}
+{"breton": "gweleou", "français": "clinoïdes"}
+{"breton": "sounna", "français": "coagulation (du sang)"}
+{"breton": "kaouledi", "français": "coagulation (du sang)"}
+{"breton": "poulloudenni", "français": "coagulation (du sang)"}
+{"breton": "sounna", "français": "coaguler"}
+{"breton": "kaouledi", "français": "coaguler"}
+{"breton": "poulloudenni", "français": "coaguler"}
 {"breton": "lost al livenn-gein", "français": "coccys"}
 {"breton": "gwadgaser tribrankek (ar c'hof)", "français": "tronc coeliaque"}
 {"breton": "kalon", "français": "cœur"}
@@ -18,20 +24,20 @@
 {"breton": "korniou an diweuz", "français": "commissures (des lèvres)"}
 {"breton": "kan", "français": "conduit"}
 {"breton": "mell-askourn-hirgelc'hel", "français": "condyle"}
-{"breton": "beraat", "français": "contracter (un muscle, etc.)"}
-{"breton": "stegna", "français": "contracter (un muscle, etc.)"}
-{"breton": "berraus", "français": "contractile"}
-{"breton": "stegnus", "français": "contractile"}
+{"breton": "beraat, stegna", "français": "contracter (un muscle, etc.)"}
+{"breton": "berraus, stegnus", "français": "contractile"}
 {"breton": "striza-distriza", "français": "contraction (du cœur)"}
 {"breton": "kenaoza", "français": "coordination (musculaire)"}
-{"breton": "korden nervennek, kerdin nervennek", "français": "cordon nerveux"}
-{"breton": "raksae (al lagad)", "français": "cornée"}
+{"breton": "nervenn daboulin ar skouarn", "français": "corde du tympan"}
+{"breton": "korden nervennek", "français": "cordon nerveux"}
+{"breton": "kerdin nervennek", "français": "cordon nerveux"}
+{"breton": "raksae", "français": "cornée"}
 {"breton": "kornig", "français": "cornet (du nez)"}
-{"breton": "kurunennhenvel", "français": "coronaire"}
-{"breton": "stumm-kurunenn", "français": "coronaire"}
+{"breton": "kurunennhenvel, stumm-kurunenn", "français": "coronaire"}
 {"breton": "kurunenn ar galon", "français": "coronaires du cœur"}
 {"breton": "kurunenn ar genou", "français": "coronaires de la bouche"}
 {"breton": "draen-araok ar werzid-vrec'h", "français": "apophyse coronoïde du cubitus"}
+{"breton": "draen ividigel ar garvan-draon", "français": "apophyse coronoïde du maxillaire inférieur"}
 {"breton": "korf", "français": "corps"}
 {"breton": "korf", "français": "corps (organe)"}
 {"breton": "kostezenn", "français": "côte"}
