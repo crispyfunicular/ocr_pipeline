@@ -160,7 +160,7 @@
   <section class="section" id="metrics">
     <div class="container reveal">
       <h2 class="section-title">📊 Métriques d’évaluation de la performance <span class="badge-wip">en cours</span></h2>
-      <p class="section-intro">Taux d’erreur (CER / WER) par ouvrage et par langue, mesurés contre des références gold annotées manuellement.</p>
+      <p class="section-intro">Taux d’erreur (CER / WER) par ouvrage et par langue, mesurés contre des références gold annotées manuellement, avec une évaluation de traduction basée sur sacrebleu et chrF2.</p>
       <div class="book-table-wrap card">
         <table class="book-table metrics-table">
           <thead>
@@ -234,20 +234,20 @@
   <section class="section" id="m2m100">
     <div class="container reveal">
       <h2 class="section-title">Entraînement m2m100</h2>
-      <p class="section-intro">Le corpus extrait alimente l’entraînement de modèles de traduction neuronale Breton↔Français.</p>
+      <p class="section-intro">Le corpus extrait alimente l’entraînement de modèles de traduction neuronale breton > français.</p>
 
       <div class="m2m-grid">
         <div class="m2m-card card">
           <h3>🌍 m2m100 (Meta)</h3>
-          <p>Modèle multilingue de base (418M paramètres) couvrant 100 langues. Fine-tuning sur notre corpus pour spécialiser la paire breton-français.</p>
+          <p>Modèle multilingue de base (418M paramètres) couvrant 100 langues</p>
         </div>
         <div class="m2m-card card">
-          <h3>⚙️ m2m100_br_fr</h3>
-          <p>Variante déjà pré-entraînée pour le breton par <a href="https://huggingface.co/lgrobol/m2m100_418M_br_fr" target="_blank" rel="noopener">Loïc Grobol</a>. Entraînement complémentaire avec nos données historiques.</p>
+          <h3>⚙️ madlad400 (QLoRa)</h3>
+          <p>Architecture "encodeur-décodeur" de type T5</p>
         </div>
         <div class="m2m-card card">
           <h3>📈 Objectif</h3>
-          <p>Obtenir un traducteur performant pour le breton, capable de gérer les variations orthographiques historiques et le vocabulaire spécialisé.</p>
+          <p>Fine-tuning sur notre corpus pour spécialiser la traduction breton > français.</p>
         </div>
       </div>
     </div>
@@ -310,7 +310,7 @@
   <footer class="footer">
     <div class="container">
       <p>Fait avec 📜 et beaucoup de patience</p>
-      <p class="footer-sub"><a href="https://github.com/crispyfunicular/ocr_pipeline" target="_blank" rel="noopener">GitHub</a> · Morgane Bona-Pellissier · 2026</p>
+      <p class="footer-sub"><a href="https://github.com/crispyfunicular/ocr_pipeline" target="_blank" rel="noopener">GitHub</a> · <a href="https://bona-pellissier.net/" target="_blank" rel="noreferrer">Morgane Bona-Pellissier</a> · 2026</p>
     </div>
   </footer>
 

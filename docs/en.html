@@ -160,7 +160,7 @@
   <section class="section" id="metrics">
     <div class="container reveal">
       <h2 class="section-title">📊 Performance Evaluation Metrics <span class="badge-wip">in progress</span></h2>
-      <p class="section-intro">Error rates (CER / WER) per book and language, measured against manually annotated gold references.</p>
+      <p class="section-intro">Error rates (CER / WER) per book and language, measured against manually annotated gold references, with translation evaluation based on sacrebleu and chrF2.</p>
       <div class="book-table-wrap card">
         <table class="book-table metrics-table">
           <thead>
@@ -234,20 +234,20 @@
   <section class="section" id="m2m100">
     <div class="container reveal">
       <h2 class="section-title">m2m100 Training</h2>
-      <p class="section-intro">The extracted corpus feeds the training of Breton↔French neural machine translation models.</p>
+      <p class="section-intro">The extracted corpus feeds the training of Breton→French neural machine translation models.</p>
 
       <div class="m2m-grid">
         <div class="m2m-card card">
           <h3>🌍 m2m100 (Meta)</h3>
-          <p>Base multilingual model (418M parameters) covering 100 languages. Fine-tuned on our corpus to specialize the Breton-French pair.</p>
+          <p>Base multilingual model (418M parameters) covering 100 languages.</p>
         </div>
         <div class="m2m-card card">
-          <h3>⚙️ m2m100_br_fr</h3>
-          <p>Variant already pre-trained for Breton by <a href="https://huggingface.co/lgrobol/m2m100_418M_br_fr" target="_blank" rel="noopener">Loïc Grobol</a>. Additional training with our historical data.</p>
+          <h3>⚙️ madlad400 (QLoRa)</h3>
+          <p>T5-style encoder-decoder architecture.</p>
         </div>
         <div class="m2m-card card">
           <h3>📈 Objective</h3>
-          <p>Build a high-performing translator for Breton, capable of handling historical spelling variations and specialized vocabulary.</p>
+          <p>Fine-tuning on our corpus to specialize Breton→French translation.</p>
         </div>
       </div>
     </div>
